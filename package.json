@@ -2,7 +2,7 @@
   "name": "rasvuyuro",
   "version": "1.0.0",
   "description": "Netflix-style movie recommendation website",
-  "homepage": "https://natricious.github.io/RasVuyuro",
+  "homepage": "https://natricious.github.io/RasVuyuro/",
   "type": "module",
   "scripts": {
     "dev": "vite",
