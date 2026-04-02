@@ -1,0 +1,30 @@
+.section-row {
+  padding: 64px 0;
+}
+
+/* Horizontal scroll row */
+.scroll-row-wrap {
+  position: relative;
+}
+
+.scroll-row {
+  display: flex;
+  gap: 16px;
+  padding: 8px 32px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-row > * {
+  scroll-snap-align: start;
+}
+
+@media (max-width: 640px) {
+  .scroll-row { padding: 8px 16px 24px; }
+}

@@ -1,0 +1,34 @@
+.new-movies {
+  padding: 64px 0;
+  background: rgba(26, 17, 24, 0.3);
+}
+
+.new-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.new-grid .poster-card__image-wrap {
+  height: 220px;
+  aspect-ratio: unset;
+  width: 100%;
+}
+
+.new-grid .poster-card__title,
+.new-grid .poster-card__meta {
+  max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .new-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .new-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

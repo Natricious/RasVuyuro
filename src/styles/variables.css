@@ -1,0 +1,24 @@
+:root {
+  --gold: #e8c547;
+  --gold-dim: #c9a832;
+  --red: #c84b31;
+  --red-dim: #9e3a24;
+
+  --bg: #0a0709;
+  --bg-surface: #1a1118;
+  --bg-card: #221a20;
+
+  --fg: #f0ead6;
+  --fg-muted: #a89e8c;
+
+  --border: rgba(232, 197, 71, 0.15);
+
+  --radius-card: 16px;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --navbar-height: 70px;
+  --content-max-width: 1280px;
+}

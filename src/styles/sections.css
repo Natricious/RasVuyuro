@@ -1,0 +1,66 @@
+/* Shared section header pattern used across all sections */
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.section-header__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.section-header__accent-bar {
+  width: 4px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, var(--gold), var(--red));
+  margin-top: 2px;
+}
+
+.section-header__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.section-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1.2;
+}
+
+.section-header__desc {
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  margin-top: 4px;
+}
+
+.section-header__view-all {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.section-header__view-all:hover {
+  color: var(--gold);
+}
+
+@media (min-width: 640px) {
+  .section-header__view-all {
+    display: flex;
+  }
+}
