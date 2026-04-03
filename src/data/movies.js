@@ -91,6 +91,7 @@ export const NEW_MOVIES = [
 export const THEMATIC_COLLECTIONS = [
   {
     id: 1,
+    key: 'vampires',
     name: 'ვამპირები',
     count: 47,
     gradient: 'linear-gradient(135deg, rgba(127,29,29,0.85) 0%, rgba(10,7,9,0.7) 100%)',
@@ -101,6 +102,7 @@ export const THEMATIC_COLLECTIONS = [
   },
   {
     id: 2,
+    key: 'ancient_rome',
     name: 'ძველი რომი',
     count: 63,
     gradient: 'linear-gradient(135deg, rgba(124,45,18,0.85) 0%, rgba(10,7,9,0.7) 100%)',
@@ -111,6 +113,7 @@ export const THEMATIC_COLLECTIONS = [
   },
   {
     id: 3,
+    key: 'college_life',
     name: 'სტუდენტური ცხოვრება',
     count: 38,
     gradient: 'linear-gradient(135deg, rgba(12,74,110,0.85) 0%, rgba(10,7,9,0.7) 100%)',
@@ -121,6 +124,7 @@ export const THEMATIC_COLLECTIONS = [
   },
   {
     id: 4,
+    key: 'travel',
     name: 'მოგზაურობა',
     count: 52,
     gradient: 'linear-gradient(135deg, rgba(113,63,18,0.85) 0%, rgba(10,7,9,0.7) 100%)',
@@ -131,6 +135,7 @@ export const THEMATIC_COLLECTIONS = [
   },
   {
     id: 5,
+    key: 'survival',
     name: 'გადარჩენა',
     count: 41,
     gradient: 'linear-gradient(135deg, rgba(88,28,135,0.85) 0%, rgba(10,7,9,0.7) 100%)',
@@ -141,6 +146,7 @@ export const THEMATIC_COLLECTIONS = [
   },
   {
     id: 6,
+    key: 'war',
     name: 'ომი',
     count: 74,
     gradient: 'linear-gradient(135deg, rgba(6,78,59,0.85) 0%, rgba(10,7,9,0.7) 100%)',

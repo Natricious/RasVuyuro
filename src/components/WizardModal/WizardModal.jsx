@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { THEMATIC_COLLECTIONS } from '../../data/movies';
+import { getMoviesByCollection } from '../../utils/movieUtils';
 import './WizardModal.css';
 
 // ─── Question pool ────────────────────────────────────────────────────────────
@@ -258,6 +259,8 @@ export default function WizardModal({ open, onClose }) {
 
   // ── Derived values ────────────────────────────────────────────────────────
 
+  const [activeCollectionKey, setActiveCollectionKey] = useState(null);
+
   const { phase, answers, confidence, currentQuestion, answeredIds } = state;
   const answeredCount = answeredIds.size;
   const recommendations = useMemo(
@@ -265,6 +268,16 @@ export default function WizardModal({ open, onClose }) {
     [phase, answers]
   );
   const highConfidence = confidence >= 70;
+
+  // When results first appear, auto-select the top collection
+  useEffect(() => {
+    if (phase === 'results' && recommendations.length > 0) {
+      setActiveCollectionKey(recommendations[0].key);
+    }
+  }, [phase, recommendations]);
+
+  const activeCollection = recommendations.find(c => c.key === activeCollectionKey) ?? recommendations[0];
+  const activeMovies = activeCollectionKey ? getMoviesByCollection(activeCollectionKey) : [];
 
   // Progress bar: question phase = answered / pool, results = 100
   const progressPct = phase === 'results' ? 100
@@ -370,12 +383,21 @@ export default function WizardModal({ open, onClose }) {
                   {answeredCount} პასუხი · სიზუსტე {confidence}%
                 </p>
               </div>
+
               <div className="wizard-results__list">
                 {recommendations.map((col, i) => (
                   <div
                     key={col.id}
                     className="wizard-result-card"
-                    style={{ animationDelay: `${i * 0.1}s` }}
+                    style={{
+                      animationDelay: `${i * 0.1}s`,
+                      cursor: 'pointer',
+                      outline: col.key === activeCollectionKey
+                        ? `2px solid ${col.accentColor}`
+                        : '2px solid transparent',
+                      outlineOffset: '2px',
+                    }}
+                    onClick={() => setActiveCollectionKey(col.key)}
                   >
                     <div className="wizard-result-card__img-wrap">
                       <img src={col.imageUrl} alt={col.name} className="wizard-result-card__img" />
@@ -394,6 +416,72 @@ export default function WizardModal({ open, onClose }) {
                   </div>
                 ))}
               </div>
+
+              {/* ── Collection movies strip ── */}
+              {activeCollection && activeMovies.length > 0 && (
+                <div style={{ marginTop: '20px' }}>
+                  <p style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.15em',
+                    color: activeCollection.accentColor,
+                    marginBottom: '10px',
+                  }}>
+                    ფილმები კოლექციიდან: {activeCollection.name}
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    gap: '10px',
+                    overflowX: 'auto',
+                    paddingBottom: '6px',
+                    scrollbarWidth: 'none',
+                  }}>
+                    {activeMovies.map(movie => (
+                      <div key={movie.id} style={{
+                        flexShrink: 0,
+                        width: '100px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '5px',
+                      }}>
+                        <div style={{
+                          width: '100px',
+                          height: '148px',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          background: 'rgba(255,255,255,0.05)',
+                        }}>
+                          <img
+                            src={movie.poster}
+                            alt={movie.title}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                            loading="lazy"
+                          />
+                        </div>
+                        <p style={{
+                          fontSize: '0.6875rem',
+                          fontWeight: 600,
+                          color: 'var(--fg)',
+                          lineHeight: 1.3,
+                          overflow: 'hidden',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                        }}>
+                          {movie.title}
+                        </p>
+                        <p style={{
+                          fontSize: '0.625rem',
+                          color: 'var(--fg-muted)',
+                        }}>
+                          {movie.year} &nbsp;⭐ {movie.imdb_rating}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 

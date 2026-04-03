@@ -6,16 +6,34 @@
     "year": 2000,
     "imdb_id": "tt0172495",
     "imdb_rating": 8.5,
-    "genres": ["Action", "Drama"],
-    "themes": ["revenge", "survival", "honor"],
+    "genres": [
+      "Action",
+      "Drama"
+    ],
+    "themes": [
+      "revenge",
+      "survival",
+      "honor"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDctMjE2NS00NTQ4LWI1NWQtYjg2YzNiZGM3ZGM5XkEyXkFqcGc@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0172495&apikey=trilogy&h=300",
     "description": "A former Roman general seeks revenge against the corrupt emperor who murdered his family.",
-    "similar_movies": [24, 25, 26, 27],
-    "collections": ["war", "ancient_rome", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      24,
+      25,
+      26,
+      27
+    ],
+    "collections": [
+      "war",
+      "ancient_rome",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 2,
@@ -24,16 +42,32 @@
     "year": 1998,
     "imdb_id": "tt0120815",
     "imdb_rating": 8.6,
-    "genres": ["Drama", "War"],
-    "themes": ["duty", "sacrifice", "brotherhood"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "duty",
+      "sacrifice",
+      "brotherhood"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0120815&apikey=trilogy&h=300",
     "description": "Following the Normandy Landings, a group of U.S. soldiers go behind enemy lines to retrieve a paratrooper whose brothers have been killed in action.",
-    "similar_movies": [8, 9, 10, 15],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      8,
+      9,
+      10,
+      15
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 3,
@@ -41,17 +75,34 @@
     "title_ge": "შინდლერის სია",
     "year": 1993,
     "imdb_id": "tt0108052",
-    "imdb_rating": 9.0,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["holocaust", "humanity", "sacrifice"],
+    "imdb_rating": 9,
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "holocaust",
+      "humanity",
+      "sacrifice"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNDE4OTEwNDAtNWFiNS00ZmE5LTlhMDItZDU5NTljMGM4ODRlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0108052&apikey=trilogy&h=300",
     "description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
-    "similar_movies": [14, 19, 20, 2],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      14,
+      19,
+      20,
+      2
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 4,
@@ -60,16 +111,33 @@
     "year": 1979,
     "imdb_id": "tt0078788",
     "imdb_rating": 8.4,
-    "genres": ["Drama", "Mystery", "War"],
-    "themes": ["madness", "imperialism", "darkness"],
+    "genres": [
+      "Drama",
+      "Mystery",
+      "War"
+    ],
+    "themes": [
+      "madness",
+      "imperialism",
+      "darkness"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZWYwMjhhZTYtODM5OC00MGE3LThmZWQtNzgzY2I2YjE5ZWE3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0078788&apikey=trilogy&h=300",
     "description": "During the Vietnam War, Captain Willard is sent on a dangerous mission into Cambodia to assassinate a renegade colonel who has set himself up as a god among a local tribe.",
-    "similar_movies": [5, 6, 12, 16],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      5,
+      6,
+      12,
+      16
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 5,
@@ -78,16 +146,32 @@
     "year": 1987,
     "imdb_id": "tt0093058",
     "imdb_rating": 8.3,
-    "genres": ["Drama", "War"],
-    "themes": ["dehumanization", "Vietnam", "military"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "dehumanization",
+      "Vietnam",
+      "military"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzkxODk0NjEtYjc4Mi00ZDI0LTgyYjEtNGMxNGEyNjI1ODY0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0093058&apikey=trilogy&h=300",
     "description": "A pragmatic U.S. Marine observes the dehumanizing effects that the Vietnam War has on his fellow recruits from their brutal boot camp training to the bloody street fighting in Hue.",
-    "similar_movies": [4, 6, 16, 17],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      4,
+      6,
+      16,
+      17
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 6,
@@ -96,16 +180,32 @@
     "year": 1986,
     "imdb_id": "tt0091763",
     "imdb_rating": 8.1,
-    "genres": ["Drama", "War"],
-    "themes": ["Vietnam", "morality", "loss of innocence"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "Vietnam",
+      "morality",
+      "loss of innocence"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzc5MjEzODYtN2VmYi00MDVjLTgwMDYtMDU0ZGVkMjNhMGJiXkEyXkFqcGdeQXVyNTI4MjkwNjA@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0091763&apikey=trilogy&h=300",
     "description": "A young soldier in Vietnam faces a moral crisis when confronted with the horrors of war and the duality of man.",
-    "similar_movies": [4, 5, 12, 2],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      4,
+      5,
+      12,
+      2
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 7,
@@ -114,16 +214,34 @@
     "year": 1995,
     "imdb_id": "tt0112573",
     "imdb_rating": 8.3,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["freedom", "rebellion", "love"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "freedom",
+      "rebellion",
+      "love"
+    ],
     "timeline": "medieval",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZDVhNjZiNjMtMTk2My00NTQ5LWFmZjItMjgxYjhjNjllZWM2XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0112573&apikey=trilogy&h=300",
     "description": "Scottish warrior William Wallace leads his countrymen in a rebellion to free his homeland from the tyranny of King Edward I of England.",
-    "similar_movies": [1, 25, 22, 20],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      25,
+      22,
+      20
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 8,
@@ -132,16 +250,33 @@
     "year": 2016,
     "imdb_id": "tt2119532",
     "imdb_rating": 8.1,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["pacifism", "courage", "faith"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "pacifism",
+      "courage",
+      "faith"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjQ1NjM3MTUxNV5BMl5BanBnXkFtZTgwMDc5MTY4MDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2119532&apikey=trilogy&h=300",
     "description": "The true story of Desmond Doss, the first conscientious objector to win the Medal of Honor, who saved 75 men at Hacksaw Ridge without ever firing a gun.",
-    "similar_movies": [2, 10, 19, 15],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      10,
+      19,
+      15
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 9,
@@ -150,16 +285,34 @@
     "year": 2017,
     "imdb_id": "tt5013056",
     "imdb_rating": 7.9,
-    "genres": ["Action", "Drama", "History"],
-    "themes": ["evacuation", "survival", "heroism"],
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "evacuation",
+      "survival",
+      "heroism"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZTAzNWZlNmUtZjc3OS00NjcxLWIwMjctZjk2YjM4MDcxMThiXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt5013056&apikey=trilogy&h=300",
     "description": "Allied soldiers from Belgium, the British Commonwealth, and France are surrounded by the German Army and evacuated during a fierce battle in World War II.",
-    "similar_movies": [2, 10, 8, 15],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      10,
+      8,
+      15
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 10,
@@ -168,16 +321,34 @@
     "year": 2019,
     "imdb_id": "tt8579674",
     "imdb_rating": 8.3,
-    "genres": ["Drama", "Thriller", "War"],
-    "themes": ["mission", "time", "brotherhood"],
+    "genres": [
+      "Drama",
+      "Thriller",
+      "War"
+    ],
+    "themes": [
+      "mission",
+      "time",
+      "brotherhood"
+    ],
     "timeline": "19th_century",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTdmNTFjNDEtNzExMi00ZTlhLTg0ZjItOWMzNmM2NWYyZWRiXkEyXkFqcGdeQXVyNDQ2MTMxNDA@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt8579674&apikey=trilogy&h=300",
     "description": "April 6th, 1917. Two British soldiers are given an impossible mission: deliver a message deep in enemy territory to stop 1,600 men from walking into a deadly trap.",
-    "similar_movies": [2, 9, 8, 21],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      9,
+      8,
+      21
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 11,
@@ -186,16 +357,33 @@
     "year": 1981,
     "imdb_id": "tt0082096",
     "imdb_rating": 8.3,
-    "genres": ["Drama", "War"],
-    "themes": ["claustrophobia", "duty", "survival"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "claustrophobia",
+      "duty",
+      "survival"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNjZiNjZiZmMtN2M1My00OGM0LTg5NjEtMjM5MDAwMjBkZDZhXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0082096&apikey=trilogy&h=300",
     "description": "The claustrophobic world of a WWII German U-boat as it patrols the Atlantic, exploring the terror and tedium of submarine warfare.",
-    "similar_movies": [2, 9, 21, 10],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      9,
+      21,
+      10
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 12,
@@ -204,16 +392,32 @@
     "year": 1998,
     "imdb_id": "tt0120863",
     "imdb_rating": 7.6,
-    "genres": ["Drama", "War"],
-    "themes": ["nature", "mortality", "philosophical"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "nature",
+      "mortality",
+      "philosophical"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODMwMDc3MDQ4N15BMl5BanBnXkFtZTgwODA5NTM5NjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0120863&apikey=trilogy&h=300",
     "description": "Adaptation of James Jones' autobiographical 1962 novel, focusing on the conflict at Guadalcanal during the second World War.",
-    "similar_movies": [4, 6, 2, 19],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      4,
+      6,
+      2,
+      19
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 13,
@@ -222,16 +426,33 @@
     "year": 2009,
     "imdb_id": "tt0361748",
     "imdb_rating": 8.3,
-    "genres": ["Adventure", "Drama", "War"],
-    "themes": ["revenge", "alternate history", "tension"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "revenge",
+      "alternate history",
+      "tension"
+    ],
     "timeline": "ww2",
     "tone": "thriller",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWQtMTg0My00MDQ2LTkxODUtYWM4OTY2Yjg5ZWFiXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0361748&apikey=trilogy&h=300",
     "description": "In Nazi-occupied France during World War II, a group of Jewish U.S. soldiers known as the Basterds are chosen to spread fear throughout the Third Reich.",
-    "similar_movies": [2, 3, 14, 15],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      3,
+      14,
+      15
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 14,
@@ -240,16 +461,34 @@
     "year": 2002,
     "imdb_id": "tt0253474",
     "imdb_rating": 8.5,
-    "genres": ["Biography", "Drama", "Music"],
-    "themes": ["holocaust", "survival", "art"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "Music"
+    ],
+    "themes": [
+      "holocaust",
+      "survival",
+      "art"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOWRiNjM5ZDctMGYwMS00YzZmLWIzYmQtMTQyMjM5MTgxMTAxXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0253474&apikey=trilogy&h=300",
     "description": "A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.",
-    "similar_movies": [3, 13, 19, 11],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      3,
+      13,
+      19,
+      11
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 15,
@@ -258,16 +497,33 @@
     "year": 2014,
     "imdb_id": "tt2713180",
     "imdb_rating": 7.6,
-    "genres": ["Action", "Drama", "War"],
-    "themes": ["tank warfare", "brotherhood", "morality"],
+    "genres": [
+      "Action",
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "tank warfare",
+      "brotherhood",
+      "morality"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTgwNjU4MDI3MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2713180&apikey=trilogy&h=300",
     "description": "April, 1945. As the Allies make their final push in the European Theatre, a battle-hardened Army sergeant named Wardaddy commands a Sherman tank and her five-man crew.",
-    "similar_movies": [2, 9, 13, 8],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      9,
+      13,
+      8
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 16,
@@ -276,16 +532,34 @@
     "year": 2001,
     "imdb_id": "tt0265086",
     "imdb_rating": 7.7,
-    "genres": ["Action", "Drama", "History"],
-    "themes": ["mission", "chaos", "modern warfare"],
+    "genres": [
+      "Action",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "mission",
+      "chaos",
+      "modern warfare"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZmZiNjFkZmYtNWY0NS00MmI0LWEyNWQtNDg5OGY0NWI4YTViXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0265086&apikey=trilogy&h=300",
     "description": "The story of 160 elite U.S. soldiers who dropped into Mogadishu in October 1993 to capture two top lieutenants of a renegade Somali warlord.",
-    "similar_movies": [17, 18, 4, 5],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      17,
+      18,
+      4,
+      5
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 17,
@@ -294,16 +568,34 @@
     "year": 2013,
     "imdb_id": "tt1091191",
     "imdb_rating": 7.5,
-    "genres": ["Action", "Biography", "Drama"],
-    "themes": ["Afghanistan", "survival", "SEAL"],
+    "genres": [
+      "Action",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Afghanistan",
+      "survival",
+      "SEAL"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ1MzYyMjM4OF5BMl5BanBnXkFtZTgwMjM0OTkwMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1091191&apikey=trilogy&h=300",
     "description": "Marcus Luttrell and his team set out on a mission to capture or kill notorious Taliban leader Ahmad Shah, in late June 2005.",
-    "similar_movies": [16, 18, 5, 6],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      16,
+      18,
+      5,
+      6
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 18,
@@ -312,16 +604,33 @@
     "year": 2014,
     "imdb_id": "tt2179136",
     "imdb_rating": 7.3,
-    "genres": ["Action", "Biography", "Drama"],
-    "themes": ["Iraq", "PTSD", "patriotism"],
+    "genres": [
+      "Action",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Iraq",
+      "PTSD",
+      "patriotism"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTkxNzI3ODI4Nl5BMl5BanBnXkFtZTgwMjkwMjY4MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2179136&apikey=trilogy&h=300",
     "description": "Navy SEAL sniper Chris Kyle's pinpoint accuracy saves countless lives on the battlefield and turns him into a legend during four tours of Iraq.",
-    "similar_movies": [17, 16, 8, 6],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      17,
+      16,
+      8,
+      6
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 19,
@@ -330,16 +639,33 @@
     "year": 2006,
     "imdb_id": "tt0498380",
     "imdb_rating": 7.9,
-    "genres": ["Drama", "History", "War"],
-    "themes": ["honor", "perspective", "Japanese"],
+    "genres": [
+      "Drama",
+      "History",
+      "War"
+    ],
+    "themes": [
+      "honor",
+      "perspective",
+      "Japanese"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTMwMDgwNjMxNF5BMl5BanBnXkFtZTcwMDU2MjkxMw@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0498380&apikey=trilogy&h=300",
     "description": "The story of the battle of Iwo Jima between the United States and Imperial Japan during World War II, as told from the perspective of the Japanese soldiers.",
-    "similar_movies": [3, 12, 11, 20],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      3,
+      12,
+      11,
+      20
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 20,
@@ -348,16 +674,32 @@
     "year": 1957,
     "imdb_id": "tt0050825",
     "imdb_rating": 8.4,
-    "genres": ["Drama", "War"],
-    "themes": ["injustice", "WWI", "military corruption"],
+    "genres": [
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "injustice",
+      "WWI",
+      "military corruption"
+    ],
     "timeline": "19th_century",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYTNmZDRhM2MtNDY2Mi00ZjVjLWJlYjctNmNkYjI4OTNmNWIzXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0050825&apikey=trilogy&h=300",
     "description": "After refusing to attack an enemy position, a general accuses the soldiers of cowardice and their captain must defend them.",
-    "similar_movies": [21, 12, 3, 7],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      21,
+      12,
+      3,
+      7
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 21,
@@ -366,16 +708,34 @@
     "year": 1957,
     "imdb_id": "tt0050212",
     "imdb_rating": 8.2,
-    "genres": ["Adventure", "Drama", "War"],
-    "themes": ["POW", "obsession", "duty"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "War"
+    ],
+    "themes": [
+      "POW",
+      "obsession",
+      "duty"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYjM5NTM3MDc1Ml5BMl5BanBnXkFtZTgwNDI3OTA4MzE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0050212&apikey=trilogy&h=300",
     "description": "British POWs are forced to build a railway bridge for their Japanese captors while a British colonel tries to outsmart them.",
-    "similar_movies": [22, 20, 11, 3],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      22,
+      20,
+      11,
+      3
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 22,
@@ -384,16 +744,34 @@
     "year": 1963,
     "imdb_id": "tt0057115",
     "imdb_rating": 8.2,
-    "genres": ["Adventure", "Drama", "History"],
-    "themes": ["escape", "POW", "ingenuity"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "escape",
+      "POW",
+      "ingenuity"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODA1MzI3NzYxNV5BMl5BanBnXkFtZTgwNzA2MjY4MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0057115&apikey=trilogy&h=300",
     "description": "Based on the true story of the largest escape attempt from a German POW camp in WWII.",
-    "similar_movies": [21, 20, 7, 14],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      21,
+      20,
+      7,
+      14
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 23,
@@ -402,16 +780,33 @@
     "year": 2001,
     "imdb_id": "tt0215750",
     "imdb_rating": 7.1,
-    "genres": ["Drama", "Thriller", "War"],
-    "themes": ["sniper", "Stalingrad", "cat and mouse"],
+    "genres": [
+      "Drama",
+      "Thriller",
+      "War"
+    ],
+    "themes": [
+      "sniper",
+      "Stalingrad",
+      "cat and mouse"
+    ],
     "timeline": "ww2",
     "tone": "thriller",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYjJiZjMzYzktNjU0NS00OTkxLWEwYzItOTE5NmQ5ZWFhMzQ4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0215750&apikey=trilogy&h=300",
     "description": "A Russian and a German sniper play a game of cat and mouse during the Battle of Stalingrad.",
-    "similar_movies": [2, 11, 15, 18],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      2,
+      11,
+      15,
+      18
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 24,
@@ -420,16 +815,35 @@
     "year": 1959,
     "imdb_id": "tt0052618",
     "imdb_rating": 8.1,
-    "genres": ["Adventure", "Drama", "History"],
-    "themes": ["revenge", "faith", "chariot race"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "revenge",
+      "faith",
+      "chariot race"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNjgxMDY5NTgtYTFkZC00MDI4LWE3MzMtYTc2NjQ1NzRlYTBhXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0052618&apikey=trilogy&h=300",
     "description": "Judah Ben-Hur, a prince falsely accused of treason by his Roman childhood friend, is forced into slavery and returns to seek revenge.",
-    "similar_movies": [1, 25, 34, 27],
-    "collections": ["ancient_rome", "war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      25,
+      34,
+      27
+    ],
+    "collections": [
+      "ancient_rome",
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 25,
@@ -438,16 +852,35 @@
     "year": 1960,
     "imdb_id": "tt0054331",
     "imdb_rating": 7.9,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["slavery", "rebellion", "freedom"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "slavery",
+      "rebellion",
+      "freedom"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOThmYjBiZGUtNjYzNS00NzI0LTg0ZWYtYTgyMjVlNTE2N2Y0XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0054331&apikey=trilogy&h=300",
     "description": "The slave Spartacus leads a violent revolt against the decadent Roman Republic.",
-    "similar_movies": [1, 24, 26, 34],
-    "collections": ["ancient_rome", "war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      24,
+      26,
+      34
+    ],
+    "collections": [
+      "ancient_rome",
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 26,
@@ -456,16 +889,34 @@
     "year": 2006,
     "imdb_id": "tt0416449",
     "imdb_rating": 7.6,
-    "genres": ["Action", "Drama", "Fantasy"],
-    "themes": ["Sparta", "sacrifice", "heroism"],
+    "genres": [
+      "Action",
+      "Drama",
+      "Fantasy"
+    ],
+    "themes": [
+      "Sparta",
+      "sacrifice",
+      "heroism"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZDgwMjViN2QtNjZmNi00NDg0LWI5OWEtNGQwYTA1NDgzNTRlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0416449&apikey=trilogy&h=300",
     "description": "King Leonidas of Sparta and a force of 300 men fight the Persian Army at the Battle of Thermopylae.",
-    "similar_movies": [1, 27, 28, 25],
-    "collections": ["ancient_rome", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      27,
+      28,
+      25
+    ],
+    "collections": [
+      "ancient_rome",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 27,
@@ -474,16 +925,34 @@
     "year": 2004,
     "imdb_id": "tt0332452",
     "imdb_rating": 7.3,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["Trojan War", "honor", "mythology"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "Trojan War",
+      "honor",
+      "mythology"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZjQxYTA3ODItNzgxMy00N2Y2LWFmNTgtNTZhMjgzNjExZGEyXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0332452&apikey=trilogy&h=300",
     "description": "An adaptation of Homer's great epic, the film follows the assault on Troy by the united Greek forces and chronicles the fates of the men involved.",
-    "similar_movies": [26, 28, 24, 1],
-    "collections": ["ancient_rome", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      26,
+      28,
+      24,
+      1
+    ],
+    "collections": [
+      "ancient_rome",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 28,
@@ -492,16 +961,34 @@
     "year": 2004,
     "imdb_id": "tt0346491",
     "imdb_rating": 5.6,
-    "genres": ["Action", "Biography", "Drama"],
-    "themes": ["conquest", "empire", "ambition"],
+    "genres": [
+      "Action",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "conquest",
+      "empire",
+      "ambition"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzMxMDc1OGQtNDE4YS00NTQ5LTk1NDMtMDc5NzE5YThkNGEwXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0346491&apikey=trilogy&h=300",
     "description": "Alexander, the King of Macedonia, leads his legions against the giant Persian Empire and then against the armies and cultures of the Indian subcontinent.",
-    "similar_movies": [26, 27, 25, 29],
-    "collections": ["ancient_rome", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      26,
+      27,
+      25,
+      29
+    ],
+    "collections": [
+      "ancient_rome",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 29,
@@ -510,16 +997,33 @@
     "year": 1963,
     "imdb_id": "tt0056937",
     "imdb_rating": 6.9,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["Egypt", "Rome", "power and love"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "Egypt",
+      "Rome",
+      "power and love"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZWNhZDNhODgtOGYyNS00M2VjLThiZGEtMThiOTE2ZGVhNmRhXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0056937&apikey=trilogy&h=300",
     "description": "Queen of Egypt Cleopatra forges alliances with Julius Caesar and Mark Antony to maintain her reign.",
-    "similar_movies": [28, 24, 34, 35],
-    "collections": ["ancient_rome"],
-    "sources": ["manual"]
+    "similar_movies": [
+      28,
+      24,
+      34,
+      35
+    ],
+    "collections": [
+      "ancient_rome"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 30,
@@ -528,16 +1032,34 @@
     "year": 2014,
     "imdb_id": "tt1921064",
     "imdb_rating": 5.7,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["disaster", "Vesuvius", "gladiator"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "disaster",
+      "Vesuvius",
+      "gladiator"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjA4OTU1NDA0M15BMl5BanBnXkFtZTgwMjQwNTMxMDE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1921064&apikey=trilogy&h=300",
     "description": "A slave turned gladiator finds himself in a race against time to save his true love, who has been betrothed to a corrupt Roman senator.",
-    "similar_movies": [1, 24, 25, 31],
-    "collections": ["ancient_rome", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      24,
+      25,
+      31
+    ],
+    "collections": [
+      "ancient_rome",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 31,
@@ -546,16 +1068,34 @@
     "year": 2011,
     "imdb_id": "tt1034389",
     "imdb_rating": 6.3,
-    "genres": ["Action", "Adventure", "History"],
-    "themes": ["Rome", "honor", "Scotland"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "History"
+    ],
+    "themes": [
+      "Rome",
+      "honor",
+      "Scotland"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODcyMTYyNjctZGI2MC00YjdhLWE5MTUtNDA5NTU2ZWE0YWFmXkEyXkFqcGdeQXVyNjk1Njg5NTA@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1034389&apikey=trilogy&h=300",
     "description": "In 140 AD, twenty years after the Ninth Legion disappeared into the mists of Caledonia, young Roman soldier Marcus Aquila journeys to recover the lost standard of the Legion.",
-    "similar_movies": [33, 24, 25, 1],
-    "collections": ["ancient_rome", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      33,
+      24,
+      25,
+      1
+    ],
+    "collections": [
+      "ancient_rome",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 32,
@@ -564,16 +1104,33 @@
     "year": 2009,
     "imdb_id": "tt1186830",
     "imdb_rating": 7.2,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["Alexandria", "religion vs science", "Hypatia"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "Alexandria",
+      "religion vs science",
+      "Hypatia"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTYyMzc1NTg5NF5BMl5BanBnXkFtZTcwMzc5MTI1Mg@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1186830&apikey=trilogy&h=300",
     "description": "A historical drama set in Roman Egypt, concerning the life of the female mathematician Hypatia of Alexandria who struggles to save the knowledge of ancient Greece.",
-    "similar_movies": [29, 34, 35, 28],
-    "collections": ["ancient_rome"],
-    "sources": ["manual"]
+    "similar_movies": [
+      29,
+      34,
+      35,
+      28
+    ],
+    "collections": [
+      "ancient_rome"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 33,
@@ -582,16 +1139,34 @@
     "year": 2010,
     "imdb_id": "tt1020558",
     "imdb_rating": 6.4,
-    "genres": ["Action", "Adventure", "History"],
-    "themes": ["Roman legion", "Picts", "survival"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "History"
+    ],
+    "themes": [
+      "Roman legion",
+      "Picts",
+      "survival"
+    ],
     "timeline": "ancient",
     "tone": "thriller",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzI5MTkwMTQtZTVmNy00MWM4LWFkYzYtZjRmMzM0Zjk4MDQ2XkEyXkFqcGdeQXVyMjMxMjM0MDc@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1020558&apikey=trilogy&h=300",
     "description": "A Roman soldier fights for his life in the wilderness after his unit is massacred in Caledonia.",
-    "similar_movies": [31, 7, 25, 1],
-    "collections": ["ancient_rome", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      31,
+      7,
+      25,
+      1
+    ],
+    "collections": [
+      "ancient_rome",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 34,
@@ -600,16 +1175,33 @@
     "year": 1951,
     "imdb_id": "tt0043819",
     "imdb_rating": 7.2,
-    "genres": ["Drama", "History", "Romance"],
-    "themes": ["Nero", "Christianity", "Rome"],
+    "genres": [
+      "Drama",
+      "History",
+      "Romance"
+    ],
+    "themes": [
+      "Nero",
+      "Christianity",
+      "Rome"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTllYWYzZWQtNzZhNy00OTY3LWIwNTAtZjE4MzBlZDY5YmYyXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0043819&apikey=trilogy&h=300",
     "description": "A Roman commander falls in love with a hostage Christian woman and must face persecution under Emperor Nero.",
-    "similar_movies": [24, 29, 25, 35],
-    "collections": ["ancient_rome"],
-    "sources": ["manual"]
+    "similar_movies": [
+      24,
+      29,
+      25,
+      35
+    ],
+    "collections": [
+      "ancient_rome"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 35,
@@ -618,16 +1210,34 @@
     "year": 1964,
     "imdb_id": "tt0058085",
     "imdb_rating": 6.9,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["decline", "empire", "Marcus Aurelius"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "decline",
+      "empire",
+      "Marcus Aurelius"
+    ],
     "timeline": "ancient",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOGE0OWY5M2MtY2MwYy00NTcwLWI0OTgtMGMwOGRmY2ZhMjNkXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0058085&apikey=trilogy&h=300",
     "description": "The story of the last years of the Roman Empire before it finally falls apart.",
-    "similar_movies": [1, 34, 29, 24],
-    "collections": ["ancient_rome", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      1,
+      34,
+      29,
+      24
+    ],
+    "collections": [
+      "ancient_rome",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 36,
@@ -636,16 +1246,33 @@
     "year": 1994,
     "imdb_id": "tt0110148",
     "imdb_rating": 7.5,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["immortality", "guilt", "dark romance"],
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "immortality",
+      "guilt",
+      "dark romance"
+    ],
     "timeline": "19th_century",
     "tone": "horror",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYzJiOTVkMTQtNmNjMS00ZGZkLTk3OWYtNjUxZGRmYTVlNzVkXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0110148&apikey=trilogy&h=300",
     "description": "A vampire tells his epic life story: love, betrayal, loneliness, and dark longing to a young reporter.",
-    "similar_movies": [37, 41, 44, 39],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      37,
+      41,
+      44,
+      39
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 37,
@@ -654,16 +1281,33 @@
     "year": 1992,
     "imdb_id": "tt0103874",
     "imdb_rating": 7.4,
-    "genres": ["Fantasy", "Horror", "Romance"],
-    "themes": ["Dracula", "love", "gothic"],
+    "genres": [
+      "Fantasy",
+      "Horror",
+      "Romance"
+    ],
+    "themes": [
+      "Dracula",
+      "love",
+      "gothic"
+    ],
     "timeline": "19th_century",
     "tone": "horror",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZGEwNzgwNDgtMjMwMy00ZjhmLThjODktMzgxNWQxMTZiM2E2XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0103874&apikey=trilogy&h=300",
     "description": "The ancient vampire Count Dracula comes to England to find the reincarnation of his dead wife Elisabeta.",
-    "similar_movies": [36, 49, 50, 47],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      36,
+      49,
+      50,
+      47
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 38,
@@ -672,16 +1316,33 @@
     "year": 1998,
     "imdb_id": "tt0120611",
     "imdb_rating": 7.1,
-    "genres": ["Action", "Horror", "Sci-Fi"],
-    "themes": ["half-vampire", "hunter", "underworld"],
+    "genres": [
+      "Action",
+      "Horror",
+      "Sci-Fi"
+    ],
+    "themes": [
+      "half-vampire",
+      "hunter",
+      "underworld"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTk2NDNjZWQtMGY0Mi00YTY2LWE2M2ItMDg3MDkzZjM3ZmI1XkEyXkFqcGdeQXVyNTI4MjkwNjA@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0120611&apikey=trilogy&h=300",
     "description": "A half-vampire, half-mortal man becomes a protector of the mortal race, while slaying evil vampires.",
-    "similar_movies": [48, 98, 39, 45],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      48,
+      98,
+      39,
+      45
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 39,
@@ -690,16 +1351,32 @@
     "year": 1987,
     "imdb_id": "tt0093437",
     "imdb_rating": 7.3,
-    "genres": ["Comedy", "Horror"],
-    "themes": ["teenage vampires", "surf", "80s"],
+    "genres": [
+      "Comedy",
+      "Horror"
+    ],
+    "themes": [
+      "teenage vampires",
+      "surf",
+      "80s"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYjMzMmM1ZDMtMGY5My00ZjZkLTg2OGEtNWIxMWViNGEyNmVmXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0093437&apikey=trilogy&h=300",
     "description": "After moving to a new town, two brothers discover that the area is infested with vampires.",
-    "similar_movies": [42, 38, 40, 36],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      42,
+      38,
+      40,
+      36
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 40,
@@ -708,16 +1385,33 @@
     "year": 2008,
     "imdb_id": "tt1099212",
     "imdb_rating": 5.2,
-    "genres": ["Drama", "Fantasy", "Romance"],
-    "themes": ["vampire romance", "forbidden love", "high school"],
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "themes": [
+      "vampire romance",
+      "forbidden love",
+      "high school"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ2NzE1MTAxN15BMl5BanBnXkFtZTcwMzE5NTI3MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1099212&apikey=trilogy&h=300",
     "description": "A teenage girl risks everything when she falls in love with a vampire.",
-    "similar_movies": [41, 36, 39, 50],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      41,
+      36,
+      39,
+      50
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 41,
@@ -725,17 +1419,34 @@
     "title_ge": "გაუშვი სწორი",
     "year": 2008,
     "imdb_id": "tt1139797",
-    "imdb_rating": 8.0,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["childhood", "friendship", "isolation"],
+    "imdb_rating": 8,
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "childhood",
+      "friendship",
+      "isolation"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ1MjI4OTcxMV5BMl5BanBnXkFtZTcwNTI2NTc3MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1139797&apikey=trilogy&h=300",
     "description": "Oskar, a bullied 12-year-old, finds love and revenge through Eli, a beautiful but peculiar neighbor who is a vampire.",
-    "similar_movies": [36, 44, 46, 42],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      36,
+      44,
+      46,
+      42
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 42,
@@ -744,16 +1455,33 @@
     "year": 1987,
     "imdb_id": "tt0093605",
     "imdb_rating": 7.3,
-    "genres": ["Horror", "Romance", "Thriller"],
-    "themes": ["nomadic vampires", "western", "love"],
+    "genres": [
+      "Horror",
+      "Romance",
+      "Thriller"
+    ],
+    "themes": [
+      "nomadic vampires",
+      "western",
+      "love"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZjE5OGZkOGQtMGZmYS00MmQxLThiMDYtZjc1ZmY1YTVkMzZmXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0093605&apikey=trilogy&h=300",
     "description": "A small-town farmer's boy meets a beautiful drifter who turns out to be part of a traveling group of vampires.",
-    "similar_movies": [39, 41, 36, 44],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      39,
+      41,
+      36,
+      44
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 43,
@@ -762,16 +1490,33 @@
     "year": 2014,
     "imdb_id": "tt3416742",
     "imdb_rating": 7.7,
-    "genres": ["Comedy", "Fantasy", "Horror"],
-    "themes": ["mockumentary", "flatmates", "modern vampire life"],
+    "genres": [
+      "Comedy",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "mockumentary",
+      "flatmates",
+      "modern vampire life"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjA2NjkxNDg3M15BMl5BanBnXkFtZTgwMzk1MDUzMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt3416742&apikey=trilogy&h=300",
     "description": "Viago, Deacon, and Vladislav are vampires who are just trying to get by in modern society. A mockumentary.",
-    "similar_movies": [44, 39, 47, 36],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      44,
+      39,
+      47,
+      36
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 44,
@@ -780,16 +1525,33 @@
     "year": 2013,
     "imdb_id": "tt1714915",
     "imdb_rating": 7.2,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["art", "immortality", "culture"],
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "art",
+      "immortality",
+      "culture"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ1NTY5MjEzNl5BMl5BanBnXkFtZTgwMTU4MTM2MDE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1714915&apikey=trilogy&h=300",
     "description": "A depressed musician reunites with his lover, though their romance and immortality are soon threatened by her uncontrollable younger sister.",
-    "similar_movies": [36, 41, 43, 46],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      36,
+      41,
+      43,
+      46
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 45,
@@ -798,16 +1560,34 @@
     "year": 2007,
     "imdb_id": "tt0389722",
     "imdb_rating": 6.6,
-    "genres": ["Action", "Horror", "Thriller"],
-    "themes": ["Alaska", "darkness", "vampire attack"],
+    "genres": [
+      "Action",
+      "Horror",
+      "Thriller"
+    ],
+    "themes": [
+      "Alaska",
+      "darkness",
+      "vampire attack"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODI3MDM1MjYtNjM2NS00NGY0LWE2MzAtYmI0ZWY3NzM5ZGFkXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0389722&apikey=trilogy&h=300",
     "description": "After an Alaskan town is plunged into darkness for a month, it is attacked by a bloodthirsty gang of vampires.",
-    "similar_movies": [47, 41, 38, 42],
-    "collections": ["vampires", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      47,
+      41,
+      38,
+      42
+    ],
+    "collections": [
+      "vampires",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 46,
@@ -816,16 +1596,33 @@
     "year": 2014,
     "imdb_id": "tt2326554",
     "imdb_rating": 7.1,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["Iranian", "feminist", "chador vampire"],
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "Iranian",
+      "feminist",
+      "chador vampire"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTg3MTY0MDA0N15BMl5BanBnXkFtZTgwMTM4MDkyMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2326554&apikey=trilogy&h=300",
     "description": "In the Iranian ghost-town Bad City, a place that reeks of death and loneliness, the townspeople are unaware they are being stalked by a lonesome vampire.",
-    "similar_movies": [41, 44, 43, 42],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      41,
+      44,
+      43,
+      42
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 47,
@@ -833,17 +1630,34 @@
     "title_ge": "ვამპირის ჩრდილი",
     "year": 2000,
     "imdb_id": "tt0189998",
-    "imdb_rating": 7.0,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["filmmaking", "Murnau", "Nosferatu"],
+    "imdb_rating": 7,
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "filmmaking",
+      "Murnau",
+      "Nosferatu"
+    ],
     "timeline": "19th_century",
     "tone": "horror",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMGUwOWIzNTItNzI1ZC00MGRiLTkzZWItNGFlYmZiYmEzOGY5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0189998&apikey=trilogy&h=300",
     "description": "The making of Nosferatu is disrupted when the star of the film turns out to be an actual vampire.",
-    "similar_movies": [49, 37, 36, 43],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      49,
+      37,
+      36,
+      43
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 48,
@@ -851,17 +1665,34 @@
     "title_ge": "მიწისქვეშა სამყარო",
     "year": 2003,
     "imdb_id": "tt0290334",
-    "imdb_rating": 7.0,
-    "genres": ["Action", "Fantasy", "Thriller"],
-    "themes": ["vampires vs werewolves", "war", "forbidden love"],
+    "imdb_rating": 7,
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Thriller"
+    ],
+    "themes": [
+      "vampires vs werewolves",
+      "war",
+      "forbidden love"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZWZiZmJiOGUtMjE2ZC00OGI4LWIxMmMtNGZjNTQ2OGQ1NDZiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0290334&apikey=trilogy&h=300",
     "description": "Selene, a vampire warrior, is entrenched in a war between the vampire and werewolf races. Although she is aligned with the vampires, she falls in love with a human.",
-    "similar_movies": [38, 39, 98, 45],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      38,
+      39,
+      98,
+      45
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 49,
@@ -870,16 +1701,32 @@
     "year": 1922,
     "imdb_id": "tt0013442",
     "imdb_rating": 7.9,
-    "genres": ["Fantasy", "Horror"],
-    "themes": ["plague", "shadow", "original vampire"],
+    "genres": [
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "plague",
+      "shadow",
+      "original vampire"
+    ],
     "timeline": "19th_century",
     "tone": "horror",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BM2FlNDNiZWYtMmU4ZS00NDA5LTg0NzItZjE1YzliNWJkNWMxXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0013442&apikey=trilogy&h=300",
     "description": "Vampire Count Orlok expresses interest in a new residence and real estate agent Hutter's wife. A landmark of German Expressionism.",
-    "similar_movies": [47, 37, 36, 42],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      47,
+      37,
+      36,
+      42
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 50,
@@ -888,16 +1735,34 @@
     "year": 2014,
     "imdb_id": "tt2091116",
     "imdb_rating": 6.2,
-    "genres": ["Action", "Drama", "Fantasy"],
-    "themes": ["origin story", "Vlad", "sacrifice"],
+    "genres": [
+      "Action",
+      "Drama",
+      "Fantasy"
+    ],
+    "themes": [
+      "origin story",
+      "Vlad",
+      "sacrifice"
+    ],
     "timeline": "medieval",
     "tone": "serious",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQyMDM0NTQ3Nl5BMl5BanBnXkFtZTgwMDM5MDQ4MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2091116&apikey=trilogy&h=300",
     "description": "The story of how Vlad the Impaler became Dracula, trading his soul for the power to protect his kingdom.",
-    "similar_movies": [37, 49, 26, 7],
-    "collections": ["vampires", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      37,
+      49,
+      26,
+      7
+    ],
+    "collections": [
+      "vampires",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 51,
@@ -906,16 +1771,33 @@
     "year": 2000,
     "imdb_id": "tt0162222",
     "imdb_rating": 7.8,
-    "genres": ["Adventure", "Drama", "Romance"],
-    "themes": ["isolation", "willpower", "time"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "isolation",
+      "willpower",
+      "time"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BN2YyZjQ0NTEtNzU5MS00NGZmLWI3ZDQtY2I2ZjhlNzgzZWY5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0162222&apikey=trilogy&h=300",
     "description": "A FedEx employee is stranded on a deserted island after his plane crashes into the Pacific Ocean.",
-    "similar_movies": [61, 56, 62, 52],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      61,
+      56,
+      62,
+      52
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 52,
@@ -923,17 +1805,34 @@
     "title_ge": "მარსიელი",
     "year": 2015,
     "imdb_id": "tt3659388",
-    "imdb_rating": 8.0,
-    "genres": ["Adventure", "Drama", "Sci-Fi"],
-    "themes": ["space", "science", "ingenuity"],
+    "imdb_rating": 8,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Sci-Fi"
+    ],
+    "themes": [
+      "space",
+      "science",
+      "ingenuity"
+    ],
     "timeline": "future",
     "tone": "light",
     "setting": "space",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTc2MTQ3MDA1Nl5BMl5BanBnXkFtZTgwODA3OTI4NjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt3659388&apikey=trilogy&h=300",
     "description": "An astronaut becomes stranded on Mars after his team assume him dead, and must rely on his ingenuity to find a way to signal that he is alive.",
-    "similar_movies": [56, 51, 94, 95],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      56,
+      51,
+      94,
+      95
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 53,
@@ -942,16 +1841,33 @@
     "year": 2010,
     "imdb_id": "tt1542344",
     "imdb_rating": 7.6,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["canyoneering", "trapped", "self-rescue"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "canyoneering",
+      "trapped",
+      "self-rescue"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODk5NzQ1MzM4OV5BMl5BanBnXkFtZTcwNzM0MDYyNA@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1542344&apikey=trilogy&h=300",
     "description": "An adventurous mountain climber becomes trapped under a boulder while canyoneering alone and resorts to desperate measures in order to survive.",
-    "similar_movies": [51, 61, 58, 55],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      51,
+      61,
+      58,
+      55
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 54,
@@ -960,16 +1876,34 @@
     "year": 2012,
     "imdb_id": "tt0454876",
     "imdb_rating": 7.9,
-    "genres": ["Adventure", "Drama", "Fantasy"],
-    "themes": ["faith", "ocean", "tiger"],
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Fantasy"
+    ],
+    "themes": [
+      "faith",
+      "ocean",
+      "tiger"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjIxOTYyMzIyNV5BMl5BanBnXkFtZTcwMDMzNDYxOA@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0454876&apikey=trilogy&h=300",
     "description": "A young man who survives a disaster at sea is hurtled into an epic journey of adventure and discovery, while marooned on a lifeboat with a fearsome Bengal tiger.",
-    "similar_movies": [51, 62, 60, 55],
-    "collections": ["survival", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      51,
+      62,
+      60,
+      55
+    ],
+    "collections": [
+      "survival",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 55,
@@ -977,17 +1911,34 @@
     "title_ge": "დაბრუნებული",
     "year": 2015,
     "imdb_id": "tt1663202",
-    "imdb_rating": 8.0,
-    "genres": ["Adventure", "Drama", "Thriller"],
-    "themes": ["revenge", "wilderness", "bear attack"],
+    "imdb_rating": 8,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Thriller"
+    ],
+    "themes": [
+      "revenge",
+      "wilderness",
+      "bear attack"
+    ],
     "timeline": "19th_century",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMDE5OWViZWEtYzYwZi00Y2I5LWIwZWQtNmI0MWRkNjdhOGMzXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1663202&apikey=trilogy&h=300",
     "description": "A frontiersman on a fur trading expedition is brutally attacked by a bear and left for dead by members of his own hunting team.",
-    "similar_movies": [57, 58, 53, 51],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      57,
+      58,
+      53,
+      51
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 56,
@@ -996,16 +1947,33 @@
     "year": 2013,
     "imdb_id": "tt1454468",
     "imdb_rating": 7.7,
-    "genres": ["Drama", "Sci-Fi", "Thriller"],
-    "themes": ["space", "debris", "lone survivor"],
+    "genres": [
+      "Drama",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "themes": [
+      "space",
+      "debris",
+      "lone survivor"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "space",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNjE5MzYwMzYxMF5BMl5BanBnXkFtZTcwOTU4NTc4OQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1454468&apikey=trilogy&h=300",
     "description": "Two astronauts work together to survive after an accident leaves them stranded in space.",
-    "similar_movies": [52, 51, 61, 94],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      52,
+      51,
+      61,
+      94
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 57,
@@ -1014,16 +1982,33 @@
     "year": 1993,
     "imdb_id": "tt0106246",
     "imdb_rating": 7.5,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["Andes", "plane crash", "extreme measures"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Andes",
+      "plane crash",
+      "extreme measures"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNDkzOGViN2ItZTNhMS00MTExLWEyNGMtNWZlZGM4Zjg5OWU3XkEyXkFqcGdeQXVyNTI4MjkwNjA@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0106246&apikey=trilogy&h=300",
     "description": "A Uruguayan rugby team stranded in the Andes mountains after a plane crash resort to extreme measures to stay alive.",
-    "similar_movies": [55, 51, 53, 59],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      55,
+      51,
+      53,
+      59
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 58,
@@ -1032,16 +2017,33 @@
     "year": 2011,
     "imdb_id": "tt1601917",
     "imdb_rating": 6.8,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["wolves", "Alaska", "group survival"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "wolves",
+      "Alaska",
+      "group survival"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ2OTcwNDU0Nl5BMl5BanBnXkFtZTcwNTQ2NTM3Ng@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1601917&apikey=trilogy&h=300",
     "description": "After a plane crash strands men in the Alaskan wilderness, they are hunted by a pack of wolves.",
-    "similar_movies": [51, 57, 55, 61],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      51,
+      57,
+      55,
+      61
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 59,
@@ -1050,16 +2052,33 @@
     "year": 2015,
     "imdb_id": "tt2719848",
     "imdb_rating": 7.1,
-    "genres": ["Action", "Adventure", "Biography"],
-    "themes": ["mountaineering", "blizzard", "human limits"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Biography"
+    ],
+    "themes": [
+      "mountaineering",
+      "blizzard",
+      "human limits"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjE0OTM0NTM0M15BMl5BanBnXkFtZTgwMjI1ODE5NTE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2719848&apikey=trilogy&h=300",
     "description": "The story of the 1996 Mount Everest disaster, in which a severe storm strikes two expedition teams during their descent from the mountain.",
-    "similar_movies": [57, 58, 53, 55],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      57,
+      58,
+      53,
+      55
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 60,
@@ -1068,16 +2087,34 @@
     "year": 2007,
     "imdb_id": "tt0758758",
     "imdb_rating": 8.1,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["freedom", "nature", "solitude"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "freedom",
+      "nature",
+      "solitude"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTAwNDYxNDg3OTZeQTJeQWpwZ15BbWU2MDM5NTU3OQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0758758&apikey=trilogy&h=300",
     "description": "After graduating from Emory University, top student Christopher McCandless abandons his possessions, gave his savings to charity and hitchhiked to Alaska to live in the wilderness.",
-    "similar_movies": [81, 80, 55, 65],
-    "collections": ["survival", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      81,
+      80,
+      55,
+      65
+    ],
+    "collections": [
+      "survival",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 61,
@@ -1086,16 +2123,33 @@
     "year": 2013,
     "imdb_id": "tt2017038",
     "imdb_rating": 6.9,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["solo sailing", "ocean", "silent film"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "solo sailing",
+      "ocean",
+      "silent film"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTkwNDQ3NDkzNV5BMl5BanBnXkFtZTgwMTIzMTAyMDE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2017038&apikey=trilogy&h=300",
     "description": "A man is alone in the Indian Ocean after his sailboat sinks and must use his wits and sailing skills to survive.",
-    "similar_movies": [51, 62, 56, 54],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      51,
+      62,
+      56,
+      54
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 62,
@@ -1104,16 +2158,34 @@
     "year": 2018,
     "imdb_id": "tt5779228",
     "imdb_rating": 6.6,
-    "genres": ["Action", "Adventure", "Biography"],
-    "themes": ["hurricane", "sailing", "survival"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Biography"
+    ],
+    "themes": [
+      "hurricane",
+      "sailing",
+      "survival"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjMwNzk5NDkyNl5BMl5BanBnXkFtZTgwMjAxOTU4NTM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt5779228&apikey=trilogy&h=300",
     "description": "Based on the true story of two sailors who set out to sail from Tahiti to San Diego, only to be caught in one of the most catastrophic hurricanes in recorded history.",
-    "similar_movies": [61, 51, 54, 58],
-    "collections": ["survival", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      61,
+      51,
+      54,
+      58
+    ],
+    "collections": [
+      "survival",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 63,
@@ -1122,16 +2194,33 @@
     "year": 2009,
     "imdb_id": "tt0898367",
     "imdb_rating": 7.3,
-    "genres": ["Drama", "Sci-Fi", "Thriller"],
-    "themes": ["post-apocalypse", "fatherhood", "hope"],
+    "genres": [
+      "Drama",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "themes": [
+      "post-apocalypse",
+      "fatherhood",
+      "hope"
+    ],
     "timeline": "future",
     "tone": "serious",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYzgxOTQ4OTctMTM1Ni00NjFkLTgwMjItZmFhYzZiYTQwYmMwXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0898367&apikey=trilogy&h=300",
     "description": "A post-apocalyptic tale of a man and his son trying to survive by any means possible.",
-    "similar_movies": [64, 94, 95, 55],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      64,
+      94,
+      95,
+      55
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 64,
@@ -1140,16 +2229,34 @@
     "year": 2015,
     "imdb_id": "tt1392190",
     "imdb_rating": 8.1,
-    "genres": ["Action", "Adventure", "Sci-Fi"],
-    "themes": ["post-apocalypse", "chase", "tyranny"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "themes": [
+      "post-apocalypse",
+      "chase",
+      "tyranny"
+    ],
     "timeline": "future",
     "tone": "serious",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BN2EwM2I5OWMtMGQyMi00Zjg1LWJkNTctZTdjYTA4OGUwZjMyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1392190&apikey=trilogy&h=300",
     "description": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search of her homeland with the aid of a group of female prisoners, a psychotic worshipper, and a drifter.",
-    "similar_movies": [63, 95, 93, 55],
-    "collections": ["survival", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      63,
+      95,
+      93,
+      55
+    ],
+    "collections": [
+      "survival",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 65,
@@ -1157,17 +2264,35 @@
     "title_ge": "პლაჟი",
     "year": 2000,
     "imdb_id": "tt0163977",
-    "imdb_rating": 7.0,
-    "genres": ["Adventure", "Drama", "Thriller"],
-    "themes": ["paradise", "community", "disillusionment"],
+    "imdb_rating": 7,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Thriller"
+    ],
+    "themes": [
+      "paradise",
+      "community",
+      "disillusionment"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTkzNTkxMTMtZmFkZS00OGY1LTlhM2ItNjkwNTE4NTc5MTkzXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0163977&apikey=trilogy&h=300",
     "description": "Twenty-something Richard travels to Thailand and finds himself in possession of a strange map. Rumors of a legendary beach lead him and his new friends on an adventure.",
-    "similar_movies": [80, 60, 54, 79],
-    "collections": ["survival", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      80,
+      60,
+      54,
+      79
+    ],
+    "collections": [
+      "survival",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 66,
@@ -1176,16 +2301,31 @@
     "year": 1978,
     "imdb_id": "tt0077975",
     "imdb_rating": 7.5,
-    "genres": ["Comedy"],
-    "themes": ["frat", "rebellion", "pranks"],
+    "genres": [
+      "Comedy"
+    ],
+    "themes": [
+      "frat",
+      "rebellion",
+      "pranks"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjM5MjcyNjk2NF5BMl5BanBnXkFtZTgwODQ2NzA4MTE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0077975&apikey=trilogy&h=300",
     "description": "At a 1962 college, Dean Wormer is determined to expel the Delta fraternity, but the fraternity fights back with a wild toga party.",
-    "similar_movies": [72, 73, 75, 77],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      72,
+      73,
+      75,
+      77
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 67,
@@ -1194,16 +2334,32 @@
     "year": 2010,
     "imdb_id": "tt1285016",
     "imdb_rating": 7.8,
-    "genres": ["Biography", "Drama"],
-    "themes": ["Harvard", "Facebook", "betrayal"],
+    "genres": [
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Harvard",
+      "Facebook",
+      "betrayal"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0MjhhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1285016&apikey=trilogy&h=300",
     "description": "As Harvard student Mark Zuckerberg creates the social networking site that would become known as Facebook, he is sued by the twins who claimed he stole their idea.",
-    "similar_movies": [68, 70, 76, 75],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      68,
+      70,
+      76,
+      75
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 68,
@@ -1212,16 +2368,32 @@
     "year": 1997,
     "imdb_id": "tt0119217",
     "imdb_rating": 8.3,
-    "genres": ["Drama", "Romance"],
-    "themes": ["genius", "therapy", "self-worth"],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "genius",
+      "therapy",
+      "self-worth"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTI0MzcxMTYtZDVkMy00NjY1LTgyMTYtZmUxN2M3NmQ1NWI1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0119217&apikey=trilogy&h=300",
     "description": "Will Hunting, a janitor at M.I.T., has a gift for mathematics but needs help from a psychologist to find direction in his life.",
-    "similar_movies": [70, 67, 77, 74],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      70,
+      67,
+      77,
+      74
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 69,
@@ -1230,16 +2402,32 @@
     "year": 2001,
     "imdb_id": "tt0250494",
     "imdb_rating": 6.9,
-    "genres": ["Comedy", "Romance"],
-    "themes": ["law school", "underestimation", "girl power"],
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "themes": [
+      "law school",
+      "underestimation",
+      "girl power"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZDQ4Mzg1YWUtNTUwZS00MjY2LWExM2MtNzZkYWIwYTJmZmE4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0250494&apikey=trilogy&h=300",
     "description": "Elle Woods, a fashionable sorority queen, is dumped by her boyfriend. She decides to follow him to law school, while trying to prove herself.",
-    "similar_movies": [74, 71, 75, 76],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      74,
+      71,
+      75,
+      76
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 70,
@@ -1248,16 +2436,32 @@
     "year": 2001,
     "imdb_id": "tt0268978",
     "imdb_rating": 8.2,
-    "genres": ["Biography", "Drama"],
-    "themes": ["schizophrenia", "genius", "Nobel Prize"],
+    "genres": [
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "schizophrenia",
+      "genius",
+      "Nobel Prize"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMzcwYWFkYzktZjAzNC00OGY1LWI4YTgtNzc5MzVjMDVmNjY0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0268978&apikey=trilogy&h=300",
     "description": "After John Nash, a brilliant but asocial mathematician, accepts secret work in cryptography, his life takes a turn for the nightmarish.",
-    "similar_movies": [67, 68, 74, 77],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      67,
+      68,
+      74,
+      77
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 71,
@@ -1266,16 +2470,33 @@
     "year": 2012,
     "imdb_id": "tt1981677",
     "imdb_rating": 7.2,
-    "genres": ["Comedy", "Music", "Romance"],
-    "themes": ["acapella", "competition", "finding yourself"],
+    "genres": [
+      "Comedy",
+      "Music",
+      "Romance"
+    ],
+    "themes": [
+      "acapella",
+      "competition",
+      "finding yourself"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTYxMTQxNzMwMV5BMl5BanBnXkFtZTcwNzI3NDkwOA@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1981677&apikey=trilogy&h=300",
     "description": "Beca, a freshman at Barden University, is cajoled into joining an all-girls singing group called the Bellas. The group have a rivalry with a male group.",
-    "similar_movies": [69, 66, 72, 77],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      69,
+      66,
+      72,
+      77
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 72,
@@ -1283,17 +2504,32 @@
     "title_ge": "ძველი სკოლა",
     "year": 2003,
     "imdb_id": "tt0302886",
-    "imdb_rating": 7.0,
-    "genres": ["Comedy"],
-    "themes": ["fraternity", "middle-age crisis", "friendship"],
+    "imdb_rating": 7,
+    "genres": [
+      "Comedy"
+    ],
+    "themes": [
+      "fraternity",
+      "middle-age crisis",
+      "friendship"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTc4NDE1MTA5N15BMl5BanBnXkFtZTYwNjk1MjA5._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0302886&apikey=trilogy&h=300",
     "description": "Three friends try to recapture their college glory days by opening a fraternity near their alma mater.",
-    "similar_movies": [66, 73, 75, 71],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      66,
+      73,
+      75,
+      71
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 73,
@@ -1301,17 +2537,34 @@
     "title_ge": "22 ჯამპ სტრიტი",
     "year": 2014,
     "imdb_id": "tt2294449",
-    "imdb_rating": 7.0,
-    "genres": ["Action", "Comedy", "Crime"],
-    "themes": ["undercover", "college", "bromance"],
+    "imdb_rating": 7,
+    "genres": [
+      "Action",
+      "Comedy",
+      "Crime"
+    ],
+    "themes": [
+      "undercover",
+      "college",
+      "bromance"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOTE1NTY1OTU4OV5BMl5BanBnXkFtZTgwMDkwMzExMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2294449&apikey=trilogy&h=300",
     "description": "After making their way through high school twice, big changes are in store for officers Schmidt and Jenko when they go deep undercover at a college.",
-    "similar_movies": [66, 72, 75, 76],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      66,
+      72,
+      75,
+      76
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 74,
@@ -1320,16 +2573,32 @@
     "year": 2003,
     "imdb_id": "tt0304415",
     "imdb_rating": 6.5,
-    "genres": ["Drama", "Romance"],
-    "themes": ["1950s", "women's education", "conformity"],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "1950s",
+      "women's education",
+      "conformity"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTM1MDQ0MTcxOF5BMl5BanBnXkFtZTYwMjcxMDk3._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0304415&apikey=trilogy&h=300",
     "description": "A free-thinking art professor inspires a group of conservative 1950s Wellesley girls to question their traditional social roles.",
-    "similar_movies": [69, 70, 68, 77],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      69,
+      70,
+      68,
+      77
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 75,
@@ -1338,16 +2607,31 @@
     "year": 2006,
     "imdb_id": "tt0437086",
     "imdb_rating": 6.5,
-    "genres": ["Comedy"],
-    "themes": ["fake college", "outsiders", "alternative education"],
+    "genres": [
+      "Comedy"
+    ],
+    "themes": [
+      "fake college",
+      "outsiders",
+      "alternative education"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZDM1NzQwZjMtN2Y3ZC00MTRkLThmZmEtYzNlMDIyZjM2ZmM1XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0437086&apikey=trilogy&h=300",
     "description": "A high school slacker who is rejected by every college he applies to opts to create his own institution of higher learning.",
-    "similar_movies": [72, 73, 66, 71],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      72,
+      73,
+      66,
+      71
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 76,
@@ -1356,16 +2640,31 @@
     "year": 2014,
     "imdb_id": "tt2388769",
     "imdb_rating": 6.4,
-    "genres": ["Drama"],
-    "themes": ["Oxford", "elitism", "privilege"],
+    "genres": [
+      "Drama"
+    ],
+    "themes": [
+      "Oxford",
+      "elitism",
+      "privilege"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjIwNjY5OTI0OV5BMl5BanBnXkFtZTgwMjQ5NjIwMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2388769&apikey=trilogy&h=300",
     "description": "Adapted from the play Posh, The Riot Club focuses on two first-year Oxford students who are invited to join a notorious dining club.",
-    "similar_movies": [67, 70, 68, 74],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      67,
+      70,
+      68,
+      74
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 77,
@@ -1374,16 +2673,33 @@
     "year": 1993,
     "imdb_id": "tt0108002",
     "imdb_rating": 7.5,
-    "genres": ["Biography", "Drama", "Sport"],
-    "themes": ["perseverance", "Notre Dame", "football"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "Sport"
+    ],
+    "themes": [
+      "perseverance",
+      "Notre Dame",
+      "football"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYzQ2OTk4ZTMtMDgwYS00OGEyLWE1NDAtYTE5ZTBlN2MxNjc4XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0108002&apikey=trilogy&h=300",
     "description": "A young man raised in a steel-making town dreams of playing football at Notre Dame, though as a poor student he has no obvious qualifications to do so.",
-    "similar_movies": [68, 70, 74, 67],
-    "collections": ["college_life"],
-    "sources": ["manual"]
+    "similar_movies": [
+      68,
+      70,
+      74,
+      67
+    ],
+    "collections": [
+      "college_life"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 78,
@@ -1392,16 +2708,33 @@
     "year": 2013,
     "imdb_id": "tt0359950",
     "imdb_rating": 7.3,
-    "genres": ["Adventure", "Comedy", "Drama"],
-    "themes": ["daydreaming", "self-discovery", "Iceland"],
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Drama"
+    ],
+    "themes": [
+      "daydreaming",
+      "self-discovery",
+      "Iceland"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODYwNDYxNDk1Nl5BMl5BanBnXkFtZTgwOTc0MTk0MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0359950&apikey=trilogy&h=300",
     "description": "When his job along with that of his co-worker are threatened, Walter takes action in the real world embarking on a global journey that turns into an adventure more extraordinary than anything he could have ever imagined.",
-    "similar_movies": [79, 83, 82, 86],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      79,
+      83,
+      82,
+      86
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 79,
@@ -1410,16 +2743,33 @@
     "year": 2010,
     "imdb_id": "tt1212958",
     "imdb_rating": 5.8,
-    "genres": ["Biography", "Drama", "Romance"],
-    "themes": ["self-discovery", "Italy", "Bali"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "self-discovery",
+      "Italy",
+      "Bali"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTMxNDU0Mjk0OV5BMl5BanBnXkFtZTcwNjgyMjEzMw@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1212958&apikey=trilogy&h=300",
     "description": "A married woman realizes how unhappy her marriage really is, and after a painful divorce, she takes a year off to travel to Italy, India and Bali, finding herself along the way.",
-    "similar_movies": [78, 82, 83, 84],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      78,
+      82,
+      83,
+      84
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 80,
@@ -1428,16 +2778,33 @@
     "year": 2004,
     "imdb_id": "tt0318462",
     "imdb_rating": 7.8,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["Che Guevara", "South America", "social awakening"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Che Guevara",
+      "South America",
+      "social awakening"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjA4NjA5MTEzMl5BMl5BanBnXkFtZTcwNzU1MTIyMQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0318462&apikey=trilogy&h=300",
     "description": "The story of the trip across South America that transformed Ernesto Guevara into the political icon and revolutionary known as Che Guevara.",
-    "similar_movies": [60, 84, 87, 86],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      60,
+      84,
+      87,
+      86
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 81,
@@ -1446,16 +2813,34 @@
     "year": 2014,
     "imdb_id": "tt2305051",
     "imdb_rating": 7.1,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["Pacific Crest Trail", "grief", "self-reliance"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Pacific Crest Trail",
+      "grief",
+      "self-reliance"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjA1NTA4Njk3NV5BMl5BanBnXkFtZTgwMjQxNzU2MjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt2305051&apikey=trilogy&h=300",
     "description": "A chronicle of one woman's 1,100-mile solo hike undertaken as a way to recover from a recent personal tragedy.",
-    "similar_movies": [60, 87, 80, 53],
-    "collections": ["travel", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      60,
+      87,
+      80,
+      53
+    ],
+    "collections": [
+      "travel",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 82,
@@ -1464,16 +2849,32 @@
     "year": 2003,
     "imdb_id": "tt0335266",
     "imdb_rating": 7.7,
-    "genres": ["Drama", "Romance"],
-    "themes": ["loneliness", "Tokyo", "connection"],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "loneliness",
+      "Tokyo",
+      "connection"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTMxMDA0NjEzNl5BMl5BanBnXkFtZTcwMDE0MDMxMQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0335266&apikey=trilogy&h=300",
     "description": "Two lost souls—a faded American movie star and a neglected newlywed—cross paths in Tokyo. They strike up an unlikely friendship, sharing humor, tenderness, and a bittersweet understanding.",
-    "similar_movies": [83, 79, 85, 84],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      83,
+      79,
+      85,
+      84
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 83,
@@ -1482,16 +2883,33 @@
     "year": 2011,
     "imdb_id": "tt1605783",
     "imdb_rating": 7.7,
-    "genres": ["Comedy", "Fantasy", "Romance"],
-    "themes": ["nostalgia", "1920s", "time travel"],
+    "genres": [
+      "Comedy",
+      "Fantasy",
+      "Romance"
+    ],
+    "themes": [
+      "nostalgia",
+      "1920s",
+      "time travel"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTM4NjY1MDQwMl5BMl5BanBnXkFtZTcwNTI3Mjg3NA@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1605783&apikey=trilogy&h=300",
     "description": "While on a trip to Paris with his fiancée's family, a nostalgic screenwriter finds himself mysteriously going back to the 1920s every day at midnight.",
-    "similar_movies": [82, 85, 84, 78],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      82,
+      85,
+      84,
+      78
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 84,
@@ -1500,16 +2918,32 @@
     "year": 1995,
     "imdb_id": "tt0112471",
     "imdb_rating": 8.1,
-    "genres": ["Drama", "Romance"],
-    "themes": ["Vienna", "spontaneous connection", "conversation"],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "Vienna",
+      "spontaneous connection",
+      "conversation"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BZDdiZTgwNzYtZmVhOS00MjhjLTkzOTQtMjNiODkzNDc4ZTYwXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0112471&apikey=trilogy&h=300",
     "description": "A young man and woman meet on a train in Europe, and it's up to the young woman whether to get off the train with him in Vienna and spend one night with him.",
-    "similar_movies": [88, 82, 83, 85],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      88,
+      82,
+      83,
+      85
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 85,
@@ -1518,16 +2952,33 @@
     "year": 2008,
     "imdb_id": "tt0497465",
     "imdb_rating": 7.1,
-    "genres": ["Comedy", "Drama", "Romance"],
-    "themes": ["Barcelona", "love triangle", "freedom"],
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "Barcelona",
+      "love triangle",
+      "freedom"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTUzNDE2ODc1OF5BMl5BanBnXkFtZTcwOTE1MDE4MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0497465&apikey=trilogy&h=300",
     "description": "Two American women spend a summer in Barcelona, where they meet a flamboyant Spanish artist who falls in love with one of them.",
-    "similar_movies": [83, 82, 84, 79],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      83,
+      82,
+      84,
+      79
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 86,
@@ -1536,16 +2987,33 @@
     "year": 2007,
     "imdb_id": "tt0838232",
     "imdb_rating": 7.1,
-    "genres": ["Adventure", "Comedy", "Drama"],
-    "themes": ["India", "brothers", "train"],
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Drama"
+    ],
+    "themes": [
+      "India",
+      "brothers",
+      "train"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjI4NjU1NzQzNV5BMl5BanBnXkFtZTcwMzMxNzM4MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0838232&apikey=trilogy&h=300",
     "description": "A year after their father's funeral, three brothers travel across India by train in an attempt to bond with each other.",
-    "similar_movies": [78, 80, 82, 87],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      78,
+      80,
+      82,
+      87
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 87,
@@ -1554,16 +3022,34 @@
     "year": 2013,
     "imdb_id": "tt1827137",
     "imdb_rating": 7.3,
-    "genres": ["Adventure", "Biography", "Drama"],
-    "themes": ["Australia", "solo walk", "camel"],
+    "genres": [
+      "Adventure",
+      "Biography",
+      "Drama"
+    ],
+    "themes": [
+      "Australia",
+      "solo walk",
+      "camel"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjIwNzg3MjU2N15BMl5BanBnXkFtZTgwNzQ1NTMwMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1827137&apikey=trilogy&h=300",
     "description": "The story of Robyn Davidson, a young woman who set out to travel 2,700 km across the Australian desert with only her dog and four camels.",
-    "similar_movies": [81, 60, 80, 78],
-    "collections": ["travel", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      81,
+      60,
+      80,
+      78
+    ],
+    "collections": [
+      "travel",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 88,
@@ -1572,16 +3058,32 @@
     "year": 2004,
     "imdb_id": "tt0381681",
     "imdb_rating": 8.1,
-    "genres": ["Drama", "Romance"],
-    "themes": ["Paris", "reunion", "what if"],
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "Paris",
+      "reunion",
+      "what if"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzI1NTE0OTcyNF5BMl5BanBnXkFtZTcwNTk4Mzk0MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0381681&apikey=trilogy&h=300",
     "description": "Nine years after spending one romantic evening together in Vienna, Jesse and Celine meet again in Paris.",
-    "similar_movies": [84, 82, 83, 85],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      84,
+      82,
+      83,
+      85
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 89,
@@ -1590,16 +3092,33 @@
     "year": 2004,
     "imdb_id": "tt0362227",
     "imdb_rating": 7.3,
-    "genres": ["Comedy", "Drama", "Romance"],
-    "themes": ["airport", "stateless", "perseverance"],
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Romance"
+    ],
+    "themes": [
+      "airport",
+      "stateless",
+      "perseverance"
+    ],
     "timeline": "modern",
     "tone": "light",
     "setting": "urban",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjE0NTA3NTM1OV5BMl5BanBnXkFtZTcwNjY0ODE4MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0362227&apikey=trilogy&h=300",
     "description": "An Eastern European tourist's homeland is dissolved while he is in the middle of an airplane flight, leaving him stranded at JFK airport indefinitely.",
-    "similar_movies": [78, 82, 79, 51],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      78,
+      82,
+      79,
+      51
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 90,
@@ -1608,16 +3127,34 @@
     "year": 2014,
     "imdb_id": "tt1809398",
     "imdb_rating": 7.2,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["POW", "endurance", "Zamperini"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "POW",
+      "endurance",
+      "Zamperini"
+    ],
     "timeline": "ww2",
     "tone": "serious",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTkxODk1NTI3MV5BMl5BanBnXkFtZTgwNjE5MTAzMjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1809398&apikey=trilogy&h=300",
     "description": "After a near-fatal plane crash in WWII, Olympian Louis Zamperini spends 47 days in a raft with two other men before Japanese soldiers capture them.",
-    "similar_movies": [14, 21, 22, 57],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      14,
+      21,
+      22,
+      57
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 91,
@@ -1626,16 +3163,34 @@
     "year": 2006,
     "imdb_id": "tt0462504",
     "imdb_rating": 7.3,
-    "genres": ["Action", "Adventure", "Biography"],
-    "themes": ["Vietnam", "POW escape", "jungle"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Biography"
+    ],
+    "themes": [
+      "Vietnam",
+      "POW escape",
+      "jungle"
+    ],
     "timeline": "modern",
     "tone": "serious",
     "setting": "natural",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNjA2NzkyNDUtMjBkZi00OTVhLWE1ZmItMDQzZTg4NjE1OWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0462504&apikey=trilogy&h=300",
     "description": "A US fighter pilot is shot down over Laos during the Vietnam War and must escape from a POW camp in the jungle.",
-    "similar_movies": [22, 17, 55, 58],
-    "collections": ["war", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      22,
+      17,
+      55,
+      58
+    ],
+    "collections": [
+      "war",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 92,
@@ -1644,16 +3199,34 @@
     "year": 2015,
     "imdb_id": "tt3682448",
     "imdb_rating": 7.6,
-    "genres": ["Biography", "Drama", "History"],
-    "themes": ["Cold War", "spy exchange", "Berlin"],
+    "genres": [
+      "Biography",
+      "Drama",
+      "History"
+    ],
+    "themes": [
+      "Cold War",
+      "spy exchange",
+      "Berlin"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjIwMjE1Nzc4NV5BMl5BanBnXkFtZTgwNDk2OTM2NjE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt3682448&apikey=trilogy&h=300",
     "description": "During the Cold War, an American lawyer is recruited to defend an arrested Soviet spy in court, and then, asked by the CIA to negotiate the release of the imprisoned pilot Francis Gary Powers.",
-    "similar_movies": [96, 3, 14, 23],
-    "collections": ["war", "travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      96,
+      3,
+      14,
+      23
+    ],
+    "collections": [
+      "war",
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 93,
@@ -1662,16 +3235,34 @@
     "year": 2006,
     "imdb_id": "tt0472043",
     "imdb_rating": 7.8,
-    "genres": ["Action", "Adventure", "Drama"],
-    "themes": ["Mayan", "sacrifice", "chase"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "themes": [
+      "Mayan",
+      "sacrifice",
+      "chase"
+    ],
     "timeline": "ancient",
     "tone": "thriller",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ3ODU2MjI3OF5BMl5BanBnXkFtZTcwNDk2MDMyMw@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0472043&apikey=trilogy&h=300",
     "description": "A man desperate to return to his family must escape from captivity in the jungle before reaching the Mayan capital city where human sacrifices are performed.",
-    "similar_movies": [64, 55, 7, 1],
-    "collections": ["ancient_rome", "survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      64,
+      55,
+      7,
+      1
+    ],
+    "collections": [
+      "ancient_rome",
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 94,
@@ -1680,16 +3271,33 @@
     "year": 2006,
     "imdb_id": "tt0206634",
     "imdb_rating": 7.9,
-    "genres": ["Drama", "Sci-Fi", "Thriller"],
-    "themes": ["infertility", "dystopia", "hope"],
+    "genres": [
+      "Drama",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "themes": [
+      "infertility",
+      "dystopia",
+      "hope"
+    ],
     "timeline": "future",
     "tone": "serious",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzA5NjM3NjUzNF5BMl5BanBnXkFtZTcwNTM3MTc0MQ@@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0206634&apikey=trilogy&h=300",
     "description": "In 2027, in a chaotic world in which women have become somehow infertile, a former activist agrees to help transport a miraculously pregnant woman to a sanctuary at sea.",
-    "similar_movies": [63, 95, 64, 52],
-    "collections": ["survival"],
-    "sources": ["manual"]
+    "similar_movies": [
+      63,
+      95,
+      64,
+      52
+    ],
+    "collections": [
+      "survival"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 95,
@@ -1698,16 +3306,34 @@
     "year": 2013,
     "imdb_id": "tt1706620",
     "imdb_rating": 7.1,
-    "genres": ["Action", "Drama", "Sci-Fi"],
-    "themes": ["class war", "train", "frozen world"],
+    "genres": [
+      "Action",
+      "Drama",
+      "Sci-Fi"
+    ],
+    "themes": [
+      "class war",
+      "train",
+      "frozen world"
+    ],
     "timeline": "future",
     "tone": "thriller",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjA4NjA1NTUyMV5BMl5BanBnXkFtZTgwMTM5NzA3MDE@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt1706620&apikey=trilogy&h=300",
     "description": "In a future where a failed climate-change experiment kills all life except for lucky few who boarded the Snowpiercer—a train that travels around the globe—a rebellion arises.",
-    "similar_movies": [64, 63, 94, 9],
-    "collections": ["survival", "war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      64,
+      63,
+      94,
+      9
+    ],
+    "collections": [
+      "survival",
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 96,
@@ -1716,16 +3342,33 @@
     "year": 1990,
     "imdb_id": "tt0099810",
     "imdb_rating": 7.6,
-    "genres": ["Action", "Thriller", "War"],
-    "themes": ["submarine", "Cold War", "defection"],
+    "genres": [
+      "Action",
+      "Thriller",
+      "War"
+    ],
+    "themes": [
+      "submarine",
+      "Cold War",
+      "defection"
+    ],
     "timeline": "modern",
     "tone": "thriller",
     "setting": "war",
-    "poster": "https://m.media-amazon.com/images/M/MV5BOGViYjEzNWQtMzQ4My00NzA5LTg0YjctMjEyOWM5N2FiNGViXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0099810&apikey=trilogy&h=300",
     "description": "In November 1984, the Soviet Union's best submarine captain in their newest sub violates orders and heads for the U.S. Coast. Is he trying to defect, or to start a war?",
-    "similar_movies": [11, 23, 92, 9],
-    "collections": ["war"],
-    "sources": ["manual"]
+    "similar_movies": [
+      11,
+      23,
+      92,
+      9
+    ],
+    "collections": [
+      "war"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 97,
@@ -1734,16 +3377,33 @@
     "year": 2002,
     "imdb_id": "tt0264925",
     "imdb_rating": 5.2,
-    "genres": ["Drama", "Fantasy", "Horror"],
-    "themes": ["ancient queen", "rock music", "vampire history"],
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Horror"
+    ],
+    "themes": [
+      "ancient queen",
+      "rock music",
+      "vampire history"
+    ],
     "timeline": "modern",
     "tone": "horror",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNDEwNTAxODExOF5BMl5BanBnXkFtZTYwMzc2NTY3._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0264925&apikey=trilogy&h=300",
     "description": "Lestat de Lioncourt wakes from a long slumber and becomes a famous rock musician, awakening the primal queen of vampires who has a plan to subjugate the human race.",
-    "similar_movies": [36, 48, 50, 37],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      36,
+      48,
+      50,
+      37
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 98,
@@ -1752,16 +3412,33 @@
     "year": 2004,
     "imdb_id": "tt0338526",
     "imdb_rating": 6.1,
-    "genres": ["Action", "Adventure", "Fantasy"],
-    "themes": ["monster hunter", "Dracula", "19th century"],
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "themes": [
+      "monster hunter",
+      "Dracula",
+      "19th century"
+    ],
     "timeline": "19th_century",
     "tone": "thriller",
     "setting": "historical",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNDBhNjk5MDgtYzQyMi00NmEyLWJkMDEtMDNiMWRkZWVhMzQ5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0338526&apikey=trilogy&h=300",
     "description": "The notorious monster hunter is sent to Transylvania to stop Count Dracula, who is using Dr. Frankenstein's research and a werewolf for unknown purposes.",
-    "similar_movies": [37, 38, 49, 50],
-    "collections": ["vampires"],
-    "sources": ["manual"]
+    "similar_movies": [
+      37,
+      38,
+      49,
+      50
+    ],
+    "collections": [
+      "vampires"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 99,
@@ -1770,16 +3447,33 @@
     "year": 2008,
     "imdb_id": "tt0795421",
     "imdb_rating": 6.4,
-    "genres": ["Comedy", "Family", "Musical"],
-    "themes": ["Greece", "wedding", "ABBA"],
+    "genres": [
+      "Comedy",
+      "Family",
+      "Musical"
+    ],
+    "themes": [
+      "Greece",
+      "wedding",
+      "ABBA"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BODgzNGY5NDMtYzJiMC00MWJlLTgwMTItMGNhNTY1NjVjNzgxXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0795421&apikey=trilogy&h=300",
     "description": "The story of a bride-to-be trying to find her birth father told using hit songs by the popular 1970s group ABBA.",
-    "similar_movies": [71, 69, 89, 85],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      71,
+      69,
+      89,
+      85
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   },
   {
     "id": 100,
@@ -1788,15 +3482,32 @@
     "year": 1988,
     "imdb_id": "tt0095556",
     "imdb_rating": 7.6,
-    "genres": ["Action", "Comedy", "Crime"],
-    "themes": ["road trip", "bounty hunter", "odd couple"],
+    "genres": [
+      "Action",
+      "Comedy",
+      "Crime"
+    ],
+    "themes": [
+      "road trip",
+      "bounty hunter",
+      "odd couple"
+    ],
     "timeline": "modern",
     "tone": "comedy",
     "setting": "modern",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYWM4ZjczMWEtZjM3Ni00NDM4LWFhZGEtNjkwMTNlN2IzNThiXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg",
+    "poster": "https://img.omdbapi.com/?i=tt0095556&apikey=trilogy&h=300",
     "description": "A bounty hunter with a mouth must transport a bail jumper from New York to Los Angeles, while the FBI, the Mob, and another bounty hunter are all trying to keep them from reaching their destination.",
-    "similar_movies": [78, 73, 89, 86],
-    "collections": ["travel"],
-    "sources": ["manual"]
+    "similar_movies": [
+      78,
+      73,
+      89,
+      86
+    ],
+    "collections": [
+      "travel"
+    ],
+    "sources": [
+      "manual"
+    ]
   }
 ]
