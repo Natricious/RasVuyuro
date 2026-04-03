@@ -3,6 +3,7 @@ import { THEMATIC_COLLECTIONS } from '../../data/movies';
 import { getMoviesByCollection } from '../../utils/movieUtils';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
+import MovieCard from '../MovieCard/MovieCard';
 import './WizardModal.css';
 
 // ─── Question pool ────────────────────────────────────────────────────────────
@@ -436,54 +437,9 @@ export default function WizardModal({ open, onClose }) {
                   }}>
                     {t.moviesFrom}: {activeCollection.name}
                   </p>
-                  <div style={{
-                    display: 'flex',
-                    gap: '10px',
-                    overflowX: 'auto',
-                    paddingBottom: '6px',
-                    scrollbarWidth: 'none',
-                  }}>
+                  <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '6px', scrollbarWidth: 'none' }}>
                     {activeMovies.map(movie => (
-                      <div key={movie.id} style={{
-                        flexShrink: 0,
-                        width: '100px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '5px',
-                      }}>
-                        <div style={{
-                          width: '100px',
-                          height: '148px',
-                          borderRadius: '8px',
-                          overflow: 'hidden',
-                          background: 'rgba(255,255,255,0.05)',
-                        }}>
-                          <img
-                            src={movie.poster}
-                            alt={movie.title}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                            loading="lazy"
-                          />
-                        </div>
-                        <p style={{
-                          fontSize: '0.6875rem',
-                          fontWeight: 600,
-                          color: 'var(--fg)',
-                          lineHeight: 1.3,
-                          overflow: 'hidden',
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                        }}>
-                          {movie.title}
-                        </p>
-                        <p style={{
-                          fontSize: '0.625rem',
-                          color: 'var(--fg-muted)',
-                        }}>
-                          {movie.year} &nbsp;⭐ {movie.imdb_rating}
-                        </p>
-                      </div>
+                      <MovieCard key={movie.id} movie={movie} width="100px" />
                     ))}
                   </div>
                 </div>

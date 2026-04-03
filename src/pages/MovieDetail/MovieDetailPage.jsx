@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import moviesData from '../../data/movies.json';
 import { useLang } from '../../context/LanguageContext';
+import MovieCard from '../../components/MovieCard/MovieCard';
 
 const ALL_MOVIES = moviesData;
 
@@ -194,33 +195,7 @@ export default function MovieDetailPage() {
               </p>
               <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px', scrollbarWidth: 'none' }}>
                 {similarMovies.map(sm => (
-                  <div
-                    key={sm.id}
-                    onClick={() => navigate(`/movie/${sm.id}`)}
-                    style={{ flexShrink: 0, width: '110px', cursor: 'pointer' }}
-                  >
-                    <div style={{
-                      width: '110px', height: '165px',
-                      borderRadius: '10px', overflow: 'hidden',
-                      background: 'var(--bg-card)',
-                      border: '1px solid rgba(255,255,255,0.07)',
-                      marginBottom: '6px',
-                      transition: 'border-color 0.2s',
-                    }}
-                      onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(232,197,71,0.4)'}
-                      onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'}
-                    >
-                      <img src={sm.poster} alt={sm.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    </div>
-                    <p style={{
-                      fontSize: '0.75rem', fontWeight: 600, color: 'var(--fg)', lineHeight: 1.3,
-                      overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-                      marginBottom: '2px',
-                    }}>
-                      {sm.title}
-                    </p>
-                    <p style={{ fontSize: '0.6875rem', color: 'var(--fg-muted)' }}>⭐ {sm.imdb_rating}</p>
-                  </div>
+                  <MovieCard key={sm.id} movie={sm} width="120px" />
                 ))}
               </div>
             </div>

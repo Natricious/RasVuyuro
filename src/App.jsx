@@ -6,6 +6,8 @@ import Home from './pages/Home/Home';
 import CollectionsPage from './pages/Collections/CollectionsPage';
 import CollectionDetailPage from './pages/Collections/CollectionDetailPage';
 import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
+import WatchedPage from './pages/Watched/WatchedPage';
+import PlannedPage from './pages/Planned/PlannedPage';
 
 function MoviesPage() {
   return (
@@ -50,6 +52,8 @@ export default function App() {
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/collections/:slug" element={<CollectionDetailPage />} />
         <Route path="/movie/:id" element={<MovieDetailPage />} />
+        <Route path="/watched" element={<WatchedPage />} />
+        <Route path="/planned" element={<PlannedPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

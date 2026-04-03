@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useLang } from '../../context/LanguageContext';
+import { useWatched } from '../../hooks/useWatched';
 import { T } from '../../data/translations';
 import './Navbar.css';
 
@@ -10,6 +11,8 @@ const NAV_LINK_KEYS = [
   { to: '/movies', key: 'movies' },
   { to: '/collections', key: 'collections' },
   { to: '/timeline', key: 'timeline' },
+  { to: '/watched', key: 'watched' },
+  { to: '/planned', key: 'planned' },
 ];
 
 export default function Navbar() {
@@ -18,6 +21,7 @@ export default function Navbar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLang } = useLang();
+  const { watchedIds, plannedIds } = useWatched();
   const t = T[lang];
 
   useEffect(() => {
@@ -47,8 +51,35 @@ export default function Navbar() {
                   key={to}
                   to={to}
                   className={`navbar__link ${location.pathname === to ? 'navbar__link--active' : ''}`}
+                  style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                 >
                   {t[key]}
+                  {key === 'watched' && watchedIds.size > 0 && (
+                    <span style={{
+                      background: 'var(--gold)',
+                      color: 'var(--bg)',
+                      borderRadius: '999px',
+                      fontSize: '10px',
+                      fontWeight: 700,
+                      padding: '1px 5px',
+                      lineHeight: 1.4,
+                    }}>
+                      {watchedIds.size}
+                    </span>
+                  )}
+                  {key === 'planned' && plannedIds.size > 0 && (
+                    <span style={{
+                      background: 'rgba(99,102,241,0.9)',
+                      color: '#fff',
+                      borderRadius: '999px',
+                      fontSize: '10px',
+                      fontWeight: 700,
+                      padding: '1px 5px',
+                      lineHeight: 1.4,
+                    }}>
+                      {plannedIds.size}
+                    </span>
+                  )}
                 </Link>
               ))}
             </nav>

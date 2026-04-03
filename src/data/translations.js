@@ -19,7 +19,12 @@ export const T = {
     // Nav
     home: 'მთავარი',
     movies: 'ფილმები',
+    watched: 'ნანახი',
+    planned: 'გეგმა',
     viewAll: 'ყველა ფილმის ნახვა',
+    // Watched page
+    watchedPageTitle: 'ნანახი ფილმები',
+    watchedEmpty: 'ჯერ არცერთი ფილმი არ გაქვს მონიშნული',
     // Wizard answer buttons
     yes: 'კი',
     no: 'არა',
@@ -57,7 +62,12 @@ export const T = {
     // Nav
     home: 'Home',
     movies: 'Movies',
+    watched: 'Watched',
+    planned: 'Planned',
     viewAll: 'Browse all movies',
+    // Watched page
+    watchedPageTitle: 'Watched Movies',
+    watchedEmpty: 'You haven\'t marked any movies as watched yet',
     // Wizard answer buttons
     yes: 'Yes',
     no: 'No',

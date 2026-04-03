@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import COLLECTIONS from '../../data/collections';
 import { getMoviesByCollectionSlug } from '../../utils/movieUtils';
 import { useLang } from '../../context/LanguageContext';
+import MovieCard from '../../components/MovieCard/MovieCard';
 
 export default function CollectionDetailPage() {
   const { slug } = useParams();
@@ -75,40 +76,7 @@ export default function CollectionDetailPage() {
             gap: '20px',
           }}>
             {movies.map(movie => (
-              <div
-                key={movie.id}
-                onClick={() => navigate(`/movie/${movie.id}`)}
-                style={{ display: 'flex', flexDirection: 'column', gap: '8px', cursor: 'pointer' }}
-              >
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '2/3',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  background: 'var(--bg-card)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  transition: 'border-color 0.2s',
-                }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(232,197,71,0.35)'}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
-                >
-                  <img
-                    src={movie.poster}
-                    alt={movie.title}
-                    loading="lazy"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  />
-                </div>
-                <div>
-                  <p style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--fg)', lineHeight: 1.3, marginBottom: '3px',
-                    overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
-                    {movie.title}
-                  </p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--fg-muted)' }}>
-                    {movie.year} &nbsp;⭐ {movie.imdb_rating}
-                  </p>
-                </div>
-              </div>
+              <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
