@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { THEMATIC_COLLECTIONS } from '../../data/movies';
 import { getMoviesByCollection } from '../../utils/movieUtils';
+import { useLang } from '../../context/LanguageContext';
+import { T } from '../../data/translations';
 import './WizardModal.css';
 
 // ─── Question pool ────────────────────────────────────────────────────────────
@@ -76,8 +78,9 @@ const COLLECTION_PREFS = {
   6: { year:  1, historical:  1, theme:  1, tone:  1,  supernatural:  0, romance: -1, ensemble:  1, foreign:  1 },
 };
 
-const ANSWER_VALUES = { კი: 1, არა: -1, 'არ ვიცი': 0 };
-const ANSWER_BUTTONS = ['კი', 'არა', 'არ ვიცი'];
+const ANSWER_VALUES = { yes: 1, no: -1, notSure: 0 };
+const ANSWER_BUTTON_KEYS = ['yes', 'no', 'notSure'];
+const ANSWER_BTN_CLASS = { yes: 'yes', no: 'no', notSure: 'idk' };
 const DECISION_EVERY = 5; // show decision dialog every N answered questions
 
 // ─── Pure scoring helpers ─────────────────────────────────────────────────────
@@ -170,6 +173,8 @@ function makeInitialState() {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function WizardModal({ open, onClose }) {
+  const { lang } = useLang();
+  const t = T[lang];
   const [state, setState] = useState(makeInitialState);
 
   // Reset on open
@@ -193,9 +198,10 @@ export default function WizardModal({ open, onClose }) {
 
   // ── Handlers ────────────────────────────────────────────────────────────────
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = (answerKey) => {
     const { currentQuestion, answeredIds, answers } = state;
-    const value = ANSWER_VALUES[answer] ?? 0;
+    const value = ANSWER_VALUES[answerKey] ?? 0;
+    const answer = answerKey;
 
     const newAnsweredIds = new Set([...answeredIds, currentQuestion.id]);
     const newAnswers = {
@@ -293,9 +299,9 @@ export default function WizardModal({ open, onClose }) {
         <div className="wizard-header">
           <div className="wizard-header__left">
             <span className="wizard-header__icon">🎬</span>
-            <span className="wizard-header__title">კინო-გზამკვლელი</span>
+            <span className="wizard-header__title">{t.wizardTitle}</span>
           </div>
-          <button className="wizard-close" onClick={onClose} aria-label="დახურვა">
+          <button className="wizard-close" onClick={onClose} aria-label={t.close}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
@@ -318,7 +324,7 @@ export default function WizardModal({ open, onClose }) {
               />
             </div>
             <span className={`wizard-accuracy__label ${highConfidence ? 'wizard-accuracy__label--high' : ''}`}>
-              რეკომენდაციის სიზუსტე: {confidence}%
+              {t.confidence}: {confidence}%
             </span>
           </div>
         )}
@@ -333,13 +339,13 @@ export default function WizardModal({ open, onClose }) {
               <h2 className="wizard-question__text">{currentQuestion.question}</h2>
               <p className="wizard-question__hint">{currentQuestion.hint}</p>
               <div className="wizard-answers">
-                {ANSWER_BUTTONS.map((btn) => (
+                {ANSWER_BUTTON_KEYS.map((key) => (
                   <button
-                    key={btn}
-                    className={`wizard-answer-btn wizard-answer-btn--${btn === 'კი' ? 'yes' : btn === 'არა' ? 'no' : 'idk'}`}
-                    onClick={() => handleAnswer(btn)}
+                    key={key}
+                    className={`wizard-answer-btn wizard-answer-btn--${ANSWER_BTN_CLASS[key]}`}
+                    onClick={() => handleAnswer(key)}
                   >
-                    {btn}
+                    {t[key]}
                   </button>
                 ))}
               </div>
@@ -351,23 +357,23 @@ export default function WizardModal({ open, onClose }) {
             <div className="wizard-decision" key="decision">
               <div className="wizard-decision__icon">🤔</div>
               <h2 className="wizard-decision__title">
-                {answeredCount} კითხვა პასუხგაცემულია
+                {answeredCount} {t.questionsAnswered}
               </h2>
               <p className="wizard-decision__sub">
-                სიზუსტე {confidence}% — {highConfidence ? 'საკმარისია კარგი რეკომენდაციისთვის' : 'მეტი კითხვა გააუმჯობესებს შედეგს'}
+                {t.accuracy} {confidence}% — {highConfidence ? t.sufficientAccuracy : t.moreWillImprove}
               </p>
               <div className="wizard-decision__actions">
                 <button
                   className={`wizard-decision-btn ${highConfidence ? 'wizard-decision-btn--primary' : 'wizard-decision-btn--secondary'}`}
                   onClick={handleRecommendNow}
                 >
-                  ✨ ფილმების რეკომენდაცია
+                  {t.recommendNow}
                 </button>
                 <button
                   className={`wizard-decision-btn ${highConfidence ? 'wizard-decision-btn--secondary' : 'wizard-decision-btn--primary'}`}
                   onClick={handleContinue}
                 >
-                  კითხვების გაგრძელება →
+                  {t.continueQuestions}
                 </button>
               </div>
             </div>
@@ -378,9 +384,9 @@ export default function WizardModal({ open, onClose }) {
             <div className="wizard-results">
               <div className="wizard-results__header">
                 <span className="wizard-results__emoji">✨</span>
-                <h2 className="wizard-results__title">შენი კოლექციები</h2>
+                <h2 className="wizard-results__title">{t.yourCollections}</h2>
                 <p className="wizard-results__subtitle">
-                  {answeredCount} პასუხი · სიზუსტე {confidence}%
+                  {answeredCount} {t.answers} · {t.accuracy} {confidence}%
                 </p>
               </div>
 
@@ -412,7 +418,7 @@ export default function WizardModal({ open, onClose }) {
                         </p>
                       </div>
                     </div>
-                    {i === 0 && <span className="wizard-result-card__badge">საუკეთესო</span>}
+                    {i === 0 && <span className="wizard-result-card__badge">{t.best}</span>}
                   </div>
                 ))}
               </div>
@@ -428,7 +434,7 @@ export default function WizardModal({ open, onClose }) {
                     color: activeCollection.accentColor,
                     marginBottom: '10px',
                   }}>
-                    ფილმები კოლექციიდან: {activeCollection.name}
+                    {t.moviesFrom}: {activeCollection.name}
                   </p>
                   <div style={{
                     display: 'flex',
@@ -497,7 +503,7 @@ export default function WizardModal({ open, onClose }) {
             )}
             {phase === 'results' && (
               <button className="wizard-footer__restart" onClick={handleRestart}>
-                ↺ თავიდან
+                {t.restartShort}
               </button>
             )}
             {(phase === 'question' || phase === 'decision') && answeredCount === 0 && (
@@ -505,14 +511,14 @@ export default function WizardModal({ open, onClose }) {
             )}
             {phase === 'question' && answeredCount > 0 && (
               <button className="wizard-footer__early" onClick={handleRecommendNow}>
-                ახლავე →
+                {t.nowShort}
               </button>
             )}
           </div>
 
           <span className="wizard-footer__step">
             {phase === 'results'
-              ? `${answeredCount} / ${QUESTION_POOL.length} · დასრულებულია`
+              ? `${answeredCount} / ${QUESTION_POOL.length} · ${t.done}`
               : `${answeredCount} / ${QUESTION_POOL.length}`}
           </span>
         </div>

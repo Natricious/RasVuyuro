@@ -1,18 +1,12 @@
+/* ── Shared / static tokens ─────────────────────────────────────────────── */
 :root {
   --gold: #e8c547;
   --gold-dim: #c9a832;
   --red: #c84b31;
   --red-dim: #9e3a24;
-
-  --bg: #0a0709;
-  --bg-surface: #1a1118;
-  --bg-card: #221a20;
-
-  --fg: #f0ead6;
-  --fg-muted: #a89e8c;
+  --accent: #e50914;
 
   --border: rgba(232, 197, 71, 0.15);
-
   --radius-card: 16px;
 
   --font-display: 'Fraunces', serif;
@@ -21,4 +15,34 @@
 
   --navbar-height: 70px;
   --content-max-width: 1280px;
+}
+
+/* ── Dark theme (default) ────────────────────────────────────────────────── */
+:root.dark {
+  --bg-primary:   #0a0709;
+  --bg-secondary: #12100f;
+  --text-primary: #f5f0eb;
+  --text-secondary: #a09898;
+
+  /* component aliases */
+  --bg:         #0a0709;
+  --bg-surface: #1a1118;
+  --bg-card:    #221a20;
+  --fg:         #f0ead6;
+  --fg-muted:   #a89e8c;
+}
+
+/* ── Light theme ─────────────────────────────────────────────────────────── */
+:root.light {
+  --bg-primary:   #f5f0eb;
+  --bg-secondary: #ffffff;
+  --text-primary: #0a0709;
+  --text-secondary: #5a5252;
+
+  /* component aliases */
+  --bg:         #f5f0eb;
+  --bg-surface: #ffffff;
+  --bg-card:    #ede7e0;
+  --fg:         #0a0709;
+  --fg-muted:   #5a5252;
 }

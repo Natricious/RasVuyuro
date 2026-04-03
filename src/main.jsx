@@ -1,13 +1,19 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
+import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import './styles/global.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/RasVuyuro">
-      <App />
-    </BrowserRouter>
+    <ThemeProvider>
+      <LanguageProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </LanguageProvider>
+    </ThemeProvider>
   </StrictMode>
 );

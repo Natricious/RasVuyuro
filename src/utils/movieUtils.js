@@ -1,4 +1,5 @@
 import moviesData from '../data/movies.json';
+import COLLECTIONS from '../data/collections.js';
 
 const ALL_MOVIES = moviesData;
 
@@ -18,6 +19,21 @@ export function getSimilarMovies(movieId) {
   return movie.similar_movies
     .map(id => getMovieById(id))
     .filter(Boolean);
+}
+
+export function getMoviesByCollectionSlug(slug) {
+  const col = COLLECTIONS.find(c => c.slug === slug);
+  if (!col) return [];
+  const { themes = [], timeline = [], genres = [] } = col.filters;
+  return ALL_MOVIES.filter(movie => {
+    const themeMatch = themes.length === 0 ||
+      themes.some(t => (movie.themes || []).includes(t));
+    const timelineMatch = timeline.length === 0 ||
+      timeline.includes(movie.timeline);
+    const genreMatch = genres.length === 0 ||
+      genres.some(g => (movie.genres || []).includes(g));
+    return themeMatch && timelineMatch && genreMatch;
+  });
 }
 
 export function searchMovies(query) {

@@ -3,6 +3,9 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import ChatButton from './components/ChatButton/ChatButton';
 import Home from './pages/Home/Home';
+import CollectionsPage from './pages/Collections/CollectionsPage';
+import CollectionDetailPage from './pages/Collections/CollectionDetailPage';
+import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 
 function MoviesPage() {
   return (
@@ -44,6 +47,9 @@ export default function App() {
         <Route path="/homepage" element={<Home />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/timeline" element={<TimelinePage />} />
+        <Route path="/collections" element={<CollectionsPage />} />
+        <Route path="/collections/:slug" element={<CollectionDetailPage />} />
+        <Route path="/movie/:id" element={<MovieDetailPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
