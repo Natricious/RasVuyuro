@@ -1,26 +1,28 @@
-import { useState, useMemo } from 'react';
-import { useMovies } from '../../hooks/useMovies';
+import { useState, useEffect, useCallback } from 'react';
+import { useFilteredMovies } from '../../hooks/useMovies';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { useLang } from '../../context/LanguageContext';
+
+const PAGE_SIZE = 40;
 
 const ALL_TIMELINES = ['ancient', 'medieval', '19th_century', 'ww2', 'modern', 'future'];
 
 const TIMELINE_LABELS = {
   ka: {
-    ancient:      'ანტიკური',
-    medieval:     'შუა საუკუნეები',
+    ancient:        'ანტიკური',
+    medieval:       'შუა საუკუნეები',
     '19th_century': 'XIX საუკუნე',
-    ww2:          'მეორე მსოფლიო ომი',
-    modern:       'თანამედროვე',
-    future:       'მომავალი',
+    ww2:            'მეორე მსოფლიო ომი',
+    modern:         'თანამედროვე',
+    future:         'მომავალი',
   },
   en: {
-    ancient:      'Ancient',
-    medieval:     'Medieval',
+    ancient:        'Ancient',
+    medieval:       'Medieval',
     '19th_century': '19th Century',
-    ww2:          'World War II',
-    modern:       'Modern',
-    future:       'Future',
+    ww2:            'World War II',
+    modern:         'Modern',
+    future:         'Future',
   },
 };
 
@@ -39,6 +41,12 @@ const SORT_OPTIONS = {
   ],
 };
 
+const GENRES = [
+  'Action','Adventure','Animation','Biography','Comedy','Crime',
+  'Documentary','Drama','Family','Fantasy','History','Horror',
+  'Music','Mystery','Romance','Sci-Fi','Thriller','War','Western',
+];
+
 const Spinner = () => (
   <div style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
     <div style={{
@@ -54,41 +62,43 @@ const Spinner = () => (
 
 export default function MoviesPage() {
   const { lang } = useLang();
-  const { movies: allMovies, loading } = useMovies();
 
-  const [search, setSearch] = useState('');
-  const [genre, setGenre] = useState('');
+  const [search,   setSearch]   = useState('');
+  const [genre,    setGenre]    = useState('');
   const [timeline, setTimeline] = useState('');
-  const [sort, setSort] = useState('rating');
+  const [sort,     setSort]     = useState('rating');
+  const [page,     setPage]     = useState(0);
+  const [allMovies, setAllMovies] = useState([]);
 
-  const allGenres = useMemo(
-    () => [...new Set(allMovies.flatMap(m => m.genres || []))].sort(),
-    [allMovies]
-  );
+  // Fetch current page
+  const { movies: pageMovies, total, loading } = useFilteredMovies({
+    query: search, genre, timeline, sort, page, pageSize: PAGE_SIZE,
+  });
 
-  const filtered = useMemo(() => {
-    let list = allMovies;
-
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter(m =>
-        m.title.toLowerCase().includes(q) ||
-        (m.title_ge && m.title_ge.toLowerCase().includes(q))
-      );
+  // Append results when a new page loads
+  useEffect(() => {
+    if (loading || pageMovies.length === 0) return;
+    if (page === 0) {
+      setAllMovies(pageMovies);
+    } else {
+      setAllMovies(prev => [...prev, ...pageMovies]);
     }
-    if (genre)    list = list.filter(m => (m.genres || []).includes(genre));
-    if (timeline) list = list.filter(m => m.timeline === timeline);
+  }, [pageMovies, page, loading]);
 
-    list = [...list];
-    if (sort === 'rating')    list.sort((a, b) => (b.imdb_rating ?? 0) - (a.imdb_rating ?? 0));
-    else if (sort === 'year_desc') list.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
-    else if (sort === 'year_asc')  list.sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
-    else if (sort === 'title')     list.sort((a, b) => a.title.localeCompare(b.title));
+  // Clear results on empty search result
+  useEffect(() => {
+    if (!loading && page === 0 && pageMovies.length === 0) {
+      setAllMovies([]);
+    }
+  }, [loading, page, pageMovies.length]);
 
-    return list;
-  }, [allMovies, search, genre, timeline, sort]);
+  const resetPage = useCallback(() => {
+    setAllMovies([]);
+    setPage(0);
+  }, []);
 
   const hasFilters = search || genre || timeline;
+  const hasMore    = total !== null && allMovies.length < total;
 
   const selectStyle = {
     background: 'var(--bg-card)',
@@ -110,9 +120,10 @@ export default function MoviesPage() {
             {lang === 'ka' ? 'ყველა ფილმი' : 'All Movies'}
           </h1>
           <p style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>
-            {loading ? '…' : (
+            {loading && page === 0 ? '…' : (
               <>
-                {filtered.length} {lang === 'ka' ? 'ფილმი' : 'movies'}
+                {total !== null ? total : allMovies.length}
+                {' '}{lang === 'ka' ? 'ფილმი' : 'movies'}
                 {hasFilters ? (lang === 'ka' ? ' ნაპოვნია' : ' found') : ''}
               </>
             )}
@@ -124,24 +135,24 @@ export default function MoviesPage() {
           <input
             type="text"
             value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder={lang === 'ka' ? 'ფილმის ძებნა...' : 'Search movies...'}
+            onChange={e => { setSearch(e.target.value); resetPage(); }}
+            placeholder={lang === 'ka' ? 'ფილმის ძებნა (მინ. 3 სიმბოლო)...' : 'Search movies (min. 3 chars)...'}
             style={{ ...selectStyle, flex: '1 1 200px', minWidth: '180px' }}
           />
 
-          <select value={genre} onChange={e => setGenre(e.target.value)} style={selectStyle}>
+          <select value={genre} onChange={e => { setGenre(e.target.value); resetPage(); }} style={selectStyle}>
             <option value="">{lang === 'ka' ? 'ყველა ჟანრი' : 'All genres'}</option>
-            {allGenres.map(g => <option key={g} value={g}>{g}</option>)}
+            {GENRES.map(g => <option key={g} value={g}>{g}</option>)}
           </select>
 
-          <select value={timeline} onChange={e => setTimeline(e.target.value)} style={selectStyle}>
+          <select value={timeline} onChange={e => { setTimeline(e.target.value); resetPage(); }} style={selectStyle}>
             <option value="">{lang === 'ka' ? 'ყველა პერიოდი' : 'All periods'}</option>
             {ALL_TIMELINES.map(tl => (
               <option key={tl} value={tl}>{TIMELINE_LABELS[lang][tl]}</option>
             ))}
           </select>
 
-          <select value={sort} onChange={e => setSort(e.target.value)} style={selectStyle}>
+          <select value={sort} onChange={e => { setSort(e.target.value); resetPage(); }} style={selectStyle}>
             {SORT_OPTIONS[lang].map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
@@ -149,7 +160,7 @@ export default function MoviesPage() {
 
           {hasFilters && (
             <button
-              onClick={() => { setSearch(''); setGenre(''); setTimeline(''); }}
+              onClick={() => { setSearch(''); setGenre(''); setTimeline(''); resetPage(); }}
               style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', color: 'var(--fg-muted)', padding: '8px 14px', fontSize: '0.875rem', cursor: 'pointer' }}
             >
               {lang === 'ka' ? '✕ გასუფთავება' : '✕ Clear'}
@@ -158,7 +169,9 @@ export default function MoviesPage() {
         </div>
 
         {/* Grid */}
-        {loading ? <Spinner /> : filtered.length === 0 ? (
+        {loading && page === 0 ? (
+          <Spinner />
+        ) : allMovies.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
             <p style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🎬</p>
             <p style={{ fontSize: '1rem' }}>
@@ -166,11 +179,39 @@ export default function MoviesPage() {
             </p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '20px' }}>
-            {filtered.map(movie => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+          <>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '20px' }}>
+              {allMovies.map(movie => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+
+            {/* Load more */}
+            {hasMore && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <button
+                    onClick={() => setPage(p => p + 1)}
+                    style={{
+                      background: 'transparent',
+                      border: '1px solid rgba(232,197,71,0.4)',
+                      borderRadius: '10px',
+                      color: 'var(--gold)',
+                      padding: '12px 32px',
+                      fontSize: '0.9375rem',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                    }}
+                  >
+                    {lang === 'ka' ? 'მეტის ჩვენება' : 'Load more'}
+                    {` (${total - allMovies.length} ${lang === 'ka' ? 'დარჩა' : 'remaining'})`}
+                  </button>
+                )}
+              </div>
+            )}
+          </>
         )}
 
       </div>

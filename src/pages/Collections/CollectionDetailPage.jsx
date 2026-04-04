@@ -1,10 +1,17 @@
-import { useState, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useMovies } from '../../hooks/useMovies';
+import { useCollectionMovies } from '../../hooks/useMovies';
 import { useCollections } from '../../hooks/useCollections';
-import { getMoviesByCollectionSlug } from '../../utils/movieUtils';
 import { useLang } from '../../context/LanguageContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
+
+const PAGE_SIZE = 20;
+
+const GENRES = [
+  'Action','Adventure','Animation','Biography','Comedy','Crime',
+  'Documentary','Drama','Family','Fantasy','History','Horror',
+  'Music','Mystery','Romance','Sci-Fi','Thriller','War','Western',
+];
 
 const YEAR_RANGES = {
   ka: [
@@ -64,57 +71,51 @@ const Spinner = () => (
 export default function CollectionDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { lang } = useLang();
+  const { lang }  = useLang();
 
-  const { movies: allMovies, loading: moviesLoading } = useMovies();
   const { collections, loading: collectionsLoading } = useCollections();
 
-  // STEP 1 — filter state
-  const [sortBy, setSortBy] = useState('rating');
-  const [minRating, setMinRating] = useState(0);
-  const [selectedGenre, setSelectedGenre] = useState('all');
-  const [yearRange, setYearRange] = useState('all');
+  // Filter + sort state
+  const [sortBy,         setSortBy]         = useState('rating');
+  const [minRating,      setMinRating]      = useState(0);
+  const [selectedGenre,  setSelectedGenre]  = useState('all');
+  const [yearRange,      setYearRange]      = useState('all');
 
-  const loading = moviesLoading || collectionsLoading;
+  // Pagination: accumulate pages
+  const [page,     setPage]     = useState(0);
+  const [allMovies, setAllMovies] = useState([]);
 
   const collection = collections.find(c => c.slug === slug);
 
-  // STEP 2 — filtered movies for this collection
-  const movies = useMemo(
-    () => getMoviesByCollectionSlug(allMovies, collections, slug),
-    [allMovies, collections, slug]
+  const filters = { sortBy, minRating, selectedGenre, yearRange };
+
+  // Fetch current page
+  const { movies: pageMovies, total, loading: moviesLoading } = useCollectionMovies(
+    collection,
+    filters,
+    page,
+    PAGE_SIZE,
   );
 
-  // STEP 3 — derive available genres from this collection's movies
-  const allGenres = useMemo(() => {
-    const genres = new Set();
-    movies.forEach(m => m.genres?.forEach(g => genres.add(g)));
-    return ['all', ...Array.from(genres).sort()];
-  }, [movies]);
+  // Reset accumulated list when filters/sort change
+  const resetFilters = useCallback((applyChange) => {
+    setAllMovies([]);
+    setPage(0);
+    applyChange();
+  }, []);
 
-  // STEP 4 — apply filters and sort
-  const filteredMovies = useMemo(() => {
-    return movies
-      .filter(m => {
-        const ratingOk = (m.imdb_rating ?? 0) >= minRating;
-        const genreOk = selectedGenre === 'all' || m.genres?.includes(selectedGenre);
-        const yearOk = yearRange === 'all'
-          || (yearRange === 'classic' && m.year < 1990)
-          || (yearRange === '90s'     && m.year >= 1990 && m.year < 2000)
-          || (yearRange === '2000s'   && m.year >= 2000 && m.year < 2010)
-          || (yearRange === '2010s'   && m.year >= 2010 && m.year < 2020)
-          || (yearRange === '2020s'   && m.year >= 2020);
-        return ratingOk && genreOk && yearOk;
-      })
-      .sort((a, b) => {
-        if (sortBy === 'rating')    return (b.imdb_rating ?? 0) - (a.imdb_rating ?? 0);
-        if (sortBy === 'year_desc') return (b.year ?? 0) - (a.year ?? 0);
-        if (sortBy === 'year_asc')  return (a.year ?? 0) - (b.year ?? 0);
-        if (sortBy === 'title')     return a.title.localeCompare(b.title);
-        return 0;
-      });
-  }, [movies, sortBy, minRating, selectedGenre, yearRange]);
+  // Append new page results to accumulated list
+  useEffect(() => {
+    if (moviesLoading || pageMovies.length === 0) return;
+    if (page === 0) {
+      setAllMovies(pageMovies);
+    } else {
+      setAllMovies(prev => [...prev, ...pageMovies]);
+    }
+  }, [pageMovies, page, moviesLoading]);
 
+  const displayed = allMovies;
+  const hasMore = total !== null && displayed.length < total;
   const hasFilters = minRating > 0 || selectedGenre !== 'all' || yearRange !== 'all';
 
   const selectStyle = {
@@ -128,7 +129,9 @@ export default function CollectionDetailPage() {
     outline: 'none',
   };
 
-  if (!loading && !collection) {
+  const loading = collectionsLoading || (moviesLoading && page === 0);
+
+  if (!collectionsLoading && !collection) {
     return (
       <main style={{ textAlign: 'center', padding: '160px 24px', minHeight: '100vh' }}>
         <p style={{ fontFamily: 'var(--font-display)', fontSize: '5rem', fontWeight: 700, color: 'var(--gold)' }}>404</p>
@@ -176,8 +179,8 @@ export default function CollectionDetailPage() {
               <p style={{ color: collection.color, fontSize: '0.8125rem', fontWeight: 600 }}>
                 {loading ? '…' : (
                   <>
-                    {filteredMovies.length}
-                    {hasFilters ? ` / ${movies.length}` : ''}
+                    {displayed.length}
+                    {total !== null && displayed.length < total ? ` / ${total}` : (total !== null ? ` ${lang === 'ka' ? 'სულ' : 'total'}` : '')}
                     {' '}{lang === 'ka' ? 'ფილმი' : 'movies'}
                   </>
                 )}
@@ -189,49 +192,60 @@ export default function CollectionDetailPage() {
         {loading ? <Spinner /> : (
           <>
             {/* Filters + Sort bar */}
-            {movies.length > 0 && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px', alignItems: 'center' }}>
-                <select value={selectedGenre} onChange={e => setSelectedGenre(e.target.value)} style={selectStyle}>
-                  {allGenres.map(g => (
-                    <option key={g} value={g}>
-                      {g === 'all' ? (lang === 'ka' ? 'ყველა ჟანრი' : 'All genres') : g}
-                    </option>
-                  ))}
-                </select>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px', alignItems: 'center' }}>
+              <select
+                value={selectedGenre}
+                onChange={e => resetFilters(() => setSelectedGenre(e.target.value))}
+                style={selectStyle}
+              >
+                <option value="all">{lang === 'ka' ? 'ყველა ჟანრი' : 'All genres'}</option>
+                {GENRES.map(g => <option key={g} value={g}>{g}</option>)}
+              </select>
 
-                <select value={minRating} onChange={e => setMinRating(Number(e.target.value))} style={selectStyle}>
-                  {RATING_OPTIONS.map(opt => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.value === 0 ? (lang === 'ka' ? 'ნებისმიერი რეიტინგი' : 'Any rating') : `⭐ ${opt.label}`}
-                    </option>
-                  ))}
-                </select>
+              <select
+                value={minRating}
+                onChange={e => resetFilters(() => setMinRating(Number(e.target.value)))}
+                style={selectStyle}
+              >
+                {RATING_OPTIONS.map(opt => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.value === 0 ? (lang === 'ka' ? 'ნებისმიერი რეიტინგი' : 'Any rating') : `⭐ ${opt.label}`}
+                  </option>
+                ))}
+              </select>
 
-                <select value={yearRange} onChange={e => setYearRange(e.target.value)} style={selectStyle}>
-                  {YEAR_RANGES[lang].map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
+              <select
+                value={yearRange}
+                onChange={e => resetFilters(() => setYearRange(e.target.value))}
+                style={selectStyle}
+              >
+                {YEAR_RANGES[lang].map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
 
-                <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={selectStyle}>
-                  {SORT_OPTIONS[lang].map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
+              <select
+                value={sortBy}
+                onChange={e => resetFilters(() => setSortBy(e.target.value))}
+                style={selectStyle}
+              >
+                {SORT_OPTIONS[lang].map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
 
-                {hasFilters && (
-                  <button
-                    onClick={() => { setMinRating(0); setSelectedGenre('all'); setYearRange('all'); }}
-                    style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', color: 'var(--fg-muted)', padding: '7px 12px', fontSize: '0.8125rem', cursor: 'pointer' }}
-                  >
-                    {lang === 'ka' ? '✕ გასუფთავება' : '✕ Clear'}
-                  </button>
-                )}
-              </div>
-            )}
+              {hasFilters && (
+                <button
+                  onClick={() => resetFilters(() => { setMinRating(0); setSelectedGenre('all'); setYearRange('all'); })}
+                  style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', color: 'var(--fg-muted)', padding: '7px 12px', fontSize: '0.8125rem', cursor: 'pointer' }}
+                >
+                  {lang === 'ka' ? '✕ გასუფთავება' : '✕ Clear'}
+                </button>
+              )}
+            </div>
 
-            {/* Movie grid or empty state */}
-            {filteredMovies.length === 0 ? (
+            {/* Movie grid */}
+            {displayed.length === 0 && !moviesLoading ? (
               <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
                 <p style={{ fontSize: '2rem', marginBottom: '12px' }}>🎬</p>
                 <p>
@@ -241,11 +255,39 @@ export default function CollectionDetailPage() {
                 </p>
               </div>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px' }}>
-                {filteredMovies.map(movie => (
-                  <MovieCard key={movie.id} movie={movie} />
-                ))}
-              </div>
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px' }}>
+                  {displayed.map(movie => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </div>
+
+                {/* Load more */}
+                {hasMore && (
+                  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+                    {moviesLoading ? (
+                      <Spinner />
+                    ) : (
+                      <button
+                        onClick={() => setPage(p => p + 1)}
+                        style={{
+                          background: 'transparent',
+                          border: '1px solid rgba(232,197,71,0.4)',
+                          borderRadius: '10px',
+                          color: 'var(--gold)',
+                          padding: '12px 32px',
+                          fontSize: '0.9375rem',
+                          cursor: 'pointer',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {lang === 'ka' ? 'მეტის ჩვენება' : 'Load more'}
+                        {total !== null ? ` (${total - displayed.length} ${lang === 'ka' ? 'დარჩა' : 'remaining'})` : ''}
+                      </button>
+                    )}
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
