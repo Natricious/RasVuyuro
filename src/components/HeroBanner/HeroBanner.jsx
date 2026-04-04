@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HERO_POSTER_URLS } from '../../data/movies';
 import WizardModal from '../WizardModal/WizardModal';
+import { useCollections } from '../../hooks/useCollections';
 import './HeroBanner.css';
 
 const STATS = [
@@ -12,6 +13,7 @@ const STATS = [
 
 export default function HeroBanner() {
   const [wizardOpen, setWizardOpen] = useState(false);
+  const { collections } = useCollections();
 
   return (
     <>
@@ -100,7 +102,7 @@ export default function HeroBanner() {
 
       </section>
 
-      <WizardModal open={wizardOpen} onClose={() => setWizardOpen(false)} />
+      <WizardModal open={wizardOpen} onClose={() => setWizardOpen(false)} collections={collections} />
     </>
   );
 }

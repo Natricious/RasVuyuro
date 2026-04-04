@@ -1,16 +1,30 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import moviesData from '../../data/movies.json';
+import { useMovies } from '../../hooks/useMovies';
 import { useLang } from '../../context/LanguageContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
-const ALL_MOVIES = moviesData;
+const Spinner = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+    <div style={{
+      width: '36px', height: '36px',
+      border: '3px solid rgba(232,197,71,0.15)',
+      borderTopColor: 'var(--gold)',
+      borderRadius: '50%',
+      animation: 'spin 0.75s linear infinite',
+    }} />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+  </div>
+);
 
 export default function MovieDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { lang } = useLang();
+  const { movies, loading } = useMovies();
 
-  const movie = ALL_MOVIES.find(m => m.id === Number(id));
+  if (loading) return <Spinner />;
+
+  const movie = movies.find(m => m.id === Number(id));
 
   if (!movie) {
     return (
@@ -28,24 +42,24 @@ export default function MovieDetailPage() {
   }
 
   const similarMovies = (movie.similar_movies || [])
-    .map(sid => ALL_MOVIES.find(m => m.id === sid))
+    .map(sid => movies.find(m => m.id === sid))
     .filter(Boolean);
 
   const TIMELINE_LABELS = {
-    ancient: lang === 'ka' ? 'ძველი სამყარო' : 'Ancient World',
-    medieval: lang === 'ka' ? 'შუა საუკუნეები' : 'Medieval',
-    '19th_century': lang === 'ka' ? 'XIX საუკუნე' : '19th Century',
-    ww2: lang === 'ka' ? 'მეორე მსოფლიო ომი' : 'World War II',
-    modern: lang === 'ka' ? 'თანამედროვე' : 'Modern',
-    future: lang === 'ka' ? 'მომავალი' : 'Future',
+    ancient:      lang === 'ka' ? 'ძველი სამყარო'    : 'Ancient World',
+    medieval:     lang === 'ka' ? 'შუა საუკუნეები'   : 'Medieval',
+    '19th_century': lang === 'ka' ? 'XIX საუკუნე'    : '19th Century',
+    ww2:          lang === 'ka' ? 'მეორე მსოფლიო ომი' : 'World War II',
+    modern:       lang === 'ka' ? 'თანამედროვე'       : 'Modern',
+    future:       lang === 'ka' ? 'მომავალი'           : 'Future',
   };
 
   const TONE_LABELS = {
-    serious: lang === 'ka' ? 'სერიოზული' : 'Serious',
-    light: lang === 'ka' ? 'მსუბუქი' : 'Light',
-    horror: lang === 'ka' ? 'საშინელება' : 'Horror',
-    comedy: lang === 'ka' ? 'კომედია' : 'Comedy',
-    thriller: lang === 'ka' ? 'თრილერი' : 'Thriller',
+    serious:  lang === 'ka' ? 'სერიოზული'  : 'Serious',
+    light:    lang === 'ka' ? 'მსუბუქი'    : 'Light',
+    horror:   lang === 'ka' ? 'საშინელება' : 'Horror',
+    comedy:   lang === 'ka' ? 'კომედია'    : 'Comedy',
+    thriller: lang === 'ka' ? 'თრილერი'   : 'Thriller',
   };
 
   return (
@@ -53,7 +67,6 @@ export default function MovieDetailPage() {
 
       {/* ── Hero ── */}
       <div style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
-        {/* Blurred background */}
         <img
           src={movie.poster}
           alt=""
@@ -71,7 +84,6 @@ export default function MovieDetailPage() {
           background: 'linear-gradient(to top, var(--bg) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
         }} />
 
-        {/* Back button */}
         <button
           onClick={() => navigate(-1)}
           style={{
@@ -85,7 +97,6 @@ export default function MovieDetailPage() {
           ← {lang === 'ka' ? 'უკან' : 'Back'}
         </button>
 
-        {/* Centered poster */}
         <div style={{
           position: 'absolute', bottom: '-60px', left: '50%',
           transform: 'translateX(-50%)',
@@ -102,7 +113,6 @@ export default function MovieDetailPage() {
       <div style={{ paddingTop: '80px', paddingBottom: '96px' }}>
         <div className="container" style={{ maxWidth: '720px' }}>
 
-          {/* Title & meta */}
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 700, color: 'var(--fg)', marginBottom: '8px', lineHeight: 1.2 }}>
               {movie.title}
@@ -111,13 +121,11 @@ export default function MovieDetailPage() {
               <p style={{ color: 'var(--fg-muted)', fontSize: '1rem', marginBottom: '12px' }}>{movie.title_ge}</p>
             )}
 
-            {/* Year + rating */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
               <span style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>{movie.year}</span>
               <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '1rem' }}>⭐ {movie.imdb_rating}</span>
             </div>
 
-            {/* Genre pills */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '16px' }}>
               {(movie.genres || []).map(g => (
                 <span key={g} style={{
@@ -131,7 +139,6 @@ export default function MovieDetailPage() {
               ))}
             </div>
 
-            {/* Timeline + tone badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
               {movie.timeline && (
                 <span style={{
@@ -156,17 +163,12 @@ export default function MovieDetailPage() {
             </div>
           </div>
 
-          {/* Description */}
           {movie.description && (
-            <p style={{
-              color: 'var(--fg-muted)', fontSize: '1rem', lineHeight: 1.7,
-              marginBottom: '28px', textAlign: 'center',
-            }}>
+            <p style={{ color: 'var(--fg-muted)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '28px', textAlign: 'center' }}>
               {movie.description}
             </p>
           )}
 
-          {/* Themes */}
           {(movie.themes || []).length > 0 && (
             <div style={{ marginBottom: '40px' }}>
               <p style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--fg-muted)', marginBottom: '10px' }}>
@@ -187,7 +189,6 @@ export default function MovieDetailPage() {
             </div>
           )}
 
-          {/* Similar movies */}
           {similarMovies.length > 0 && (
             <div>
               <p style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--fg-muted)', marginBottom: '14px' }}>

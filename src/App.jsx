@@ -3,22 +3,12 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import ChatButton from './components/ChatButton/ChatButton';
 import Home from './pages/Home/Home';
+import MoviesPage from './pages/Movies/MoviesPage';
 import CollectionsPage from './pages/Collections/CollectionsPage';
 import CollectionDetailPage from './pages/Collections/CollectionDetailPage';
 import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import WatchedPage from './pages/Watched/WatchedPage';
 import PlannedPage from './pages/Planned/PlannedPage';
-
-function MoviesPage() {
-  return (
-    <main style={{ paddingTop: 'calc(var(--navbar-height) + 48px)', paddingBottom: '96px', minHeight: '100vh' }}>
-      <div className="container">
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: 'var(--fg)', marginBottom: '8px' }}>ფილმები</h1>
-        <p style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>ყველა ფილმი</p>
-      </div>
-    </main>
-  );
-}
 
 function TimelinePage() {
   return (

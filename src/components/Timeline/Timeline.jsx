@@ -1,16 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TIMELINE_MOVIES } from '../../data/movies';
+import { useMovies } from '../../hooks/useMovies';
 import './Timeline.css';
 
 const ERAS = [
-  { id: 'ancient', label: 'ძველი სამყარო', active: true },
-  { id: 'medieval', label: 'შუასაუკუნეები', active: false },
-  { id: 'modern', label: 'თანამედროვე', active: false },
+  { id: 'ancient',  label: 'ძველი სამყარო' },
+  { id: 'medieval', label: 'შუასაუკუნეები' },
+  { id: 'modern',   label: 'თანამედროვე' },
 ];
+
+const ERA_COLORS = {
+  ancient:  '#FB923C',
+  medieval: '#A78BFA',
+  modern:   '#34D399',
+};
 
 export default function Timeline() {
   const [activeEra, setActiveEra] = useState('ancient');
+  const { movies, loading } = useMovies();
+
+  const eraMovies = movies
+    .filter(m => m.timeline === activeEra)
+    .sort((a, b) => (b.imdb_rating ?? 0) - (a.imdb_rating ?? 0))
+    .slice(0, 6);
 
   return (
     <section className="timeline-section">
@@ -50,43 +62,65 @@ export default function Timeline() {
         </div>
 
         {/* Cards grid */}
-        <div className="timeline-section__grid">
-          {TIMELINE_MOVIES.map((movie, i) => (
-            <Link
-              key={movie.id}
-              to="/timeline"
-              className="timeline-card"
-              style={{ animationDelay: `${i * 0.1}s` }}
-            >
-              <div className="timeline-card__image-wrap">
-                <img src={movie.imageUrl} alt={movie.title} className="timeline-card__image" loading="lazy" />
-                <div className="timeline-card__gradient" />
-                {/* Era dot */}
-                <div
-                  className="timeline-card__era-dot"
-                  style={{
-                    background: movie.eraColor,
-                    boxShadow: `0 0 8px ${movie.eraColor}`,
-                  }}
-                />
-              </div>
-
-              <div className="timeline-card__body">
-                <p className="timeline-card__title truncate">{movie.title}</p>
-                <div className="timeline-card__rating">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <span>{movie.rating.toFixed(1)}</span>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}>
+            <div style={{
+              width: '32px', height: '32px',
+              border: '3px solid rgba(232,197,71,0.15)',
+              borderTopColor: 'var(--gold)',
+              borderRadius: '50%',
+              animation: 'spin 0.75s linear infinite',
+            }} />
+            <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+          </div>
+        ) : (
+          <div className="timeline-section__grid">
+            {eraMovies.map((movie, i) => (
+              <Link
+                key={movie.id}
+                to={`/movie/${movie.id}`}
+                className="timeline-card"
+                style={{ animationDelay: `${i * 0.1}s` }}
+              >
+                <div className="timeline-card__image-wrap">
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="timeline-card__image"
+                    loading="lazy"
+                  />
+                  <div className="timeline-card__gradient" />
+                  <div
+                    className="timeline-card__era-dot"
+                    style={{
+                      background: ERA_COLORS[movie.timeline] ?? '#FB923C',
+                      boxShadow: `0 0 8px ${ERA_COLORS[movie.timeline] ?? '#FB923C'}`,
+                    }}
+                  />
                 </div>
-                <p className="timeline-card__meta">{movie.year} · {movie.era}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
 
-        {/* Footer range */}
-        <p className="timeline-section__range">3000 BC – 500 AD</p>
+                <div className="timeline-card__body">
+                  <p className="timeline-card__title truncate">{movie.title}</p>
+                  <div className="timeline-card__rating">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="var(--gold)">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    <span>{(movie.imdb_rating ?? 0).toFixed(1)}</span>
+                  </div>
+                  <p className="timeline-card__meta">{movie.year}</p>
+                </div>
+              </Link>
+            ))}
+
+            {eraMovies.length === 0 && (
+              <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', padding: '40px 0' }}>
+                ამ პერიოდისთვის ფილმები ვერ მოიძებნა
+              </p>
+            )}
+          </div>
+        )}
+
+        <p className="timeline-section__range">3000 BC – დღეს</p>
 
       </div>
     </section>

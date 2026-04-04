@@ -1,192 +1,471 @@
-import { useState, useEffect, useMemo } from 'react';
-import { THEMATIC_COLLECTIONS } from '../../data/movies';
-import { getMoviesByCollection } from '../../utils/movieUtils';
+import { useState, useEffect } from 'react';
+import { useMovies } from '../../hooks/useMovies';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
 import MovieCard from '../MovieCard/MovieCard';
 import './WizardModal.css';
 
-// ─── Question pool ────────────────────────────────────────────────────────────
-// Larger pool lets the adaptive picker choose meaningfully
-const QUESTION_POOL = [
+// ─── Question definitions ─────────────────────────────────────────────────────
+// Each question has: id, group, question_ka, question_en, answers_ka, answers_en,
+// filter(movies, answerIndex) → filtered movies
+// score(movie, answerIndex) → number added to movie's relevance score
+
+const Q_ERA = {
+  id: 'era',
+  group: 'era',
+  question_ka: 'რომელი პერიოდის ფილმი გსურს?',
+  question_en: 'What era of film do you prefer?',
+  answers_ka: ['კლასიკა (2000-მდე)', '2000–2019', 'ახალი (2020+)', 'მნიშვნელობა არ აქვს'],
+  answers_en: ['Classic (before 2000)', '2000–2019', 'Recent (2020+)', "Doesn't matter"],
+  filter: (movies, i) => {
+    if (i === 3) return movies;
+    if (i === 0) return movies.filter(m => m.year < 2000);
+    if (i === 1) return movies.filter(m => m.year >= 2000 && m.year < 2020);
+    if (i === 2) return movies.filter(m => m.year >= 2020);
+    return movies;
+  },
+  score: (movie, i) => {
+    if (i === 3) return 0;
+    if (i === 0) return movie.year < 2000 ? 2 : 0;
+    if (i === 1) return movie.year >= 2000 && movie.year < 2020 ? 2 : 0;
+    if (i === 2) return movie.year >= 2020 ? 2 : 0;
+    return 0;
+  },
+};
+
+// Group: Tone (pick 1 randomly)
+const Q_TONE = [
   {
-    id: 'year',
-    label: 'გამოშვების წელი',
-    question: 'გსურს კლასიკური ფილმი (1990-მდე)?',
-    hint: 'ფილმის გამოშვების პერიოდი',
-    weight: 0.9,
+    id: 'tone_dark',
+    group: 'tone',
+    question_ka: 'გირჩევნია მძიმე, სერიოზული ტონი?',
+    question_en: 'Do you prefer a dark, serious tone?',
+    answers_ka: ['კი, სერიოზული', 'არა, მსუბუქი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, serious', 'No, light & fun', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      if (i === 0) return movies.filter(m => ['serious', 'thriller', 'horror'].includes(m.tone));
+      if (i === 1) return movies.filter(m => ['light', 'comedy'].includes(m.tone));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      if (i === 0) return ['serious', 'thriller', 'horror'].includes(movie.tone) ? 3 : 0;
+      if (i === 1) return ['light', 'comedy'].includes(movie.tone) ? 3 : 0;
+      return 0;
+    },
   },
   {
-    id: 'historical',
-    label: 'ისტორიული გარემო',
-    question: 'გინდა ისტორიული ეპოქის ფილმი?',
-    hint: 'ისტორიული ან თანამედროვე სეტინგი',
-    weight: 1.0,
-  },
-  {
-    id: 'theme',
-    label: 'სიუჟეტის თემა',
-    question: 'გსურს სათავგადასავლო სიუჟეტი?',
-    hint: 'ექსპედიცია, ბრძოლა, გადარჩენა',
-    weight: 0.85,
-  },
-  {
-    id: 'tone',
-    label: 'ფილმის ტონი',
-    question: 'გირჩევნია მძიმე, სერიოზული ტონი?',
-    hint: 'მსუბუქი კომედია vs დრამა/საშინელება',
-    weight: 0.8,
-  },
-  {
-    id: 'supernatural',
-    label: 'ზებუნებრივი ელემენტი',
-    question: 'გინდა ზებუნებრივი ან ფანტასტიური ელემენტები?',
-    hint: 'ვამპირები, მითოლოგია, ჯადოსნობა',
-    weight: 0.95,
-  },
-  {
-    id: 'romance',
-    label: 'სიყვარულის ხაზი',
-    question: 'გსურს ძლიერი სიყვარულის სიუჟეტი?',
-    hint: 'რომანტიკა მთავარ პლანში',
-    weight: 0.7,
-  },
-  {
-    id: 'ensemble',
-    label: 'პერსონაჟების ჯგუფი',
-    question: 'გირჩევნია ჯგუფური / ანსამბლური ისტორია?',
-    hint: 'ომი, ექსპედიცია, სტუდენტური ჯგუფი',
-    weight: 0.75,
-  },
-  {
-    id: 'foreign',
-    label: 'ფილმის ენა',
-    question: 'მზად ხარ არაინგლისურენოვანი ფილმისთვის?',
-    hint: 'სუბტიტრები ან დუბლირება',
-    weight: 0.65,
+    id: 'tone_thriller',
+    group: 'tone',
+    question_ka: 'გსურს დაძაბული, თრილერის ატმოსფერო?',
+    question_en: 'Do you want a tense, thriller atmosphere?',
+    answers_ka: ['კი, დაძაბული', 'არა, მშვიდი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, tense', 'No, calm', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      if (i === 0) return movies.filter(m => ['thriller', 'serious', 'horror'].includes(m.tone));
+      if (i === 1) return movies.filter(m => ['light', 'comedy'].includes(m.tone));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      if (i === 0) return ['thriller', 'serious', 'horror'].includes(movie.tone) ? 3 : 0;
+      if (i === 1) return ['light', 'comedy'].includes(movie.tone) ? 3 : 0;
+      return 0;
+    },
   },
 ];
 
-// ─── Collection preference vectors ───────────────────────────────────────────
-// +1 = strongly prefers "კი", -1 = strongly prefers "არა", 0 = neutral
-// Collections: 1=ვამპირები 2=ძველი რომი 3=სტუდენტური 4=მოგზაურობა 5=გადარჩენა 6=ომი
-const COLLECTION_PREFS = {
-  1: { year: 1,  historical: -1, theme: -1, tone:  1,  supernatural:  1, romance:  1, ensemble: -1, foreign:  0 },
-  2: { year: 1,  historical:  1, theme:  1, tone:  1,  supernatural:  0, romance: -1, ensemble:  1, foreign:  1 },
-  3: { year: -1, historical: -1, theme: -1, tone: -1,  supernatural: -1, romance:  1, ensemble:  1, foreign: -1 },
-  4: { year: -1, historical: -1, theme:  1, tone: -1,  supernatural: -1, romance:  0, ensemble: -1, foreign:  1 },
-  5: { year:  0, historical:  0, theme:  1, tone:  1,  supernatural: -1, romance: -1, ensemble:  0, foreign:  0 },
-  6: { year:  1, historical:  1, theme:  1, tone:  1,  supernatural:  0, romance: -1, ensemble:  1, foreign:  1 },
-};
+// Group: Setting (pick 1 randomly)
+const Q_SETTING = [
+  {
+    id: 'setting_historical',
+    group: 'setting',
+    question_ka: 'გინდა ისტორიული ეპოქის ფილმი?',
+    question_en: 'Do you want a historical era film?',
+    answers_ka: ['კი, ისტორიული', 'არა, თანამედროვე', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, historical', 'No, modern day', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      if (i === 0) return movies.filter(m => ['ancient', 'medieval', '19th_century', 'ww2'].includes(m.timeline));
+      if (i === 1) return movies.filter(m => ['modern', 'future'].includes(m.timeline));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      if (i === 0) return ['ancient', 'medieval', '19th_century', 'ww2'].includes(movie.timeline) ? 3 : 0;
+      if (i === 1) return ['modern', 'future'].includes(movie.timeline) ? 3 : 0;
+      return 0;
+    },
+  },
+  {
+    id: 'setting_nature',
+    group: 'setting',
+    question_ka: 'გინდა ბუნებაში / გარე სამყაროში მოქმედი ფილმი?',
+    question_en: 'Do you want a film set in nature or the outdoors?',
+    answers_ka: ['კი, ბუნება / გადარჩენა', 'არა, ქალაქური', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, nature / survival', 'No, urban', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const natureTags = ['survival', 'nature', 'wilderness', 'expedition'];
+      const urbanTags = ['urban', 'city', 'crime', 'heist'];
+      if (i === 0) return movies.filter(m => m.themes?.some(t => natureTags.includes(t)));
+      if (i === 1) return movies.filter(m => m.themes?.some(t => urbanTags.includes(t)));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const natureTags = ['survival', 'nature', 'wilderness', 'expedition'];
+      const urbanTags = ['urban', 'city', 'crime', 'heist'];
+      if (i === 0) return (movie.themes?.filter(t => natureTags.includes(t)).length ?? 0) * 2;
+      if (i === 1) return (movie.themes?.filter(t => urbanTags.includes(t)).length ?? 0) * 2;
+      return 0;
+    },
+  },
+  {
+    id: 'setting_ww2',
+    group: 'setting',
+    question_ka: 'გაინტერესებს ომის ეპოქის ფილმი?',
+    question_en: 'Are you interested in a war-era film?',
+    answers_ka: ['კი, ომი / WW2', 'არა', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, war / WW2', 'No', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      if (i === 0) return movies.filter(m => m.timeline === 'ww2' || m.themes?.includes('war'));
+      if (i === 1) return movies.filter(m => m.timeline !== 'ww2' && !m.themes?.includes('war'));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const isWar = movie.timeline === 'ww2' || movie.themes?.includes('war');
+      if (i === 0) return isWar ? 3 : 0;
+      if (i === 1) return isWar ? 0 : 2;
+      return 0;
+    },
+  },
+];
 
-const ANSWER_VALUES = { yes: 1, no: -1, notSure: 0 };
-const ANSWER_BUTTON_KEYS = ['yes', 'no', 'notSure'];
-const ANSWER_BTN_CLASS = { yes: 'yes', no: 'no', notSure: 'idk' };
-const DECISION_EVERY = 5; // show decision dialog every N answered questions
+// Group: Story type (pick 1 randomly)
+const Q_STORY = [
+  {
+    id: 'story_ensemble',
+    group: 'story',
+    question_ka: 'გირჩევნია ჯგუფური / ანსამბლური ისტორია?',
+    question_en: 'Do you prefer a group / ensemble story?',
+    answers_ka: ['კი, ჯგუფური', 'არა, ერთი გმირი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, ensemble cast', 'No, solo hero', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const ensembleTags = ['ensemble', 'group', 'team', 'friendship'];
+      if (i === 0) return movies.filter(m => m.themes?.some(t => ensembleTags.includes(t)));
+      if (i === 1) return movies.filter(m => !m.themes?.some(t => ensembleTags.includes(t)));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const ensembleTags = ['ensemble', 'group', 'team', 'friendship'];
+      const hasEnsemble = movie.themes?.some(t => ensembleTags.includes(t));
+      if (i === 0) return hasEnsemble ? 2 : 0;
+      if (i === 1) return hasEnsemble ? 0 : 2;
+      return 0;
+    },
+  },
+  {
+    id: 'story_realevents',
+    group: 'story',
+    question_ka: 'გსურს რეალურ მოვლენებზე დაფუძნებული ფილმი?',
+    question_en: 'Do you want a film based on real events?',
+    answers_ka: ['კი, რეალური', 'არა, გამოგონილი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, based on true events', 'No, fiction', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const realTags = ['true story', 'based on true events', 'historical', 'biography'];
+      if (i === 0) return movies.filter(m => m.themes?.some(t => realTags.includes(t)));
+      if (i === 1) return movies.filter(m => !m.themes?.some(t => realTags.includes(t)));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const realTags = ['true story', 'based on true events', 'historical', 'biography'];
+      const isReal = movie.themes?.some(t => realTags.includes(t));
+      if (i === 0) return isReal ? 2 : 0;
+      if (i === 1) return isReal ? 0 : 1;
+      return 0;
+    },
+  },
+];
 
-// ─── Pure scoring helpers ─────────────────────────────────────────────────────
+// Group: Psychological depth (pick 1 randomly)
+const Q_DEPTH = [
+  {
+    id: 'depth_complex',
+    group: 'depth',
+    question_ka: 'გსურს ფსიქოლოგიურად ღრმა, რთული ფილმი?',
+    question_en: 'Do you want a psychologically complex, layered film?',
+    answers_ka: ['კი, ღრმა / საფიქრებელი', 'არა, მარტივი / გასართობი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, deep & thought-provoking', 'No, simple & entertaining', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const deepTags = ['psychological', 'philosophical', 'complex', 'identity', 'moral dilemma'];
+      if (i === 0) return movies.filter(m =>
+        m.themes?.some(t => deepTags.includes(t)) || m.genres?.includes('Drama')
+      );
+      if (i === 1) return movies.filter(m =>
+        !m.themes?.some(t => deepTags.includes(t)) &&
+        (m.genres?.some(g => ['Action', 'Adventure', 'Comedy'].includes(g)) ?? false)
+      );
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const deepTags = ['psychological', 'philosophical', 'complex', 'identity', 'moral dilemma'];
+      const isDeep = movie.themes?.some(t => deepTags.includes(t)) || movie.genres?.includes('Drama');
+      if (i === 0) return isDeep ? 3 : 0;
+      if (i === 1) return isDeep ? 0 : 2;
+      return 0;
+    },
+  },
+  {
+    id: 'depth_mindbending',
+    group: 'depth',
+    question_ka: 'გაინტერესებს გონებაამრეველი, არამხიარული სიუჟეტი?',
+    question_en: 'Are you interested in a mind-bending, non-linear plot?',
+    answers_ka: ['კი, კომპლექსური', 'არა, პირდაპირი', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, complex structure', 'No, straightforward', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const complexTags = ['nonlinear', 'twist', 'unreliable narrator', 'psychological'];
+      if (i === 0) return movies.filter(m => m.themes?.some(t => complexTags.includes(t)));
+      if (i === 1) return movies.filter(m => !m.themes?.some(t => complexTags.includes(t)));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const complexTags = ['nonlinear', 'twist', 'unreliable narrator', 'psychological'];
+      const isComplex = movie.themes?.some(t => complexTags.includes(t));
+      if (i === 0) return isComplex ? 3 : 0;
+      if (i === 1) return isComplex ? 0 : 1;
+      return 0;
+    },
+  },
+];
 
-// Score a single collection given current structured answers
-function scoreCollection(colId, answers) {
-  return Object.entries(answers).reduce((sum, [qId, { value, weight }]) => {
-    const pref = COLLECTION_PREFS[colId]?.[qId] ?? 0;
-    return sum + pref * value * weight;
-  }, 0);
+// Adaptive pool questions (used after checkpoint)
+const Q_ADAPTIVE = [
+  {
+    id: 'adapt_fantasy',
+    group: 'fantasy',
+    question_ka: 'გინდა ფანტასტიკური / ზებუნებრივი ელემენტები?',
+    question_en: 'Do you want fantasy / supernatural elements?',
+    answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes', 'No', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const tags = ['supernatural', 'fantasy', 'magic', 'vampires', 'mythology'];
+      if (i === 0) return movies.filter(m =>
+        m.themes?.some(t => tags.includes(t)) || m.genres?.includes('Fantasy')
+      );
+      if (i === 1) return movies.filter(m =>
+        !m.themes?.some(t => tags.includes(t)) && !m.genres?.includes('Fantasy')
+      );
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const tags = ['supernatural', 'fantasy', 'magic', 'vampires', 'mythology'];
+      const has = movie.themes?.some(t => tags.includes(t)) || movie.genres?.includes('Fantasy');
+      if (i === 0) return has ? 3 : 0;
+      if (i === 1) return has ? 0 : 2;
+      return 0;
+    },
+  },
+  {
+    id: 'adapt_scifi',
+    group: 'scifi',
+    question_ka: 'გაინტერესებს სამეცნიერო ფანტასტიკა?',
+    question_en: 'Are you interested in science fiction?',
+    answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes', 'No', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      if (i === 0) return movies.filter(m =>
+        m.genres?.includes('Science Fiction') || m.genres?.includes('Sci-Fi') || m.timeline === 'future'
+      );
+      if (i === 1) return movies.filter(m =>
+        !m.genres?.includes('Science Fiction') && !m.genres?.includes('Sci-Fi') && m.timeline !== 'future'
+      );
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const isSF = movie.genres?.includes('Science Fiction') || movie.genres?.includes('Sci-Fi') || movie.timeline === 'future';
+      if (i === 0) return isSF ? 3 : 0;
+      if (i === 1) return isSF ? 0 : 2;
+      return 0;
+    },
+  },
+  {
+    id: 'adapt_emotional',
+    group: 'emotional',
+    question_ka: 'გსურს ემოციურად ძლიერი, მამოძრავებელი ფილმი?',
+    question_en: 'Do you want an emotionally powerful, moving film?',
+    answers_ka: ['კი, ემოციური', 'არა, ნეიტრალური', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes, emotional', 'No, neutral', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const emotionTags = ['emotional', 'grief', 'love', 'loss', 'redemption', 'friendship'];
+      if (i === 0) return movies.filter(m => m.themes?.some(t => emotionTags.includes(t)));
+      if (i === 1) return movies.filter(m => !m.themes?.some(t => emotionTags.includes(t)));
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const emotionTags = ['emotional', 'grief', 'love', 'loss', 'redemption', 'friendship'];
+      const count = movie.themes?.filter(t => emotionTags.includes(t)).length ?? 0;
+      if (i === 0) return count * 2;
+      if (i === 1) return count === 0 ? 2 : 0;
+      return 0;
+    },
+  },
+  {
+    id: 'adapt_romance',
+    group: 'romance',
+    question_ka: 'გსურს ძლიერი სიყვარულის სიუჟეტი?',
+    question_en: 'Do you want a strong romance storyline?',
+    answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
+    answers_en: ['Yes', 'No', "Doesn't matter"],
+    filter: (movies, i) => {
+      if (i === 2) return movies;
+      const romanceTags = ['romance', 'love', 'forbidden love'];
+      if (i === 0) return movies.filter(m =>
+        m.genres?.includes('Romance') || m.themes?.some(t => romanceTags.includes(t))
+      );
+      if (i === 1) return movies.filter(m =>
+        !m.genres?.includes('Romance') && !m.themes?.some(t => romanceTags.includes(t))
+      );
+      return movies;
+    },
+    score: (movie, i) => {
+      if (i === 2) return 0;
+      const romanceTags = ['romance', 'love', 'forbidden love'];
+      const has = movie.genres?.includes('Romance') || movie.themes?.some(t => romanceTags.includes(t));
+      if (i === 0) return has ? 3 : 0;
+      if (i === 1) return has ? 0 : 2;
+      return 0;
+    },
+  },
+];
+
+// ─── Pick one random question from a group array ─────────────────────────────
+function pickFromGroup(group) {
+  return group[Math.floor(Math.random() * group.length)];
 }
 
-// Rank all collections, return array sorted desc
-function rankCollections(answers) {
-  return THEMATIC_COLLECTIONS
-    .map((col) => ({ ...col, score: scoreCollection(col.id, answers) }))
-    .sort((a, b) => b.score - a.score);
+// ─── Build the fixed 5-question sequence for questions 1–5 ───────────────────
+function buildSessionQuestions() {
+  return [
+    Q_ERA,
+    pickFromGroup(Q_TONE),
+    pickFromGroup(Q_SETTING),
+    pickFromGroup(Q_STORY),
+    pickFromGroup(Q_DEPTH),
+  ];
 }
 
-// ─── Confidence calculation ────────────────────────────────────────────────────
-// Base curve: 100 * (1 - 0.8^n) gives ~20/36/49/59/67/74 for n=1..6
-// Discrimination bonus: how far #1 is ahead of #2 (max +10)
-function calcConfidence(answers) {
-  const n = Object.keys(answers).length;
-  if (n === 0) return 0;
-  const base = Math.round(100 * (1 - Math.pow(0.8, n)));
-  const ranked = rankCollections(answers);
-  const spread = ranked[0].score - (ranked[1]?.score ?? 0);
-  const bonus = Math.min(10, Math.round(spread * 3));
-  return Math.min(95, base + bonus);
-}
+// ─── Pick best adaptive question (closest 50/50 split) ───────────────────────
+function pickAdaptiveQuestion(remainingMovies, askedIds) {
+  const available = Q_ADAPTIVE.filter(q => !askedIds.has(q.id));
+  if (available.length === 0) return null;
 
-// ─── Adaptive question picker ─────────────────────────────────────────────────
-// For each unanswered question, compute the weighted variance of its preference
-// values across collections, where weights are softmax of current collection scores.
-// The question with highest weighted variance will best discriminate the frontrunners.
-function pickNextQuestion(answeredIds, answers) {
-  const unanswered = QUESTION_POOL.filter((q) => !answeredIds.has(q.id));
-  if (unanswered.length === 0) return null;
+  const target = remainingMovies.length / 2;
+  let best = available[0];
+  let bestScore = Infinity;
 
-  // Softmax weights from current scores (temperature=1)
-  const scored = THEMATIC_COLLECTIONS.map((col) => ({
-    id: col.id,
-    score: scoreCollection(col.id, answers),
-  }));
-  const maxScore = Math.max(...scored.map((s) => s.score), 0);
-  const exps = scored.map((s) => Math.exp(s.score - maxScore));
-  const expSum = exps.reduce((a, b) => a + b, 0);
-  const softmax = exps.map((e) => e / expSum);
-
-  // Weighted variance of prefs for each candidate question
-  let bestQ = unanswered[0];
-  let bestVar = -1;
-
-  for (const q of unanswered) {
-    const prefs = THEMATIC_COLLECTIONS.map((col, i) => ({
-      pref: COLLECTION_PREFS[col.id][q.id] ?? 0,
-      w: softmax[i],
-    }));
-    const mean = prefs.reduce((s, p) => s + p.pref * p.w, 0);
-    const variance = prefs.reduce((s, p) => s + p.w * (p.pref - mean) ** 2, 0);
-    // Weight by the question's intrinsic importance
-    const score = variance * q.weight;
-    if (score > bestVar) {
-      bestVar = score;
-      bestQ = q;
+  for (const q of available) {
+    let variance = 0;
+    for (let i = 0; i < q.answers_ka.length - 1; i++) {
+      const filtered = q.filter(remainingMovies, i);
+      variance += Math.abs(filtered.length - target);
+    }
+    if (variance < bestScore) {
+      bestScore = variance;
+      best = q;
     }
   }
 
-  return bestQ;
+  return best;
 }
 
-// ─── Top 3 results ────────────────────────────────────────────────────────────
-function getRecommendations(answers) {
-  return rankCollections(answers).slice(0, 3);
-}
-
-// ─── Initial state factory ────────────────────────────────────────────────────
-function makeInitialState() {
-  const firstQ = pickNextQuestion(new Set(), {});
-  return {
-    phase: 'question',       // 'question' | 'decision' | 'results'
-    answeredIds: new Set(),
-    // Structured: { [questionId]: { answer: string, value: number, weight: number } }
-    answers: {},
-    confidence: 0,
-    currentQuestion: firstQ,
-  };
+// ─── Score movies against collected answers ───────────────────────────────────
+function scoreAndRank(movies, answeredQuestions) {
+  const pool = movies.length > 0 ? movies : [];
+  const scored = pool.map(movie => {
+    let s = 0;
+    for (const { question, answerIndex } of answeredQuestions) {
+      s += question.score(movie, answerIndex);
+    }
+    // Blend with IMDb rating as a tiebreaker
+    s += (movie.imdb_rating ?? 5) * 0.3;
+    return { movie, score: s };
+  });
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10)
+    .map(s => s.movie);
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function WizardModal({ open, onClose }) {
+const VISIBLE_COUNT = 3;
+
+export default function WizardModal({ open, onClose, collections = [] }) {
   const { lang } = useLang();
   const t = T[lang];
-  const [state, setState] = useState(makeInitialState);
+  const isKa = lang === 'ka';
 
-  // Reset on open
+  const { movies: allMovies } = useMovies();
+
+  // Session questions (fixed sequence of 5, built once per open)
+  const [sessionQuestions, setSessionQuestions] = useState([]);
+  // Index into sessionQuestions (0–4 = structured, 5+ = adaptive)
+  const [questionIndex, setQuestionIndex] = useState(0);
+  // Current adaptive question (used after checkpoint)
+  const [adaptiveQuestion, setAdaptiveQuestion] = useState(null);
+
+  const [phase, setPhase] = useState('question'); // 'question' | 'checkpoint' | 'results'
+  const [remainingMovies, setRemainingMovies] = useState([]);
+  const [askedIds, setAskedIds] = useState(new Set());
+  const [answeredQuestions, setAnsweredQuestions] = useState([]); // [{question, answerIndex}]
+  const [questionCount, setQuestionCount] = useState(0);
+  const [results, setResults] = useState([]);
+  const [scrollIndex, setScrollIndex] = useState(0);
+
+  // Determine current question
+  const isAdaptivePhase = questionIndex >= 5;
+  const currentQuestion = isAdaptivePhase
+    ? adaptiveQuestion
+    : sessionQuestions[questionIndex] ?? null;
+
+  // Initialize when modal opens (also handles movies arriving after open)
   useEffect(() => {
-    if (open) setState(makeInitialState());
-  }, [open]);
+    if (!open || !allMovies.length) return;
+    const sq = buildSessionQuestions();
+    setSessionQuestions(sq);
+    setQuestionIndex(0);
+    setAdaptiveQuestion(null);
+    setPhase('question');
+    setRemainingMovies(allMovies);
+    setAskedIds(new Set());
+    setAnsweredQuestions([]);
+    setQuestionCount(0);
+    setResults([]);
+    setScrollIndex(0);
+  }, [open, allMovies]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Escape to close
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = e => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
@@ -197,104 +476,94 @@ export default function WizardModal({ open, onClose }) {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
+  // ── Helpers ──────────────────────────────────────────────────────────────────
 
-  const handleAnswer = (answerKey) => {
-    const { currentQuestion, answeredIds, answers } = state;
-    const value = ANSWER_VALUES[answerKey] ?? 0;
-    const answer = answerKey;
+  function showResults(movies, answered) {
+    const pool = movies.length > 0 ? movies : allMovies;
+    const top10 = scoreAndRank(pool, answered);
+    setResults(top10);
+    setScrollIndex(0);
+    setPhase('results');
+  }
 
-    const newAnsweredIds = new Set([...answeredIds, currentQuestion.id]);
-    const newAnswers = {
-      ...answers,
-      [currentQuestion.id]: { answer, value, weight: currentQuestion.weight },
-    };
-    const newConfidence = calcConfidence(newAnswers);
-    const count = newAnsweredIds.size;
+  function handleAnswer(answerIndex) {
+    const filtered = currentQuestion.filter(remainingMovies, answerIndex);
+    const newAskedIds = new Set([...askedIds, currentQuestion.id]);
+    const newAnswered = [...answeredQuestions, { question: currentQuestion, answerIndex }];
+    const newCount = questionCount + 1;
+    const nextIndex = questionIndex + 1;
 
-    // Every DECISION_EVERY questions → show decision dialog
-    if (count % DECISION_EVERY === 0) {
-      setState({
-        phase: 'decision',
-        answeredIds: newAnsweredIds,
-        answers: newAnswers,
-        confidence: newConfidence,
-        currentQuestion: null,
-      });
+    setRemainingMovies(filtered);
+    setAskedIds(newAskedIds);
+    setAnsweredQuestions(newAnswered);
+    setQuestionCount(newCount);
+
+    // Stop early if pool is small enough
+    if (filtered.length <= 10) {
+      showResults(filtered, newAnswered);
       return;
     }
 
-    // If no more questions → go straight to results
-    const nextQ = pickNextQuestion(newAnsweredIds, newAnswers);
-    if (!nextQ) {
-      setState({
-        phase: 'results',
-        answeredIds: newAnsweredIds,
-        answers: newAnswers,
-        confidence: newConfidence,
-        currentQuestion: null,
-      });
+    // After question 5 (index 4), show checkpoint
+    if (questionIndex === 4) {
+      setQuestionIndex(nextIndex);
+      setPhase('checkpoint');
       return;
     }
 
-    setState({
-      phase: 'question',
-      answeredIds: newAnsweredIds,
-      answers: newAnswers,
-      confidence: newConfidence,
-      currentQuestion: nextQ,
-    });
-  };
-
-  const handleContinue = () => {
-    const { answeredIds, answers, confidence } = state;
-    const nextQ = pickNextQuestion(answeredIds, answers);
-    if (!nextQ) {
-      setState((s) => ({ ...s, phase: 'results' }));
+    // Structured phase: advance to next session question
+    if (nextIndex < 5) {
+      setQuestionIndex(nextIndex);
       return;
     }
-    setState((s) => ({ ...s, phase: 'question', currentQuestion: nextQ }));
-  };
 
-  const handleRecommendNow = () => {
-    setState((s) => ({ ...s, phase: 'results' }));
-  };
-
-  const handleRestart = () => {
-    setState(makeInitialState());
-  };
-
-  // ── Derived values ────────────────────────────────────────────────────────
-
-  const [activeCollectionKey, setActiveCollectionKey] = useState(null);
-
-  const { phase, answers, confidence, currentQuestion, answeredIds } = state;
-  const answeredCount = answeredIds.size;
-  const recommendations = useMemo(
-    () => (phase === 'results' ? getRecommendations(answers) : []),
-    [phase, answers]
-  );
-  const highConfidence = confidence >= 70;
-
-  // When results first appear, auto-select the top collection
-  useEffect(() => {
-    if (phase === 'results' && recommendations.length > 0) {
-      setActiveCollectionKey(recommendations[0].key);
+    // Adaptive phase: pick best splitting question
+    const nextAdaptive = pickAdaptiveQuestion(filtered, newAskedIds);
+    if (!nextAdaptive) {
+      showResults(filtered, newAnswered);
+      return;
     }
-  }, [phase, recommendations]);
+    setAdaptiveQuestion(nextAdaptive);
+    setQuestionIndex(nextIndex);
+  }
 
-  const activeCollection = recommendations.find(c => c.key === activeCollectionKey) ?? recommendations[0];
-  const activeMovies = activeCollectionKey ? getMoviesByCollection(activeCollectionKey) : [];
+  function handleContinueFromCheckpoint() {
+    const next = pickAdaptiveQuestion(remainingMovies, askedIds);
+    if (!next) {
+      showResults(remainingMovies, answeredQuestions);
+      return;
+    }
+    setAdaptiveQuestion(next);
+    setPhase('question');
+  }
 
-  // Progress bar: question phase = answered / pool, results = 100
-  const progressPct = phase === 'results' ? 100
-    : Math.round((answeredCount / QUESTION_POOL.length) * 100);
+  function handleRestart() {
+    const sq = buildSessionQuestions();
+    setSessionQuestions(sq);
+    setQuestionIndex(0);
+    setAdaptiveQuestion(null);
+    setPhase('question');
+    setRemainingMovies(allMovies);
+    setAskedIds(new Set());
+    setAnsweredQuestions([]);
+    setQuestionCount(0);
+    setResults([]);
+    setScrollIndex(0);
+  }
 
   if (!open) return null;
 
+  const answers = isKa
+    ? (currentQuestion?.answers_ka ?? [])
+    : (currentQuestion?.answers_en ?? []);
+
+  const progressPct = phase === 'results'
+    ? 100
+    : Math.min(95, Math.round((questionCount / 9) * 100));
+
   return (
     <div className="wizard-overlay" role="dialog" aria-modal="true" onClick={onClose}>
-      <div className="wizard-panel" onClick={(e) => e.stopPropagation()}>
+      <div className="wizard-panel" onClick={e => e.stopPropagation()}>
 
         {/* ── Header ── */}
         <div className="wizard-header">
@@ -315,66 +584,66 @@ export default function WizardModal({ open, onClose }) {
           <div className="wizard-progress__bar" style={{ width: `${progressPct}%` }} />
         </div>
 
-        {/* ── Accuracy indicator (shown once at least 1 answer given) ── */}
-        {answeredCount > 0 && phase !== 'results' && (
-          <div className="wizard-accuracy">
-            <div className="wizard-accuracy__track">
-              <div
-                className={`wizard-accuracy__fill ${highConfidence ? 'wizard-accuracy__fill--high' : ''}`}
-                style={{ width: `${confidence}%` }}
-              />
-            </div>
-            <span className={`wizard-accuracy__label ${highConfidence ? 'wizard-accuracy__label--high' : ''}`}>
-              {t.confidence}: {confidence}%
-            </span>
-          </div>
-        )}
-
         {/* ── Body ── */}
         <div className="wizard-body">
 
           {/* Question phase */}
           {phase === 'question' && currentQuestion && (
             <div className="wizard-question" key={currentQuestion.id}>
-              <p className="wizard-question__label">{currentQuestion.label}</p>
-              <h2 className="wizard-question__text">{currentQuestion.question}</h2>
-              <p className="wizard-question__hint">{currentQuestion.hint}</p>
+              <h2 className="wizard-question__text">
+                {isKa ? currentQuestion.question_ka : currentQuestion.question_en}
+              </h2>
               <div className="wizard-answers">
-                {ANSWER_BUTTON_KEYS.map((key) => (
+                {answers.map((label, i) => (
                   <button
-                    key={key}
-                    className={`wizard-answer-btn wizard-answer-btn--${ANSWER_BTN_CLASS[key]}`}
-                    onClick={() => handleAnswer(key)}
+                    key={i}
+                    className={`wizard-answer-btn ${
+                      i === answers.length - 1
+                        ? 'wizard-answer-btn--idk'
+                        : i === 0
+                          ? 'wizard-answer-btn--yes'
+                          : 'wizard-answer-btn--no'
+                    }`}
+                    onClick={() => handleAnswer(i)}
                   >
-                    {t[key]}
+                    {label}
                   </button>
                 ))}
               </div>
+              <p className="wizard-question__hint" style={{ marginTop: 12, color: '#888', fontSize: '0.8rem' }}>
+                {isKa
+                  ? `კითხვა ${questionCount + 1} · დარჩენილი ფილმები: ${remainingMovies.length}`
+                  : `Question ${questionCount + 1} · Remaining: ${remainingMovies.length}`}
+              </p>
             </div>
           )}
 
-          {/* Decision phase (every 5 answers) */}
-          {phase === 'decision' && (
-            <div className="wizard-decision" key="decision">
+          {/* Checkpoint phase */}
+          {phase === 'checkpoint' && (
+            <div className="wizard-decision" key="checkpoint">
               <div className="wizard-decision__icon">🤔</div>
               <h2 className="wizard-decision__title">
-                {answeredCount} {t.questionsAnswered}
+                {isKa
+                  ? `უკვე ${questionCount} კითხვაზე უპასუხე`
+                  : `You've answered ${questionCount} questions`}
               </h2>
-              <p className="wizard-decision__sub">
-                {t.accuracy} {confidence}% — {highConfidence ? t.sufficientAccuracy : t.moreWillImprove}
+              <p className="wizard-decision__sub" style={{ color: '#aaa', marginBottom: 8 }}>
+                {isKa
+                  ? `დარჩენილი ფილმები: ${remainingMovies.length}`
+                  : `Remaining movies: ${remainingMovies.length}`}
               </p>
               <div className="wizard-decision__actions">
                 <button
-                  className={`wizard-decision-btn ${highConfidence ? 'wizard-decision-btn--primary' : 'wizard-decision-btn--secondary'}`}
-                  onClick={handleRecommendNow}
+                  className="wizard-decision-btn wizard-decision-btn--primary"
+                  onClick={() => showResults(remainingMovies, answeredQuestions)}
                 >
-                  {t.recommendNow}
+                  {isKa ? '✨ საუკეთესო შედეგების ნახვა' : '✨ Show best results'}
                 </button>
                 <button
-                  className={`wizard-decision-btn ${highConfidence ? 'wizard-decision-btn--secondary' : 'wizard-decision-btn--primary'}`}
-                  onClick={handleContinue}
+                  className="wizard-decision-btn wizard-decision-btn--secondary"
+                  onClick={handleContinueFromCheckpoint}
                 >
-                  {t.continueQuestions}
+                  {isKa ? 'კიდევ კითხვები →' : 'More questions →'}
                 </button>
               </div>
             </div>
@@ -385,65 +654,78 @@ export default function WizardModal({ open, onClose }) {
             <div className="wizard-results">
               <div className="wizard-results__header">
                 <span className="wizard-results__emoji">✨</span>
-                <h2 className="wizard-results__title">{t.yourCollections}</h2>
-                <p className="wizard-results__subtitle">
-                  {answeredCount} {t.answers} · {t.accuracy} {confidence}%
+                <h2 className="wizard-results__title">
+                  {isKa ? 'შენთვის შერჩეული ფილმები' : 'Movies picked for you'}
+                </h2>
+                <p className="wizard-results__subtitle" style={{ color: '#888' }}>
+                  {isKa
+                    ? `${questionCount} კითხვის საფუძველზე`
+                    : `Based on ${questionCount} questions`}
                 </p>
               </div>
 
-              <div className="wizard-results__list">
-                {recommendations.map((col, i) => (
-                  <div
-                    key={col.id}
-                    className="wizard-result-card"
-                    style={{
-                      animationDelay: `${i * 0.1}s`,
-                      cursor: 'pointer',
-                      outline: col.key === activeCollectionKey
-                        ? `2px solid ${col.accentColor}`
-                        : '2px solid transparent',
-                      outlineOffset: '2px',
-                    }}
-                    onClick={() => setActiveCollectionKey(col.key)}
-                  >
-                    <div className="wizard-result-card__img-wrap">
-                      <img src={col.imageUrl} alt={col.name} className="wizard-result-card__img" />
-                      <div className="wizard-result-card__overlay" style={{ background: col.gradient }} />
-                    </div>
-                    <div className="wizard-result-card__body">
-                      <span className="wizard-result-card__icon">{col.icon}</span>
-                      <div>
-                        <p className="wizard-result-card__name">{col.name}</p>
-                        <p className="wizard-result-card__count" style={{ color: col.accentColor }}>
-                          {col.count} ფილმი
-                        </p>
-                      </div>
-                    </div>
-                    {i === 0 && <span className="wizard-result-card__badge">{t.best}</span>}
-                  </div>
-                ))}
-              </div>
+              {results.length === 0 ? (
+                <p style={{ color: '#888', textAlign: 'center', padding: '20px 0' }}>
+                  {isKa ? 'ფილმები ვერ მოიძებნა' : 'No movies found'}
+                </p>
+              ) : (() => {
+                const canGoLeft = scrollIndex > 0;
+                const canGoRight = scrollIndex + VISIBLE_COUNT < results.length;
+                const visibleMovies = results.slice(scrollIndex, scrollIndex + VISIBLE_COUNT);
+                return (
+                  <>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+                      <button
+                        onClick={() => setScrollIndex(i => i - 1)}
+                        disabled={!canGoLeft}
+                        style={{
+                          flexShrink: 0, width: '32px', height: '32px',
+                          borderRadius: '50%',
+                          background: canGoLeft ? 'rgba(234,179,8,0.9)' : 'rgba(255,255,255,0.08)',
+                          border: 'none',
+                          color: canGoLeft ? '#000' : '#444',
+                          fontSize: '20px',
+                          cursor: canGoLeft ? 'pointer' : 'default',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          lineHeight: 1,
+                        }}
+                      >‹</button>
 
-              {/* ── Collection movies strip ── */}
-              {activeCollection && activeMovies.length > 0 && (
-                <div style={{ marginTop: '20px' }}>
-                  <p style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.15em',
-                    color: activeCollection.accentColor,
-                    marginBottom: '10px',
-                  }}>
-                    {t.moviesFrom}: {activeCollection.name}
-                  </p>
-                  <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '6px', scrollbarWidth: 'none' }}>
-                    {activeMovies.map(movie => (
-                      <MovieCard key={movie.id} movie={movie} width="100px" />
-                    ))}
-                  </div>
-                </div>
-              )}
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(3, 1fr)',
+                        gap: '8px',
+                        flex: 1,
+                        minWidth: 0,
+                      }}>
+                        {visibleMovies.map(movie => (
+                          <MovieCard key={movie.id} movie={movie} />
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => setScrollIndex(i => i + 1)}
+                        disabled={!canGoRight}
+                        style={{
+                          flexShrink: 0, width: '32px', height: '32px',
+                          borderRadius: '50%',
+                          background: canGoRight ? 'rgba(234,179,8,0.9)' : 'rgba(255,255,255,0.08)',
+                          border: 'none',
+                          color: canGoRight ? '#000' : '#444',
+                          fontSize: '20px',
+                          cursor: canGoRight ? 'pointer' : 'default',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          lineHeight: 1,
+                        }}
+                      >›</button>
+                    </div>
+
+                    <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '8px' }}>
+                      {scrollIndex + 1}–{Math.min(scrollIndex + VISIBLE_COUNT, results.length)} / {results.length}
+                    </p>
+                  </>
+                );
+              })()}
             </div>
           )}
 
@@ -452,30 +734,16 @@ export default function WizardModal({ open, onClose }) {
         {/* ── Footer ── */}
         <div className="wizard-footer">
           <div className="wizard-footer__left">
-            {phase === 'question' && answeredCount > 0 && (
-              <button className="wizard-footer__back" onClick={handleContinue}>
-                {/* skip back — go to results early */}
-              </button>
-            )}
             {phase === 'results' && (
               <button className="wizard-footer__restart" onClick={handleRestart}>
                 {t.restartShort}
               </button>
             )}
-            {(phase === 'question' || phase === 'decision') && answeredCount === 0 && (
-              <span />
-            )}
-            {phase === 'question' && answeredCount > 0 && (
-              <button className="wizard-footer__early" onClick={handleRecommendNow}>
-                {t.nowShort}
-              </button>
-            )}
           </div>
-
           <span className="wizard-footer__step">
             {phase === 'results'
-              ? `${answeredCount} / ${QUESTION_POOL.length} · ${t.done}`
-              : `${answeredCount} / ${QUESTION_POOL.length}`}
+              ? (isKa ? `${results.length} ფილმი` : `${results.length} movies`)
+              : (isKa ? `${questionCount} კითხვა` : `${questionCount} questions`)}
           </span>
         </div>
 

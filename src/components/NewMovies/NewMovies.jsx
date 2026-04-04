@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { NEW_MOVIES } from '../../data/movies';
 import MovieCard from '../MovieCard/MovieCard';
 import './NewMovies.css';
 
-export default function NewMovies() {
+export default function NewMovies({ movies = [] }) {
   return (
     <section className="new-movies">
       <div className="container">
@@ -26,13 +25,13 @@ export default function NewMovies() {
         </div>
 
         <div className="new-grid">
-          {NEW_MOVIES.map((movie, i) => (
+          {movies.map((movie, i) => (
             <div
               key={movie.id}
               style={{ animationDelay: `${i * 0.08}s` }}
               className="animate-fade-in"
             >
-              <MovieCard movie={movie} isNew />
+              <MovieCard movie={movie} />
             </div>
           ))}
         </div>
