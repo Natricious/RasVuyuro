@@ -151,6 +151,18 @@
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
+/* Hamburger → X animation */
+.navbar__hamburger span:nth-child(1).open {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__hamburger span:nth-child(2).open {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.navbar__hamburger span:nth-child(3).open {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 /* Mobile menu */
 .mobile-menu {
   position: fixed;

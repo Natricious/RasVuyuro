@@ -446,8 +446,37 @@
 
 /* ── Mobile ──────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .wizard-panel       { border-radius: 20px; }
+  .wizard-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .wizard-panel {
+    border-radius: 24px 24px 0 0;
+    max-width: 100%;
+    max-height: 90dvh;
+    overflow-y: auto;
+  }
+
   .wizard-question__text { font-size: 1.25rem; }
-  .wizard-answer-btn  { padding: 12px 6px; font-size: 0.875rem; }
-  .wizard-decision-btn { padding: 12px 16px; font-size: 0.875rem; }
+
+  .wizard-answer-btn {
+    padding: 14px 6px;
+    font-size: 0.875rem;
+    min-height: 48px;
+  }
+
+  .wizard-decision-btn {
+    padding: 14px 16px;
+    font-size: 0.875rem;
+    min-height: 48px;
+  }
+
+  .wizard-body {
+    padding: 24px 20px 16px;
+  }
+
+  .wizard-footer {
+    padding: 12px 20px 24px;
+  }
 }

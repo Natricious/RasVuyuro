@@ -7,11 +7,9 @@ import { useLang } from '../../context/LanguageContext';
 function SkeletonCard() {
   return (
     <div style={{
-      width: '280px',
       height: '180px',
       borderRadius: '12px',
       background: 'rgba(255,255,255,0.05)',
-      flexShrink: 0,
       animation: 'skeletonPulse 1.4s ease-in-out infinite',
     }} />
   );
@@ -41,7 +39,7 @@ export default function CollectionsPage() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
           {loading
             ? Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)
             : collections.map(col => (
@@ -50,12 +48,10 @@ export default function CollectionsPage() {
                 to={`/collections/${col.slug}`}
                 style={{
                   position: 'relative',
-                  width: '280px',
                   height: '180px',
                   borderRadius: '12px',
                   overflow: 'hidden',
                   display: 'block',
-                  flexShrink: 0,
                   transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 }}
                 onMouseEnter={e => {

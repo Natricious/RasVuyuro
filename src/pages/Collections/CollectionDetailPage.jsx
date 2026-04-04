@@ -55,6 +55,16 @@ const RATING_OPTIONS = [
   { value: 8.5, label: '8.5+' },
 ];
 
+const mobileStyles = `
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 768px) {
+    .collection-filters { flex-direction: column !important; align-items: stretch !important; }
+    .collection-filters select,
+    .collection-filters button { width: 100% !important; }
+    .collection-header { flex-direction: column !important; gap: 12px !important; }
+  }
+`;
+
 const Spinner = () => (
   <div style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
     <div style={{
@@ -64,7 +74,6 @@ const Spinner = () => (
       borderRadius: '50%',
       animation: 'spin 0.75s linear infinite',
     }} />
-    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
   </div>
 );
 
@@ -147,6 +156,7 @@ export default function CollectionDetailPage() {
 
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>
+      <style>{mobileStyles}</style>
       <div className="container">
 
         {/* Back button */}
@@ -159,7 +169,7 @@ export default function CollectionDetailPage() {
 
         {/* Header */}
         {collection && (
-          <div style={{ marginBottom: '32px', display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
+          <div className="collection-header" style={{ marginBottom: '32px', display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
             <div style={{
               width: '72px', height: '72px', borderRadius: '18px',
               background: `${collection.color}22`,
@@ -192,7 +202,7 @@ export default function CollectionDetailPage() {
         {loading ? <Spinner /> : (
           <>
             {/* Filters + Sort bar */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px', alignItems: 'center' }}>
+            <div className="collection-filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px', alignItems: 'center' }}>
               <select
                 value={selectedGenre}
                 onChange={e => resetFilters(() => setSelectedGenre(e.target.value))}

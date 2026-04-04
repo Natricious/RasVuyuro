@@ -65,9 +65,22 @@ export default function MovieDetailPage() {
 
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .movie-detail-hero { height: 320px !important; }
+          .movie-detail-poster { width: 120px !important; height: 180px !important; bottom: -45px !important; }
+          .movie-detail-content { padding-top: 60px !important; }
+          .movie-detail-title { font-size: 1.625rem !important; }
+        }
+        @media (max-width: 480px) {
+          .movie-detail-hero { height: 260px !important; }
+          .movie-detail-poster { width: 100px !important; height: 150px !important; bottom: -38px !important; }
+          .movie-detail-content { padding-top: 50px !important; }
+        }
+      `}</style>
 
       {/* ── Hero ── */}
-      <div style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
+      <div className="movie-detail-hero" style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
         <img
           src={movie.poster}
           alt=""
@@ -98,7 +111,7 @@ export default function MovieDetailPage() {
           ← {lang === 'ka' ? 'უკან' : 'Back'}
         </button>
 
-        <div style={{
+        <div className="movie-detail-poster" style={{
           position: 'absolute', bottom: '-60px', left: '50%',
           transform: 'translateX(-50%)',
           width: '160px', height: '240px',
@@ -111,11 +124,11 @@ export default function MovieDetailPage() {
       </div>
 
       {/* ── Content ── */}
-      <div style={{ paddingTop: '80px', paddingBottom: '96px' }}>
+      <div className="movie-detail-content" style={{ paddingTop: '80px', paddingBottom: '96px' }}>
         <div className="container" style={{ maxWidth: '720px' }}>
 
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 700, color: 'var(--fg)', marginBottom: '8px', lineHeight: 1.2 }}>
+            <h1 className="movie-detail-title" style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 700, color: 'var(--fg)', marginBottom: '8px', lineHeight: 1.2 }}>
               {movie.title}
             </h1>
             {movie.title_ge && lang === 'ka' && (
