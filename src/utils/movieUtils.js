@@ -23,14 +23,20 @@ export function getMoviesByCollectionSlug(movies, collections, slug) {
   const col = collections.find(c => c.slug === slug)
   if (!col) return []
   const { themes = [], timeline = [], genres = [] } = col.filters || {}
+
   return movies.filter(movie => {
-    const themeMatch = themes.length === 0 ||
-      themes.some(t => (movie.themes || []).includes(t))
-    const timelineMatch = timeline.length === 0 ||
-      timeline.includes(movie.timeline)
-    const genreMatch = genres.length === 0 ||
-      genres.some(g => (movie.genres || []).includes(g))
-    return themeMatch && timelineMatch && genreMatch
+    // 1. Exact slug match — also normalize underscore → hyphen (pipeline movies use
+    //    values like "ancient_rome" but collection slugs use "ancient-rome")
+    const normalizedColls = (movie.collections || []).map(c => c.replace(/_/g, '-'))
+    if (normalizedColls.includes(slug)) return true
+
+    // 2. OR fallback: match via themes, genres, or timeline from the collection's filters.
+    //    This catches pipeline-imported movies that have genres/timeline but not the exact slug.
+    const themeMatch    = themes.length > 0   && themes.some(t => (movie.themes || []).includes(t))
+    const genreMatch    = genres.length > 0   && genres.some(g => (movie.genres || []).includes(g))
+    const timelineMatch = timeline.length > 0 && timeline.includes(movie.timeline)
+
+    return themeMatch || genreMatch || timelineMatch
   })
 }
 

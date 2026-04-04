@@ -1,43 +1,35 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useCollections } from '../../hooks/useCollections';
-import { useMovies } from '../../hooks/useMovies';
-import { getMoviesByCollectionSlug } from '../../utils/movieUtils';
+import { useCollectionCounts } from '../../hooks/useMovies';
 import { useLang } from '../../context/LanguageContext';
 
-const Spinner = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
+// Skeleton card shown while collections are loading
+function SkeletonCard() {
+  return (
     <div style={{
-      width: '36px', height: '36px',
-      border: '3px solid rgba(232,197,71,0.15)',
-      borderTopColor: 'var(--gold)',
-      borderRadius: '50%',
-      animation: 'spin 0.75s linear infinite',
+      width: '280px',
+      height: '180px',
+      borderRadius: '12px',
+      background: 'rgba(255,255,255,0.05)',
+      flexShrink: 0,
+      animation: 'skeletonPulse 1.4s ease-in-out infinite',
     }} />
-    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-  </div>
-);
+  );
+}
 
 export default function CollectionsPage() {
-  const navigate = useNavigate();
   const { lang } = useLang();
-  const { collections, loading: collectionsLoading } = useCollections();
-  const { movies, loading: moviesLoading } = useMovies();
-
-  const loading = collectionsLoading || moviesLoading
-
-  // Pre-compute movie counts for all collections
-  const countsBySlug = useMemo(() => {
-    if (!movies.length || !collections.length) return {};
-    const map = {};
-    for (const col of collections) {
-      map[col.slug] = getMoviesByCollectionSlug(movies, collections, col.slug).length;
-    }
-    return map;
-  }, [movies, collections]);
+  const { collections, loading } = useCollections();
+  const counts = useCollectionCounts(collections);
 
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>
+      <style>{`
+        @keyframes skeletonPulse {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.4; }
+        }
+      `}</style>
       <div className="container">
 
         <div style={{ marginBottom: '40px' }}>
@@ -49,23 +41,22 @@ export default function CollectionsPage() {
           </p>
         </div>
 
-        {loading ? <Spinner /> : (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-            {collections.map(col => (
-              <button
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+          {loading
+            ? Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)
+            : collections.map(col => (
+              <Link
                 key={col.slug}
-                onClick={() => navigate(`/collections/${col.slug}`)}
+                to={`/collections/${col.slug}`}
                 style={{
                   position: 'relative',
                   width: '280px',
                   height: '180px',
                   borderRadius: '12px',
                   overflow: 'hidden',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  display: 'block',
                   flexShrink: 0,
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.transform = 'scale(1.03)';
@@ -76,28 +67,36 @@ export default function CollectionsPage() {
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                <img
-                  src={col.imageUrl}
-                  alt=""
-                  aria-hidden="true"
-                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-                />
+                {col.imageUrl && (
+                  <img
+                    src={col.imageUrl}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                )}
+                {/* Fallback background when no image */}
                 <div style={{
                   position: 'absolute', inset: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%)',
+                  background: col.imageUrl
+                    ? 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%)'
+                    : `linear-gradient(135deg, ${col.color}33 0%, rgba(10,7,9,0.9) 100%)`,
                 }} />
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px', textAlign: 'left' }}>
                   <p style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff', marginBottom: '4px', lineHeight: 1.2, fontFamily: 'var(--font-display)' }}>
                     {col.icon} {lang === 'ka' ? col.title_ka : col.title_en}
                   </p>
                   <p style={{ fontSize: '0.75rem', fontWeight: 600, color: col.color }}>
-                    {countsBySlug[col.slug] ?? '…'} {lang === 'ka' ? 'ფილმი' : 'movies'}
+                    {counts[col.slug] != null
+                      ? `${counts[col.slug]} ${lang === 'ka' ? 'ფილმი' : 'movies'}`
+                      : '…'}
                   </p>
                 </div>
-              </button>
-            ))}
-          </div>
-        )}
+              </Link>
+            ))
+          }
+        </div>
 
       </div>
     </main>

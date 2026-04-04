@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCollectionMovies } from '../../hooks/useMovies';
 import { useCollections } from '../../hooks/useCollections';

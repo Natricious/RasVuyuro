@@ -60,6 +60,65 @@ export function useNewMovies(limit = 10) {
   return { movies, loading }
 }
 
+// ── Shared: build PostgREST OR filter for collection matching ─────────────────
+// Used by both useCollectionMovies and useCollectionCounts.
+function buildCollectionOrFilter(slug, cf) {
+  const parts = [`collections.cs.{"${slug}"}`]
+  const underscoreSlug = slug.replace(/-/g, '_')
+  if (underscoreSlug !== slug) parts.push(`collections.cs.{"${underscoreSlug}"}`)
+  if (cf.themes?.length) {
+    const vals = cf.themes
+      .map(v => (/[ ,{}()"\\]/.test(v) ? `"${v.replace(/"/g, '\\"')}"` : v))
+      .join(',')
+    parts.push(`themes.ov.{${vals}}`)
+  }
+  if (cf.genres?.length)   parts.push(`genres.ov.{${cf.genres.join(',')}}`)
+  if (cf.timeline?.length) parts.push(`timeline.in.(${cf.timeline.join(',')})`)
+  return parts.join(',')
+}
+
+// ── useCollectionCounts ───────────────────────────────────────────────────────
+// Returns { [slug]: count } for all collections without loading any movie data.
+// Fires parallel HEAD count queries (very lightweight), updates progressively.
+export function useCollectionCounts(collections) {
+  const [counts, setCounts] = useState({})
+
+  useEffect(() => {
+    if (!collections.length) return
+    let cancelled = false
+
+    const BATCH = 10
+    async function run() {
+      const result = {}
+      for (let i = 0; i < collections.length; i += BATCH) {
+        if (cancelled) break
+        const batch = collections.slice(i, i + BATCH)
+        const settled = await Promise.allSettled(
+          batch.map(async col => {
+            const cacheKey = ck('count', col.slug)
+            if (queryCache.has(cacheKey)) return { slug: col.slug, count: queryCache.get(cacheKey) }
+            const orFilter = buildCollectionOrFilter(col.slug, col.filters || {})
+            const { count, error } = await supabase
+              .from('movies')
+              .select('id', { count: 'exact', head: true })
+              .or(orFilter)
+            const n = (!error && count != null) ? count : 0
+            queryCache.set(cacheKey, n)
+            return { slug: col.slug, count: n }
+          })
+        )
+        if (cancelled) break
+        settled.forEach(r => { if (r.status === 'fulfilled') result[r.value.slug] = r.value.count })
+        setCounts(prev => ({ ...prev, ...result }))
+      }
+    }
+    run()
+    return () => { cancelled = true }
+  }, [collections.length])
+
+  return counts
+}
+
 // ── useCollectionMovies ───────────────────────────────────────────────────────
 // Fetches movies for a collection using server-side filters + pagination.
 //
@@ -103,11 +162,8 @@ export function useCollectionMovies(collection, filters = {}, page = 0, pageSize
       .from('movies')
       .select(LIST_FIELDS, { count: 'exact' })
 
-    // Collection-level filters (from Supabase collections.filters jsonb)
-    const cf = collection.filters || {}
-    if (cf.themes?.length)   q = q.overlaps('themes',   cf.themes)
-    if (cf.timeline?.length) q = q.in('timeline',       cf.timeline)
-    if (cf.genres?.length)   q = q.overlaps('genres',   cf.genres)
+    // OR logic: slug match, themes, genres, timeline (see buildCollectionOrFilter)
+    q = q.or(buildCollectionOrFilter(slug, collection.filters || {}))
 
     // User filters
     if (minRating > 0)            q = q.gte('imdb_rating', minRating)
