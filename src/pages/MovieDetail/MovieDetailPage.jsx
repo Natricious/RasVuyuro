@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMovies } from '../../hooks/useMovies';
 import { useLang } from '../../context/LanguageContext';
+import { T } from '../../data/translations';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
 const Spinner = () => (
@@ -30,7 +31,7 @@ export default function MovieDetailPage() {
     return (
       <main style={{ textAlign: 'center', padding: '160px 24px', minHeight: '100vh' }}>
         <p style={{ fontFamily: 'var(--font-display)', fontSize: '5rem', fontWeight: 700, color: 'var(--gold)' }}>404</p>
-        <p style={{ color: 'var(--fg-muted)', marginTop: '12px' }}>ფილმი ვერ მოიძებნა</p>
+        <p style={{ color: 'var(--fg-muted)', marginTop: '12px' }}>{T[lang].movieNotFound}</p>
         <button
           onClick={() => navigate(-1)}
           style={{ marginTop: '24px', color: 'var(--gold)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9375rem' }}

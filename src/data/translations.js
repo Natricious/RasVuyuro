@@ -41,6 +41,20 @@ export const T = {
     questionsAnswered: 'კითხვა პასუხგაცემულია',
     sufficientAccuracy: 'საკმარისია კარგი რეკომენდაციისთვის',
     moreWillImprove: 'მეტი კითხვა გააუმჯობესებს შედეგს',
+    // Home sections
+    trendingLabel: 'ტოპ ფილმები',
+    trendingTitle: 'ტრენდულობაში',
+    trendingDesc: 'ყველაზე მაღალი რეიტინგის ფილმები',
+    newMoviesLabel: 'განახლებები',
+    newMoviesTitle: 'ახალი ფილმები',
+    newMoviesDesc: 'ბოლოს დამატებული',
+    newMoviesViewAll: 'ყველა',
+    // Planned page
+    plannedPageTitle: 'სანახავი სია',
+    plannedEmpty: 'გეგმაში ფილმები არ გაქვს დამატებული',
+    plannedCount: 'ფილმი',
+    // 404
+    movieNotFound: 'ფილმი ვერ მოიძებნა',
   },
   en: {
     findMovie: 'Find a Movie',
@@ -84,5 +98,19 @@ export const T = {
     questionsAnswered: 'questions answered',
     sufficientAccuracy: 'Good enough for a solid recommendation',
     moreWillImprove: 'More questions will improve results',
+    // Home sections
+    trendingLabel: 'Top Films',
+    trendingTitle: 'Trending',
+    trendingDesc: 'Highest rated movies',
+    newMoviesLabel: 'Updates',
+    newMoviesTitle: 'New Movies',
+    newMoviesDesc: 'Recently added',
+    newMoviesViewAll: 'All',
+    // Planned page
+    plannedPageTitle: 'Watch List',
+    plannedEmpty: 'No movies in your watch list yet',
+    plannedCount: 'movies',
+    // 404
+    movieNotFound: 'Movie not found',
   },
 };

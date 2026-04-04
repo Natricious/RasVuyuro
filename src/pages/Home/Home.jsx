@@ -5,9 +5,12 @@ import ThematicCollections from '../../components/ThematicCollections/ThematicCo
 import NewMovies from '../../components/NewMovies/NewMovies';
 import Timeline from '../../components/Timeline/Timeline';
 import { useMovies } from '../../hooks/useMovies';
+import { useLang } from '../../context/LanguageContext';
+import { T } from '../../data/translations';
 
 export default function Home() {
   const { movies } = useMovies();
+  const { lang } = useLang();
 
   const trendingMovies = useMemo(
     () => movies
@@ -30,9 +33,9 @@ export default function Home() {
       <HeroBanner />
 
       <MovieRow
-        label="ტოპ ფილმები"
-        title="ტრენდულობაში"
-        description="ყველაზე ხედული ფილმები ამ კვირაში"
+        label={T[lang].trendingLabel}
+        title={T[lang].trendingTitle}
+        description={T[lang].trendingDesc}
         movies={trendingMovies}
         viewAllTo="/movies"
       />
