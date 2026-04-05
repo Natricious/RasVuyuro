@@ -9,16 +9,7 @@
   gap: 16px;
 }
 
-.new-grid .poster-card__image-wrap {
-  height: 220px;
-  aspect-ratio: unset;
-  width: 100%;
-}
 
-.new-grid .poster-card__title,
-.new-grid .poster-card__meta {
-  max-width: 100%;
-}
 
 /* Responsive */
 @media (max-width: 1023px) {
