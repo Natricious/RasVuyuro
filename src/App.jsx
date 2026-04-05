@@ -10,6 +10,7 @@ import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import WatchedPage from './pages/Watched/WatchedPage';
 import PlannedPage from './pages/Planned/PlannedPage';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 function TimelinePage() {
   return (
@@ -25,6 +26,7 @@ function TimelinePage() {
 export default function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
