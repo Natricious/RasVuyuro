@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useWatched } from '../../hooks/useWatched';
 import { useLang } from '../../context/LanguageContext';
@@ -9,6 +9,10 @@ export default function MovieCard({ movie }) {
   const { lang } = useLang();
   const { isWatched, toggleWatched, isPlanned, togglePlanned } = useWatched();
   const [imgError, setImgError] = useState(false);
+
+  const containerRef = useRef(null);
+  const primaryRef = useRef(null);
+  const secondaryRef = useRef(null);
 
   // Fallbacks for data structures
   const poster = movie.poster || movie.posterUrl;
@@ -32,6 +36,35 @@ export default function MovieCard({ movie }) {
   // Strict Fallback
   const primaryTitle = enTitle || geTitle;
   const secondaryTitle = (enTitle && geTitle && enTitle !== geTitle) ? geTitle : null;
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const primary = primaryRef.current;
+    const secondary = secondaryRef.current;
+    
+    if (!container || !primary) return;
+
+    // Default typography resets
+    primary.style.fontSize = '1em';
+    if (secondary) {
+      secondary.style.fontSize = '0.85em';
+    }
+
+    let scale = 1.0;
+    const minScale = 0.75;
+    
+    // Evaluate if natural wrap or unbroken strings pushed constraints out of their fixed volume boundaries!
+    while (
+      (container.scrollHeight > container.clientHeight || container.scrollWidth > container.clientWidth || primary.scrollWidth > container.clientWidth) 
+      && scale > minScale
+    ) {
+      scale -= 0.05;
+      primary.style.fontSize = `${scale}em`;
+      if (secondary) {
+        secondary.style.fontSize = `${scale * 0.85}em`;
+      }
+    }
+  }, [primaryTitle, secondaryTitle]);
 
   return (
     <div className="movie-card" onClick={handleWatch}>
@@ -84,18 +117,14 @@ export default function MovieCard({ movie }) {
       </div>
 
       <div className="movie-card__content">
-        <div className="movie-card__title" title={`${primaryTitle}${secondaryTitle ? ` - ${secondaryTitle}` : ''}`}>
-          {secondaryTitle ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', height: '100%', justifyContent: 'center' }}>
-              <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'clip' }}>
-                {primaryTitle}
-              </span>
-              <span style={{ fontSize: '0.82em', color: 'var(--fg-muted)', fontWeight: 500, opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'clip' }}>
-                {secondaryTitle}
-              </span>
-            </div>
-          ) : (
-            <span style={{ fontWeight: 800 }}>{primaryTitle}</span>
+        <div ref={containerRef} className="movie-card__title" title={`${primaryTitle}${secondaryTitle ? ` - ${secondaryTitle}` : ''}`}>
+          <span ref={primaryRef} style={{ fontWeight: 800, width: '100%' }}>
+            {primaryTitle}
+          </span>
+          {secondaryTitle && (
+            <span ref={secondaryRef} style={{ color: 'var(--fg-muted)', fontWeight: 500, opacity: 0.9, marginTop: '4px', width: '100%' }}>
+              {secondaryTitle}
+            </span>
           )}
         </div>
         

@@ -65,5 +65,5 @@
 .scroll-row > * {
   scroll-snap-align: start;
   flex-shrink: 0;
-  width: 176px;
+  width: 215px;
 }
