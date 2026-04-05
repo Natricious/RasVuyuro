@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useMovies } from '../../hooks/useMovies';
+import { useMovieDetail } from '../../hooks/useMovies';
 import { useWatched } from '../../hooks/useWatched';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
@@ -22,12 +22,10 @@ export default function MovieDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { lang } = useLang();
-  const { movies, loading } = useMovies();
+  const { movie, similar: similarMovies, loading } = useMovieDetail(id);
   const { isWatched, toggleWatched, isPlanned, togglePlanned } = useWatched();
 
   if (loading) return <Spinner />;
-
-  const movie = movies.find(m => m.id === Number(id));
 
   if (!movie) {
     return (
@@ -43,10 +41,6 @@ export default function MovieDetailPage() {
       </main>
     );
   }
-
-  const similarMovies = (movie.similar_movies || [])
-    .map(sid => movies.find(m => m.id === sid))
-    .filter(Boolean);
 
   const TIMELINE_LABELS = {
     ancient:      lang === 'ka' ? 'ძველი სამყარო'    : 'Ancient World',
@@ -348,7 +342,7 @@ export default function MovieDetailPage() {
         <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '24px', color: 'white' }}>
           {lang === 'ka' ? 'აღწერა' : 'Overview'}
         </h2>
-        <div style={{ maxWidth: '900px' }}>
+<div style={{ maxWidth: '900px' }}>
           <p style={{ fontSize: '1.15rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.85)', margin: 0, letterSpacing: '0.015em' }}>
             {(lang === 'ka' ? (movie.description_ka || movie.description) : movie.description) || (lang === 'ka' ? 'ფილმის აღწერა არ არის ხელმისაწვდომი.' : 'Movie description is not available.')}
           </p>

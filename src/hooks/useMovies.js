@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 
 // ── Shared query cache (session-scoped) ───────────────────────────────────────
+// Bump CACHE_V whenever LIST_FIELDS changes to invalidate all stale cached data.
+const CACHE_V = 2
 const queryCache = new Map()
 
 function ck(...parts) {
-  return JSON.stringify(parts)
+  return JSON.stringify([CACHE_V, ...parts])
 }
 
 // Fields needed for movie cards / lists — skip description & sources
@@ -206,7 +208,7 @@ export function useFilteredMovies({ query = '', genre = '', timeline = '', sort 
 
   const [movies,        setMovies]        = useState(() => queryCache.get(key)?.movies || [])
   const [total,         setTotal]         = useState(() => queryCache.get(key)?.total  ?? null)
-  const [loading,       setLoading]       = useState(false)
+  const [loading,       setLoading]       = useState(() => !queryCache.has(key))
   const [debouncedQuery, setDebouncedQuery] = useState(trimmed)
   const timerRef = useRef(null)
 
@@ -309,10 +311,56 @@ export function useNavSearch(query, limit = 6) {
   return { results, loading }
 }
 
+// ── useMovieDetail ────────────────────────────────────────────────────────────
+// Fetches a single movie by ID plus its similar movies — used by MovieDetailPage.
+// Two targeted queries instead of loading all 6112 movies.
+export function useMovieDetail(id) {
+  const numId = Number(id)
+  const key = ck('detail', numId)
+
+  const [movie,   setMovie]   = useState(() => queryCache.get(key)?.movie   ?? null)
+  const [similar, setSimilar] = useState(() => queryCache.get(key)?.similar ?? [])
+  const [loading, setLoading] = useState(!queryCache.has(key))
+
+  useEffect(() => {
+    if (!numId) return
+    if (queryCache.has(key)) return
+
+    setLoading(true)
+
+    supabase
+      .from('movies')
+      .select(LIST_FIELDS)
+      .eq('id', numId)
+      .single()
+      .then(async ({ data: m, error }) => {
+        if (error || !m) { setLoading(false); return }
+
+        // Fetch similar movies in one query if any IDs exist
+        const similarIds = m.similar_movies || []
+        let similarData = []
+        if (similarIds.length > 0) {
+          const { data } = await supabase
+            .from('movies')
+            .select(LIST_FIELDS)
+            .in('id', similarIds)
+          similarData = data || []
+        }
+
+        queryCache.set(key, { movie: m, similar: similarData })
+        setMovie(m)
+        setSimilar(similarData)
+        setLoading(false)
+      })
+  }, [key, numId])
+
+  return { movie, similar, loading }
+}
+
 // ── useMovies (backward compat) ───────────────────────────────────────────────
 // Fetches ALL movies via internal pagination. Used by ChatButton, WatchedPage,
 // PlannedPage, WizardModal, etc. Cached for session lifetime.
-let allMoviesCache = null
+let allMoviesCacheV2 = null
 
 async function fetchAllMovies() {
   const PAGE = 1000
@@ -333,13 +381,13 @@ async function fetchAllMovies() {
 }
 
 export function useMovies() {
-  const [movies,  setMovies]  = useState(allMoviesCache || [])
-  const [loading, setLoading] = useState(!allMoviesCache)
+  const [movies,  setMovies]  = useState(allMoviesCacheV2 || [])
+  const [loading, setLoading] = useState(!allMoviesCacheV2)
 
   useEffect(() => {
-    if (allMoviesCache) return
+    if (allMoviesCacheV2) return
     fetchAllMovies().then(data => {
-      allMoviesCache = data
+      allMoviesCacheV2 = data
       setMovies(data)
       setLoading(false)
     })

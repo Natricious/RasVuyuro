@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useFilteredMovies } from '../../hooks/useMovies';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { useLang } from '../../context/LanguageContext';
@@ -79,11 +79,8 @@ export default function MoviesPage() {
   const [timeline, setTimeline] = useState('');
   const [sort,     setSort]     = useState('rating');
   const [page,     setPage]     = useState(0);
-  const [allMovies, setAllMovies] = useState([]);
 
   // ── Responsive page-size ──────────────────────────────────────────────────
-  // Measure the container so pageSize is always a multiple of the column count,
-  // ensuring every loaded batch fills complete rows with no empty trailing cells.
   const containerRef = useRef(null);
   const [cols, setCols] = useState(initialCols);
 
@@ -97,15 +94,6 @@ export default function MoviesPage() {
     return () => ro.disconnect();
   }, []);
 
-  // Reset when the column count changes (viewport resize crosses a breakpoint)
-  const prevCols = useRef(cols);
-  useEffect(() => {
-    if (prevCols.current === cols) return;
-    prevCols.current = cols;
-    setAllMovies([]);
-    setPage(0);
-  }, [cols]);
-
   // Smallest multiple of cols that is >= 40
   const pageSize = Math.ceil(40 / cols) * cols;
 
@@ -114,30 +102,38 @@ export default function MoviesPage() {
     query: search, genre, timeline, sort, page, pageSize,
   });
 
-  // Append results when a new page loads
-  useEffect(() => {
-    if (loading || pageMovies.length === 0) return;
-    if (page === 0) {
-      setAllMovies(pageMovies);
-    } else {
-      setAllMovies(prev => [...prev, ...pageMovies]);
-    }
-  }, [pageMovies, page, loading]);
+  // ── Load-more accumulation ────────────────────────────────────────────────
+  // prevMovies holds all movies from pages 0..page-1.
+  // allMovies is always derived synchronously: no effects, no race conditions.
+  const [prevMovies, setPrevMovies] = useState([]);
 
-  // Clear results on empty search result
+  const allMovies = useMemo(() => {
+    if (page === 0 || prevMovies.length === 0) return pageMovies;
+    const ids = new Set(prevMovies.map(m => m.id));
+    return [...prevMovies, ...pageMovies.filter(m => !ids.has(m.id))];
+  }, [prevMovies, pageMovies, page]);
+
+  // Reset on cols change (breakpoint crossed)
+  const prevCols = useRef(cols);
   useEffect(() => {
-    if (!loading && page === 0 && pageMovies.length === 0) {
-      setAllMovies([]);
-    }
-  }, [loading, page, pageMovies.length]);
+    if (prevCols.current === cols) return;
+    prevCols.current = cols;
+    setPrevMovies([]);
+    setPage(0);
+  }, [cols]);
 
   const resetPage = useCallback(() => {
-    setAllMovies([]);
+    setPrevMovies([]);
     setPage(0);
   }, []);
 
+  const handleLoadMore = useCallback(() => {
+    setPrevMovies(allMovies);
+    setPage(p => p + 1);
+  }, [allMovies]);
+
   const hasFilters = search || genre || timeline;
-  const hasMore    = total !== null && allMovies.length < total;
+  const hasMore    = total !== null && allMovies.length > 0 && allMovies.length < total;
 
   const selectStyle = {
     background: 'var(--bg-card)',
@@ -208,15 +204,19 @@ export default function MoviesPage() {
         </div>
 
         {/* Grid */}
-        {loading && page === 0 ? (
-          <Spinner />
-        ) : allMovies.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
-            <p style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🎬</p>
-            <p style={{ fontSize: '1rem' }}>
-              {lang === 'ka' ? 'ფილმი ვერ მოიძებნა' : 'No movies found'}
-            </p>
-          </div>
+        {allMovies.length === 0 ? (
+          loading ? (
+            <Spinner />
+          ) : hasFilters ? (
+            <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
+              <p style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🎬</p>
+              <p style={{ fontSize: '1rem' }}>
+                {lang === 'ka' ? 'ფილმი ვერ მოიძებნა' : 'No movies found'}
+              </p>
+            </div>
+          ) : (
+            <Spinner />
+          )
         ) : (
           <>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '20px' }}>
@@ -232,7 +232,7 @@ export default function MoviesPage() {
                   <Spinner />
                 ) : (
                   <button
-                    onClick={() => setPage(p => p + 1)}
+                    onClick={handleLoadMore}
                     style={{
                       background: 'transparent',
                       border: '1px solid rgba(232,197,71,0.4)',

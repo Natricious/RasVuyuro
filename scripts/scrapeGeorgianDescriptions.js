@@ -29,15 +29,17 @@ function loadEnv(path = '.env') {
 
 loadEnv()
 
-const SUPABASE_URL     = process.env.VITE_SUPABASE_URL
-const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY
+const SUPABASE_URL      = process.env.VITE_SUPABASE_URL
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error('Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY in .env')
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+  console.error('Missing VITE_SUPABASE_URL or SUPABASE_SERVICE_KEY in .env')
+  console.error('Get the service_role key from: Supabase Dashboard → Project Settings → API')
   process.exit(1)
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+// Use service role key so RLS does not block UPDATE writes
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const BATCH_SIZE      = 5
