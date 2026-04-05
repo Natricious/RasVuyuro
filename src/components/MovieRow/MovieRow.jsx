@@ -5,15 +5,15 @@ import './MovieRow.css';
 
 export default function MovieRow({ label, title, description, movies, viewAllTo }) {
   const rowRef = useRef(null);
-  const [showLeft, setShowLeft] = useState(false);
-  const [showRight, setShowRight] = useState(true);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const handleScroll = () => {
     if (!rowRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = rowRef.current;
-    setShowLeft(scrollLeft > 0);
-    // Use Math.ceil to prevent sub-pixel rounding errors
-    setShowRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+    setCanScrollLeft(scrollLeft > 1);
+    // Tolerate rounding variance natively
+    setCanScrollRight(Math.ceil(scrollLeft + clientWidth + 1) < scrollWidth);
   };
 
   useEffect(() => {
@@ -55,17 +55,16 @@ export default function MovieRow({ label, title, description, movies, viewAllTo 
         </div>
 
         <div className="scroll-row-wrap">
-          {showLeft && (
-            <button 
-              className="scroll-btn scroll-btn--left" 
-              onClick={() => scroll('left')}
-              aria-label="Scroll left"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-          )}
+          <button 
+            className="scroll-btn scroll-btn--left" 
+            onClick={() => scroll('left')}
+            aria-label="Scroll left"
+            disabled={!canScrollLeft}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
           
           <div 
             className="scroll-row" 
@@ -83,11 +82,12 @@ export default function MovieRow({ label, title, description, movies, viewAllTo 
             ))}
           </div>
 
-          {showRight && movies.length > 0 && (
+          {movies.length > 0 && (
             <button 
               className="scroll-btn scroll-btn--right" 
               onClick={() => scroll('right')}
               aria-label="Scroll right"
+              disabled={!canScrollRight}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />

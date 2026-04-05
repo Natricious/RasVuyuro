@@ -5,11 +5,21 @@
 /* Horizontal scroll row */
 .scroll-row-wrap {
   position: relative;
+  /* Sync dimensions mathematically strictly tracking view limitations */
+  --visible: 5;
+  --gap: 16px;
+  --card-width: calc((100% - ((var(--visible) - 1) * var(--gap))) / var(--visible));
+  --poster-height: calc(var(--card-width) * 1.5);
+  --poster-center: calc(8px + (var(--poster-height) / 2) + (var(--poster-height) * 0.75));
 }
+
+@media (max-width: 1080px) { .scroll-row-wrap { --visible: 4; } }
+@media (max-width: 860px) { .scroll-row-wrap { --visible: 3; } }
+@media (max-width: 580px) { .scroll-row-wrap { --visible: 2; } }
 
 .scroll-btn {
   position: absolute;
-  top: 50%;
+  top: var(--poster-center);
   transform: translateY(-50%);
   z-index: 10;
   background: var(--bg-card, rgba(20, 20, 20, 0.9));
@@ -27,25 +37,33 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.scroll-btn:hover {
+.scroll-btn:hover:not(:disabled) {
   background: var(--gold, #e8c547);
   color: #000;
   border-color: transparent;
   transform: translateY(-50%) scale(1.05); /* Slight scale on hover */
 }
 
+.scroll-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
 .scroll-btn--left {
-  left: -24px;
+  left: -28px;
 }
 
 .scroll-btn--right {
-  right: -24px;
+  right: -28px;
 }
 
 @media (max-width: 768px) {
   .scroll-btn {
-    display: none;
+    width: 36px;
+    height: 36px;
   }
+  .scroll-btn--left { left: -16px; }
+  .scroll-btn--right { right: -16px; }
 }
 
 .scroll-row {
@@ -65,5 +83,5 @@
 .scroll-row > * {
   scroll-snap-align: start;
   flex-shrink: 0;
-  width: 215px;
+  width: var(--card-width);
 }
