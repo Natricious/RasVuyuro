@@ -26,20 +26,27 @@ export default function MovieCard({ movie }) {
   const watchedBtnText = lang === 'ka' ? 'ნანახი მაქვს' : 'Mark as watched';
   const watchBtnText = lang === 'ka' ? 'ყურება' : 'Watch';
 
+  const enTitle = movie.title || movie.title_en;
+  const geTitle = movie.title_ge || movie.title_ka;
+  
+  // Strict Fallback
+  const primaryTitle = enTitle || geTitle;
+  const secondaryTitle = (enTitle && geTitle && enTitle !== geTitle) ? geTitle : null;
+
   return (
     <div className="movie-card" onClick={handleWatch}>
       <div className="movie-card__poster">
         {poster && !imgError ? (
           <img
             src={poster}
-            alt={movie.title}
+            alt={primaryTitle}
             className="movie-card__img"
             loading="lazy"
             onError={() => setImgError(true)}
           />
         ) : (
           <div className="movie-card__placeholder">
-            <span>{movie.title}</span>
+            <span>{primaryTitle}</span>
           </div>
         )}
         
@@ -77,9 +84,20 @@ export default function MovieCard({ movie }) {
       </div>
 
       <div className="movie-card__content">
-        <h3 className="movie-card__title" title={movie.title}>
-          {movie.title}
-        </h3>
+        <div className="movie-card__title" title={`${primaryTitle}${secondaryTitle ? ` - ${secondaryTitle}` : ''}`}>
+          {secondaryTitle ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', height: '100%', justifyContent: 'center' }}>
+              <span style={{ fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'clip' }}>
+                {primaryTitle}
+              </span>
+              <span style={{ fontSize: '0.82em', color: 'var(--fg-muted)', fontWeight: 500, opacity: 0.9, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'clip' }}>
+                {secondaryTitle}
+              </span>
+            </div>
+          ) : (
+            <span style={{ fontWeight: 800 }}>{primaryTitle}</span>
+          )}
+        </div>
         
         <div className="movie-card__meta">
           <span>{year}</span>
