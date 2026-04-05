@@ -10,7 +10,7 @@ function ck(...parts) {
 
 // Fields needed for movie cards / lists — skip description & sources
 const LIST_FIELDS =
-  'id,title,title_ge,year,imdb_id,imdb_rating,genres,themes,timeline,tone,poster,collections,similar_movies,description'
+  'id,title,title_ge,year,imdb_id,imdb_rating,genres,themes,timeline,tone,poster,collections,similar_movies,description,description_ka'
 
 // ── useTrendingMovies ─────────────────────────────────────────────────────────
 // Fetches top N movies by IMDb rating.

@@ -350,7 +350,7 @@ export default function MovieDetailPage() {
         </h2>
         <div style={{ maxWidth: '900px' }}>
           <p style={{ fontSize: '1.15rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.85)', margin: 0, letterSpacing: '0.015em' }}>
-            {movie.description || movie.overview || movie.plot || (lang === 'ka' ? 'ფილმის აღწერა არ არის ხელმისაწვდომი.' : 'Movie description is not available.')}
+            {(lang === 'ka' ? (movie.description_ka || movie.description) : movie.description) || (lang === 'ka' ? 'ფილმის აღწერა არ არის ხელმისაწვდომი.' : 'Movie description is not available.')}
           </p>
         </div>
       </section>
