@@ -43,11 +43,15 @@ export default function MovieCard({ movie }) {
           </div>
         )}
         
-        <div className="movie-card__overlay">
+        <div 
+          className="movie-card__overlay" 
+          style={{ background: 'rgba(0, 0, 0, 0.65)' }}
+        >
           <button 
             type="button"
             className={`movie-card__btn movie-card__btn--glass movie-card__btn--planned ${planned ? 'active' : ''}`}
             onClick={handlePlanned}
+            style={{ position: 'absolute', top: '30%', left: '12px', right: '12px', width: 'auto', transform: 'translateY(-50%)' }}
           >
             {plannedBtnText}
           </button>
@@ -56,6 +60,7 @@ export default function MovieCard({ movie }) {
             type="button"
             className="movie-card__btn movie-card__btn--primary"
             onClick={handleWatch}
+            style={{ position: 'absolute', top: '50%', left: '12px', right: '12px', width: 'auto', transform: 'translateY(-50%)' }}
           >
             {watchBtnText}
           </button>
@@ -64,6 +69,7 @@ export default function MovieCard({ movie }) {
             type="button"
             className={`movie-card__btn movie-card__btn--glass movie-card__btn--watched ${watched ? 'active' : ''}`}
             onClick={handleWatched}
+            style={{ position: 'absolute', top: '70%', left: '12px', right: '12px', width: 'auto', transform: 'translateY(-50%)' }}
           >
             {watchedBtnText}
           </button>
