@@ -4,7 +4,9 @@ import './Footer.css';
 const NAV_LINKS = [
   { to: '/', label: 'მთავარი' },
   { to: '/movies', label: 'ფილმები' },
-  { to: '/timeline', label: 'ქრონოლოგია' },
+  { to: '/collections', label: 'კოლექციები' },
+  { to: '/watched', label: 'ნანახი' },
+  { to: '/planned', label: 'გეგმა' },
 ];
 
 export default function Footer() {
@@ -46,7 +48,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="footer__copy">
-              © {new Date().getFullYear()} CineGuide ·{' '}
+              © 2025 CineGuide ·{' '}
               <a href="#" className="footer__policy-link">Privacy</a>
               {' · '}
               <a href="#" className="footer__policy-link">Terms</a>

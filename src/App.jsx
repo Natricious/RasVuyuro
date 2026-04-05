@@ -9,6 +9,7 @@ import CollectionDetailPage from './pages/Collections/CollectionDetailPage';
 import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import WatchedPage from './pages/Watched/WatchedPage';
 import PlannedPage from './pages/Planned/PlannedPage';
+import NotFoundPage from './pages/NotFound/NotFoundPage';
 
 function TimelinePage() {
   return (
@@ -17,15 +18,6 @@ function TimelinePage() {
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: 'var(--fg)', marginBottom: '8px' }}>ქრონოლოგია</h1>
         <p style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>ისტორიული ქრონოლოგია</p>
       </div>
-    </main>
-  );
-}
-
-function NotFound() {
-  return (
-    <main style={{ textAlign: 'center', padding: '160px 24px', minHeight: '100vh' }}>
-      <p style={{ fontFamily: 'var(--font-display)', fontSize: '5rem', fontWeight: 700, color: 'var(--gold)' }}>404</p>
-      <p style={{ color: 'var(--fg-muted)', marginTop: '12px' }}>გვერდი ვერ მოიძებნა</p>
     </main>
   );
 }
@@ -44,7 +36,7 @@ export default function App() {
         <Route path="/movie/:id" element={<MovieDetailPage />} />
         <Route path="/watched" element={<WatchedPage />} />
         <Route path="/planned" element={<PlannedPage />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
       <ChatButton />
