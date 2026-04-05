@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useMovies } from '../../hooks/useMovies';
+import { useWatched } from '../../hooks/useWatched';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -22,6 +23,7 @@ export default function MovieDetailPage() {
   const navigate = useNavigate();
   const { lang } = useLang();
   const { movies, loading } = useMovies();
+  const { isWatched, toggleWatched, isPlanned, togglePlanned } = useWatched();
 
   if (loading) return <Spinner />;
 
@@ -63,161 +65,320 @@ export default function MovieDetailPage() {
     thriller: lang === 'ka' ? 'თრილერი'   : 'Thriller',
   };
 
+  const watched = isWatched(movie.id);
+  const planned = isPlanned(movie.id);
+
   return (
-    <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <main style={{ minHeight: '100vh', background: 'var(--bg)', color: 'var(--fg)', overflow: 'hidden' }}>
       <style>{`
-        @media (max-width: 768px) {
-          .movie-detail-hero { height: 320px !important; }
-          .movie-detail-poster { width: 120px !important; height: 180px !important; bottom: -45px !important; }
-          .movie-detail-content { padding-top: 60px !important; }
-          .movie-detail-title { font-size: 1.625rem !important; }
+        .cinematic-hero {
+          position: relative;
+          min-height: 80vh;
+          display: flex;
+          align-items: center;
+          padding: 100px 4% 80px 4%;
         }
-        @media (max-width: 480px) {
-          .movie-detail-hero { height: 260px !important; }
-          .movie-detail-poster { width: 100px !important; height: 150px !important; bottom: -38px !important; }
-          .movie-detail-content { padding-top: 50px !important; }
+
+        .cinematic-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          filter: blur(24px) brightness(0.25);
+          transform: scale(1.1);
+        }
+
+        .cinematic-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(90deg, var(--bg) 0%, rgba(15,15,15,0.8) 45%, transparent 100%),
+                      linear-gradient(0deg, var(--bg) 0%, transparent 40%);
+        }
+
+        .cinematic-content {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 340px 1fr;
+          gap: 64px;
+          align-items: center;
+        }
+
+        .cinematic-poster img {
+          width: 100%;
+          border-radius: 12px;
+          box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+          border: 1px solid rgba(255,255,255,0.1);
+          aspect-ratio: 2/3;
+          object-fit: cover;
+          display: block;
+        }
+
+        .cinematic-info {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .movie-title {
+          font-family: var(--font-display);
+          font-size: 3.5rem;
+          font-weight: 800;
+          line-height: 1.1;
+          margin: 0;
+          text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+        
+        .movie-meta {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 16px;
+          font-size: 1.1rem;
+          color: var(--fg-muted);
+        }
+
+        .action-buttons {
+          display: flex;
+          gap: 16px;
+          margin-top: 8px;
+          flex-wrap: wrap;
+        }
+
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 28px;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 1.05rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border: none;
+        }
+
+        .btn-primary {
+          background: var(--gold);
+          color: #000;
+        }
+        .btn-primary:hover {
+          filter: brightness(1.15);
+          transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+          background: rgba(255,255,255,0.1);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.2);
+          backdrop-filter: blur(12px);
+        }
+        .btn-secondary:hover {
+          background: rgba(255,255,255,0.2);
+          transform: translateY(-2px);
+        }
+
+        .btn-active {
+          background: rgba(232,197,71,0.15);
+          color: var(--gold);
+          border: 1px solid var(--gold);
+          backdrop-filter: blur(12px);
+        }
+        .btn-active:hover {
+          background: rgba(232,197,71,0.25);
+          transform: translateY(-2px);
+        }
+
+        .tags-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        
+        .tag-pill {
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .overview-section {
+          padding: 64px 4% 0 4%;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .similar-section {
+          padding: 64px 4%;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+          .cinematic-content {
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+          }
+          .movie-title {
+            font-size: 2.75rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .cinematic-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 32px;
+          }
+          .cinematic-poster {
+            max-width: 260px;
+            margin: 0 auto;
+          }
+          .cinematic-overlay {
+            background: linear-gradient(to top, var(--bg) 0%, rgba(15,15,15,0.85) 60%, transparent 100%);
+          }
+          .movie-meta, .tags-container, .action-buttons {
+            justify-content: center;
+          }
         }
       `}</style>
 
-      {/* ── Hero ── */}
-      <div className="movie-detail-hero" style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
-        <img
-          src={movie.poster}
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover',
-            filter: 'blur(24px) brightness(0.35)',
-            transform: 'scale(1.1)',
-          }}
-        />
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, var(--bg) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)',
-        }} />
+      {/* ── Cinematic Hero ── */}
+      <section className="cinematic-hero">
+        <img className="cinematic-bg" src={movie.poster} alt="" aria-hidden="true" />
+        <div className="cinematic-overlay" />
+        
+        <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
+          
+          <div style={{ marginBottom: '40px' }}>
+            <button
+              onClick={() => navigate(-1)}
+              style={{
+                color: 'rgba(255,255,255,0.9)', background: 'rgba(0,0,0,0.5)',
+                border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px',
+                padding: '8px 16px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 500,
+                backdropFilter: 'blur(12px)', display: 'inline-flex', alignItems: 'center', gap: '8px',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseOver={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.7)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.5)'}
+            >
+              <span>←</span> {lang === 'ka' ? 'უკან' : 'Back'}
+            </button>
+          </div>
 
-        <button
-          onClick={() => navigate(-1)}
-          style={{
-            position: 'absolute', top: 'calc(var(--navbar-height) + 16px)', left: '24px',
-            color: 'rgba(255,255,255,0.8)', background: 'rgba(0,0,0,0.4)',
-            border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px',
-            padding: '8px 14px', cursor: 'pointer', fontSize: '0.875rem',
-            backdropFilter: 'blur(8px)',
-          }}
-        >
-          ← {lang === 'ka' ? 'უკან' : 'Back'}
-        </button>
-
-        <div className="movie-detail-poster" style={{
-          position: 'absolute', bottom: '-60px', left: '50%',
-          transform: 'translateX(-50%)',
-          width: '160px', height: '240px',
-          borderRadius: '14px', overflow: 'hidden',
-          boxShadow: '0 24px 64px rgba(0,0,0,0.7)',
-          border: '2px solid rgba(255,255,255,0.12)',
-        }}>
-          <img src={movie.poster} alt={movie.title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        </div>
-      </div>
-
-      {/* ── Content ── */}
-      <div className="movie-detail-content" style={{ paddingTop: '80px', paddingBottom: '96px' }}>
-        <div className="container" style={{ maxWidth: '720px' }}>
-
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h1 className="movie-detail-title" style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 700, color: 'var(--fg)', marginBottom: '8px', lineHeight: 1.2 }}>
-              {movie.title}
-            </h1>
-            {movie.title_ge && lang === 'ka' && (
-              <p style={{ color: 'var(--fg-muted)', fontSize: '1rem', marginBottom: '12px' }}>{movie.title_ge}</p>
-            )}
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '16px' }}>
-              <span style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>{movie.year}</span>
-              <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '1rem' }}>⭐ {movie.imdb_rating}</span>
+          <div className="cinematic-content">
+            <div className="cinematic-poster">
+              <img src={movie.poster} alt={movie.title} />
             </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginBottom: '16px' }}>
-              {(movie.genres || []).map(g => (
-                <span key={g} style={{
-                  padding: '4px 12px', borderRadius: '999px',
-                  background: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  color: 'var(--fg)', fontSize: '0.8125rem', fontWeight: 600,
-                }}>
-                  {g}
-                </span>
-              ))}
-            </div>
+            <div className="cinematic-info">
+              <div>
+                <h1 className="movie-title">{movie.title}</h1>
+                {movie.title_ge && lang === 'ka' && (
+                  <p style={{ color: 'var(--fg-muted)', fontSize: '1.25rem', marginTop: '12px', fontWeight: 500 }}>{movie.title_ge}</p>
+                )}
+              </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
-              {movie.timeline && (
-                <span style={{
-                  padding: '3px 10px', borderRadius: '6px',
-                  background: 'rgba(232,197,71,0.12)',
-                  border: '1px solid rgba(232,197,71,0.3)',
-                  color: 'var(--gold)', fontSize: '0.75rem', fontWeight: 700,
-                }}>
-                  {TIMELINE_LABELS[movie.timeline] || movie.timeline}
-                </span>
-              )}
-              {movie.tone && (
-                <span style={{
-                  padding: '3px 10px', borderRadius: '6px',
-                  background: 'rgba(200,75,49,0.12)',
-                  border: '1px solid rgba(200,75,49,0.3)',
-                  color: 'var(--red)', fontSize: '0.75rem', fontWeight: 700,
-                }}>
-                  {TONE_LABELS[movie.tone] || movie.tone}
-                </span>
+              <div className="movie-meta">
+                <span style={{ fontWeight: 600, color: 'white' }}>{movie.year}</span>
+                <span>•</span>
+                <span style={{ color: 'var(--gold)', fontWeight: 700 }}>⭐ {movie.imdb_rating}</span>
+                {movie.timeline && (
+                  <>
+                    <span>•</span>
+                    <span>{TIMELINE_LABELS[movie.timeline] || movie.timeline}</span>
+                  </>
+                )}
+              </div>
+
+              <div className="tags-container">
+                {(movie.genres || []).map(g => (
+                  <span key={g} className="tag-pill">{g}</span>
+                ))}
+                {movie.tone && (
+                  <span className="tag-pill" style={{ borderColor: 'rgba(200,75,49,0.4)', color: 'var(--red)', background: 'rgba(200,75,49,0.05)' }}>
+                    {TONE_LABELS[movie.tone] || movie.tone}
+                  </span>
+                )}
+              </div>
+
+              <div className="action-buttons">
+                <button className="btn btn-primary">
+                  ▶ {lang === 'ka' ? 'ყურება' : 'Watch'}
+                </button>
+                <button 
+                  className={`btn ${planned ? 'btn-active' : 'btn-secondary'}`}
+                  onClick={() => togglePlanned(movie.id)}
+                >
+                  {planned ? '✓' : '+'} {lang === 'ka' ? 'ვაპირებ ყურებას' : 'Planned'}
+                </button>
+                <button 
+                  className={`btn ${watched ? 'btn-active' : 'btn-secondary'}`}
+                  onClick={() => toggleWatched(movie.id)}
+                >
+                  {watched ? '✓' : '♥'} {lang === 'ka' ? 'ნანახი მაქვს' : 'Watched'}
+                </button>
+              </div>
+              
+              {(movie.themes || []).length > 0 && (
+                <div style={{ marginTop: '16px' }}>
+                  <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--fg-muted)', marginBottom: '12px', fontWeight: 600 }}>
+                    {lang === 'ka' ? 'თემები' : 'Themes'}
+                  </p>
+                  <div className="tags-container">
+                    {movie.themes.map(th => (
+                      <span key={th} className="tag-pill" style={{ background: 'transparent', opacity: 0.7, padding: '4px 12px', fontSize: '0.8rem' }}>{th}</span>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           </div>
-
-          {movie.description && (
-            <p style={{ color: 'var(--fg-muted)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '28px', textAlign: 'center' }}>
-              {movie.description}
-            </p>
-          )}
-
-          {(movie.themes || []).length > 0 && (
-            <div style={{ marginBottom: '40px' }}>
-              <p style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--fg-muted)', marginBottom: '10px' }}>
-                {lang === 'ka' ? 'თემები' : 'Themes'}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                {movie.themes.map(th => (
-                  <span key={th} style={{
-                    padding: '3px 9px', borderRadius: '6px',
-                    background: 'var(--bg-card)',
-                    border: '1px solid rgba(255,255,255,0.07)',
-                    color: 'var(--fg-muted)', fontSize: '0.75rem',
-                  }}>
-                    {th}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {similarMovies.length > 0 && (
-            <div>
-              <p style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--fg-muted)', marginBottom: '14px' }}>
-                {lang === 'ka' ? 'მსგავსი ფილმები' : 'Similar Movies'}
-              </p>
-              <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px', scrollbarWidth: 'none' }}>
-                {similarMovies.map(sm => (
-                  <MovieCard key={sm.id} movie={sm} width="120px" />
-                ))}
-              </div>
-            </div>
-          )}
-
         </div>
-      </div>
+      </section>
+
+      {/* ── Overview Description ── */}
+      <section className="overview-section">
+        <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '24px', color: 'white' }}>
+          {lang === 'ka' ? 'აღწერა' : 'Overview'}
+        </h2>
+        <div style={{ maxWidth: '900px' }}>
+          <p style={{ fontSize: '1.15rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.85)', margin: 0, letterSpacing: '0.015em' }}>
+            {movie.description || movie.overview || movie.plot || (lang === 'ka' ? 'ფილმის აღწერა არ არის ხელმისაწვდომი.' : 'Movie description is not available.')}
+          </p>
+        </div>
+      </section>
+
+      {/* ── Similar Movies ── */}
+      {similarMovies.length > 0 && (
+        <section className="similar-section">
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 700, marginBottom: '32px', color: 'white' }}>
+            {lang === 'ka' ? 'მსგავსი ფილმები' : 'Similar Movies'}
+          </h2>
+          <div style={{ 
+            display: 'grid', 
+            gridAutoFlow: 'column', 
+            gridAutoColumns: 'max-content',
+            gap: '20px', 
+            overflowX: 'auto', 
+            paddingBottom: '32px',
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'rgba(255,255,255,0.2) transparent'
+          }}>
+            {similarMovies.map(sm => (
+              <div key={sm.id} style={{ width: '180px' }}>
+                 <MovieCard movie={sm} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
