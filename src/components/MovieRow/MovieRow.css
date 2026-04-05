@@ -7,10 +7,51 @@
   position: relative;
 }
 
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: var(--bg-card, rgba(20, 20, 20, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--fg, #fff);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-btn:hover {
+  background: var(--gold, #e8c547);
+  color: #000;
+  border-color: transparent;
+  transform: translateY(-50%) scale(1.05); /* Slight scale on hover */
+}
+
+.scroll-btn--left {
+  left: -24px;
+}
+
+.scroll-btn--right {
+  right: -24px;
+}
+
+@media (max-width: 768px) {
+  .scroll-btn {
+    display: none;
+  }
+}
+
 .scroll-row {
   display: flex;
   gap: 16px;
-  padding: 8px 32px 24px;
+  padding: 8px 0 24px; /* Reset padding to 0 horizontally to perfectly align left edge */
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -23,8 +64,4 @@
 
 .scroll-row > * {
   scroll-snap-align: start;
-}
-
-@media (max-width: 640px) {
-  .scroll-row { padding: 8px 16px 24px; }
 }

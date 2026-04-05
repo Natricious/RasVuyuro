@@ -43,7 +43,7 @@ export const T = {
     moreWillImprove: 'მეტი კითხვა გააუმჯობესებს შედეგს',
     // Home sections
     trendingLabel: 'ტოპ ფილმები',
-    trendingTitle: 'ტრენდულობაში',
+    trendingTitle: 'ტრენდული ფილმები',
     trendingDesc: 'ყველაზე მაღალი რეიტინგის ფილმები',
     newMoviesLabel: 'განახლებები',
     newMoviesTitle: 'ახალი ფილმები',

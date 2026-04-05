@@ -9,7 +9,7 @@ import { T } from '../../data/translations';
 
 export default function Home() {
   const { lang } = useLang();
-  const { movies: trendingMovies } = useTrendingMovies(6);
+  const { movies: trendingMovies } = useTrendingMovies(20);
   const { movies: newMovies }      = useNewMovies(6);
 
   return (

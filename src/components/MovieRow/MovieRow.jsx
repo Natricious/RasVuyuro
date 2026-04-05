@@ -1,8 +1,35 @@
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MovieCard from '../MovieCard/MovieCard';
 import './MovieRow.css';
 
 export default function MovieRow({ label, title, description, movies, viewAllTo }) {
+  const rowRef = useRef(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(true);
+
+  const handleScroll = () => {
+    if (!rowRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = rowRef.current;
+    setShowLeft(scrollLeft > 0);
+    // Use Math.ceil to prevent sub-pixel rounding errors
+    setShowRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth);
+  };
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener('resize', handleScroll);
+    return () => window.removeEventListener('resize', handleScroll);
+  }, [movies]);
+
+  const scroll = (direction) => {
+    if (rowRef.current) {
+      const { clientWidth } = rowRef.current;
+      const scrollAmount = direction === 'left' ? -clientWidth * 0.75 : clientWidth * 0.75;
+      rowRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="section-row">
       <div className="container">
@@ -26,19 +53,47 @@ export default function MovieRow({ label, title, description, movies, viewAllTo 
             </Link>
           )}
         </div>
-      </div>
 
-      <div className="scroll-row-wrap">
-        <div className="scroll-row">
-          {movies.map((movie, i) => (
-            <div
-              key={movie.id}
-              style={{ animationDelay: `${i * 0.1}s` }}
-              className="animate-fade-in"
+        <div className="scroll-row-wrap">
+          {showLeft && (
+            <button 
+              className="scroll-btn scroll-btn--left" 
+              onClick={() => scroll('left')}
+              aria-label="Scroll left"
             >
-              <MovieCard movie={movie} />
-            </div>
-          ))}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+          )}
+          
+          <div 
+            className="scroll-row" 
+            ref={rowRef} 
+            onScroll={handleScroll}
+          >
+            {movies.map((movie, i) => (
+              <div
+                key={movie.id}
+                style={{ animationDelay: `${i * 0.05}s` }}
+                className="animate-fade-in"
+              >
+                <MovieCard movie={movie} />
+              </div>
+            ))}
+          </div>
+
+          {showRight && movies.length > 0 && (
+            <button 
+              className="scroll-btn scroll-btn--right" 
+              onClick={() => scroll('right')}
+              aria-label="Scroll right"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
     </section>
