@@ -1,11 +1,19 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCollectionMovies } from '../../hooks/useMovies';
 import { useCollections } from '../../hooks/useCollections';
 import { useLang } from '../../context/LanguageContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
-const PAGE_SIZE = 20;
+// Grid is: repeat(auto-fill, minmax(150px, 1fr)) with gap 20px
+function colsFromWidth(containerWidth) {
+  return Math.max(1, Math.floor((containerWidth + 20) / 170));
+}
+
+function initialCols() {
+  const cw = Math.min(window.innerWidth, 1280) - (window.innerWidth <= 640 ? 32 : 64);
+  return colsFromWidth(cw);
+}
 
 const GENRES = [
   'Action','Adventure','Animation','Biography','Comedy','Crime',
@@ -94,6 +102,30 @@ export default function CollectionDetailPage() {
   const [page,     setPage]     = useState(0);
   const [allMovies, setAllMovies] = useState([]);
 
+  // ── Responsive page-size ──────────────────────────────────────────────────
+  const containerRef = useRef(null);
+  const [cols, setCols] = useState(initialCols);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const measure = () => setCols(colsFromWidth(el.offsetWidth));
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const prevCols = useRef(cols);
+  useEffect(() => {
+    if (prevCols.current === cols) return;
+    prevCols.current = cols;
+    setAllMovies([]);
+    setPage(0);
+  }, [cols]);
+
+  const pageSize = Math.ceil(20 / cols) * cols;
+
   const collection = collections.find(c => c.slug === slug);
 
   const filters = { sortBy, minRating, selectedGenre, yearRange };
@@ -103,7 +135,7 @@ export default function CollectionDetailPage() {
     collection,
     filters,
     page,
-    PAGE_SIZE,
+    pageSize,
   );
 
   // Reset accumulated list when filters/sort change
@@ -157,7 +189,7 @@ export default function CollectionDetailPage() {
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>
       <style>{mobileStyles}</style>
-      <div className="container">
+      <div className="container" ref={containerRef}>
 
         {/* Back button */}
         <button

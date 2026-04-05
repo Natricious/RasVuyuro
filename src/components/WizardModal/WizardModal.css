@@ -444,6 +444,59 @@
   text-align: right;
 }
 
+/* ── Results carousel ────────────────────────────────────────────────────── */
+/*
+ * Cards are given an explicit pixel width via the MovieCard `width` prop so
+ * they never overflow. The carousel row sizes naturally to card content —
+ * no negative margins or flex:1 tricks needed.
+ */
+.wizard-carousel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.wizard-carousel__btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-top: 22px; /* align arrow with upper portion of card poster */
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: #555;
+  cursor: default;
+  transition: background 0.15s, color 0.15s;
+}
+
+.wizard-carousel__btn--active {
+  background: rgba(234, 179, 8, 0.9);
+  color: #000;
+  cursor: pointer;
+}
+
+.wizard-carousel__btn--active:hover {
+  background: rgba(234, 179, 8, 1);
+}
+
+.wizard-carousel__grid {
+  display: flex;
+  gap: 8px;
+}
+
+.wizard-carousel__counter {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 8px;
+}
+
 /* ── Mobile ──────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .wizard-overlay {

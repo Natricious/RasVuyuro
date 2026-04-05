@@ -1,14 +1,45 @@
 import { useState, useEffect } from 'react';
-import { useMovies } from '../../hooks/useMovies';
+import { supabase } from '../../lib/supabase';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
 import MovieCard from '../MovieCard/MovieCard';
 import './WizardModal.css';
 
+// Fields fetched for result movie cards
+const LIST_FIELDS =
+  'id,title,title_ge,year,imdb_id,imdb_rating,genres,themes,timeline,tone,poster,collections,similar_movies';
+
+// ─── Apply all accumulated filters to a Supabase query builder ───────────────
+function applyFilters(q, answeredQuestions) {
+  for (const { question, answerIndex } of answeredQuestions) {
+    q = question.applyFilter(q, answerIndex);
+  }
+  return q;
+}
+
+// ─── COUNT how many movies match the current filters (lightweight HEAD) ───────
+async function queryCount(answeredQuestions) {
+  let q = supabase.from('movies').select('id', { count: 'exact', head: true });
+  q = applyFilters(q, answeredQuestions);
+  const { count, error } = await q;
+  return error ? null : count;
+}
+
+// ─── Fetch top 10 matching movies ordered by IMDb rating ─────────────────────
+async function queryResults(answeredQuestions) {
+  let q = supabase
+    .from('movies')
+    .select(LIST_FIELDS)
+    .order('imdb_rating', { ascending: false })
+    .limit(10);
+  q = applyFilters(q, answeredQuestions);
+  const { data, error } = await q;
+  return error ? [] : (data ?? []);
+}
+
 // ─── Question definitions ─────────────────────────────────────────────────────
-// Each question has: id, group, question_ka, question_en, answers_ka, answers_en,
-// filter(movies, answerIndex) → filtered movies
-// score(movie, answerIndex) → number added to movie's relevance score
+// Each question has: id, group, question_ka/en, answers_ka/en,
+// applyFilter(q, answerIndex) → modified Supabase query (returns q unchanged for "doesn't matter")
 
 const Q_ERA = {
   id: 'era',
@@ -17,23 +48,14 @@ const Q_ERA = {
   question_en: 'What era of film do you prefer?',
   answers_ka: ['კლასიკა (2000-მდე)', '2000–2019', 'ახალი (2020+)', 'მნიშვნელობა არ აქვს'],
   answers_en: ['Classic (before 2000)', '2000–2019', 'Recent (2020+)', "Doesn't matter"],
-  filter: (movies, i) => {
-    if (i === 3) return movies;
-    if (i === 0) return movies.filter(m => m.year < 2000);
-    if (i === 1) return movies.filter(m => m.year >= 2000 && m.year < 2020);
-    if (i === 2) return movies.filter(m => m.year >= 2020);
-    return movies;
-  },
-  score: (movie, i) => {
-    if (i === 3) return 0;
-    if (i === 0) return movie.year < 2000 ? 2 : 0;
-    if (i === 1) return movie.year >= 2000 && movie.year < 2020 ? 2 : 0;
-    if (i === 2) return movie.year >= 2020 ? 2 : 0;
-    return 0;
+  applyFilter: (q, i) => {
+    if (i === 0) return q.lt('year', 2000);
+    if (i === 1) return q.gte('year', 2000).lt('year', 2020);
+    if (i === 2) return q.gte('year', 2020);
+    return q; // doesn't matter
   },
 };
 
-// Group: Tone (pick 1 randomly)
 const Q_TONE = [
   {
     id: 'tone_dark',
@@ -42,17 +64,10 @@ const Q_TONE = [
     question_en: 'Do you prefer a dark, serious tone?',
     answers_ka: ['კი, სერიოზული', 'არა, მსუბუქი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, serious', 'No, light & fun', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      if (i === 0) return movies.filter(m => ['serious', 'thriller', 'horror'].includes(m.tone));
-      if (i === 1) return movies.filter(m => ['light', 'comedy'].includes(m.tone));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      if (i === 0) return ['serious', 'thriller', 'horror'].includes(movie.tone) ? 3 : 0;
-      if (i === 1) return ['light', 'comedy'].includes(movie.tone) ? 3 : 0;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.in('tone', ['serious', 'thriller', 'horror']);
+      if (i === 1) return q.in('tone', ['light', 'comedy']);
+      return q;
     },
   },
   {
@@ -62,22 +77,14 @@ const Q_TONE = [
     question_en: 'Do you want a tense, thriller atmosphere?',
     answers_ka: ['კი, დაძაბული', 'არა, მშვიდი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, tense', 'No, calm', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      if (i === 0) return movies.filter(m => ['thriller', 'serious', 'horror'].includes(m.tone));
-      if (i === 1) return movies.filter(m => ['light', 'comedy'].includes(m.tone));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      if (i === 0) return ['thriller', 'serious', 'horror'].includes(movie.tone) ? 3 : 0;
-      if (i === 1) return ['light', 'comedy'].includes(movie.tone) ? 3 : 0;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.in('tone', ['thriller', 'serious', 'horror']);
+      if (i === 1) return q.in('tone', ['light', 'comedy']);
+      return q;
     },
   },
 ];
 
-// Group: Setting (pick 1 randomly)
 const Q_SETTING = [
   {
     id: 'setting_historical',
@@ -86,17 +93,10 @@ const Q_SETTING = [
     question_en: 'Do you want a historical era film?',
     answers_ka: ['კი, ისტორიული', 'არა, თანამედროვე', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, historical', 'No, modern day', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      if (i === 0) return movies.filter(m => ['ancient', 'medieval', '19th_century', 'ww2'].includes(m.timeline));
-      if (i === 1) return movies.filter(m => ['modern', 'future'].includes(m.timeline));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      if (i === 0) return ['ancient', 'medieval', '19th_century', 'ww2'].includes(movie.timeline) ? 3 : 0;
-      if (i === 1) return ['modern', 'future'].includes(movie.timeline) ? 3 : 0;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.in('timeline', ['ancient', 'medieval', '19th_century', 'ww2']);
+      if (i === 1) return q.in('timeline', ['modern', 'future']);
+      return q;
     },
   },
   {
@@ -106,21 +106,10 @@ const Q_SETTING = [
     question_en: 'Do you want a film set in nature or the outdoors?',
     answers_ka: ['კი, ბუნება / გადარჩენა', 'არა, ქალაქური', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, nature / survival', 'No, urban', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const natureTags = ['survival', 'nature', 'wilderness', 'expedition'];
-      const urbanTags = ['urban', 'city', 'crime', 'heist'];
-      if (i === 0) return movies.filter(m => m.themes?.some(t => natureTags.includes(t)));
-      if (i === 1) return movies.filter(m => m.themes?.some(t => urbanTags.includes(t)));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const natureTags = ['survival', 'nature', 'wilderness', 'expedition'];
-      const urbanTags = ['urban', 'city', 'crime', 'heist'];
-      if (i === 0) return (movie.themes?.filter(t => natureTags.includes(t)).length ?? 0) * 2;
-      if (i === 1) return (movie.themes?.filter(t => urbanTags.includes(t)).length ?? 0) * 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.overlaps('themes', ['survival', 'nature', 'wilderness', 'expedition']);
+      if (i === 1) return q.overlaps('themes', ['urban', 'city', 'crime', 'heist']);
+      return q;
     },
   },
   {
@@ -130,23 +119,15 @@ const Q_SETTING = [
     question_en: 'Are you interested in a war-era film?',
     answers_ka: ['კი, ომი / WW2', 'არა', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, war / WW2', 'No', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      if (i === 0) return movies.filter(m => m.timeline === 'ww2' || m.themes?.includes('war'));
-      if (i === 1) return movies.filter(m => m.timeline !== 'ww2' && !m.themes?.includes('war'));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const isWar = movie.timeline === 'ww2' || movie.themes?.includes('war');
-      if (i === 0) return isWar ? 3 : 0;
-      if (i === 1) return isWar ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      // "Yes" → timeline is ww2 OR themes contains war
+      if (i === 0) return q.or('timeline.eq.ww2,themes.cs.{war}');
+      // "No" → skip (negative theme filter over-narrows; positive picks elsewhere handle this)
+      return q;
     },
   },
 ];
 
-// Group: Story type (pick 1 randomly)
 const Q_STORY = [
   {
     id: 'story_ensemble',
@@ -155,20 +136,9 @@ const Q_STORY = [
     question_en: 'Do you prefer a group / ensemble story?',
     answers_ka: ['კი, ჯგუფური', 'არა, ერთი გმირი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, ensemble cast', 'No, solo hero', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const ensembleTags = ['ensemble', 'group', 'team', 'friendship'];
-      if (i === 0) return movies.filter(m => m.themes?.some(t => ensembleTags.includes(t)));
-      if (i === 1) return movies.filter(m => !m.themes?.some(t => ensembleTags.includes(t)));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const ensembleTags = ['ensemble', 'group', 'team', 'friendship'];
-      const hasEnsemble = movie.themes?.some(t => ensembleTags.includes(t));
-      if (i === 0) return hasEnsemble ? 2 : 0;
-      if (i === 1) return hasEnsemble ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.overlaps('themes', ['ensemble', 'group', 'team', 'friendship']);
+      return q; // "No" → skip (negative theme overlap is too restrictive)
     },
   },
   {
@@ -178,25 +148,13 @@ const Q_STORY = [
     question_en: 'Do you want a film based on real events?',
     answers_ka: ['კი, რეალური', 'არა, გამოგონილი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, based on true events', 'No, fiction', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const realTags = ['true story', 'based on true events', 'historical', 'biography'];
-      if (i === 0) return movies.filter(m => m.themes?.some(t => realTags.includes(t)));
-      if (i === 1) return movies.filter(m => !m.themes?.some(t => realTags.includes(t)));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const realTags = ['true story', 'based on true events', 'historical', 'biography'];
-      const isReal = movie.themes?.some(t => realTags.includes(t));
-      if (i === 0) return isReal ? 2 : 0;
-      if (i === 1) return isReal ? 0 : 1;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.filter('themes', 'ov', '{"true story","based on true events",historical,biography}');
+      return q; // "No" → skip
     },
   },
 ];
 
-// Group: Psychological depth (pick 1 randomly)
 const Q_DEPTH = [
   {
     id: 'depth_complex',
@@ -205,25 +163,10 @@ const Q_DEPTH = [
     question_en: 'Do you want a psychologically complex, layered film?',
     answers_ka: ['კი, ღრმა / საფიქრებელი', 'არა, მარტივი / გასართობი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, deep & thought-provoking', 'No, simple & entertaining', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const deepTags = ['psychological', 'philosophical', 'complex', 'identity', 'moral dilemma'];
-      if (i === 0) return movies.filter(m =>
-        m.themes?.some(t => deepTags.includes(t)) || m.genres?.includes('Drama')
-      );
-      if (i === 1) return movies.filter(m =>
-        !m.themes?.some(t => deepTags.includes(t)) &&
-        (m.genres?.some(g => ['Action', 'Adventure', 'Comedy'].includes(g)) ?? false)
-      );
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const deepTags = ['psychological', 'philosophical', 'complex', 'identity', 'moral dilemma'];
-      const isDeep = movie.themes?.some(t => deepTags.includes(t)) || movie.genres?.includes('Drama');
-      if (i === 0) return isDeep ? 3 : 0;
-      if (i === 1) return isDeep ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.or('themes.ov.{psychological,philosophical,complex,identity,"moral dilemma"},genres.cs.{Drama}');
+      if (i === 1) return q.overlaps('genres', ['Action', 'Adventure', 'Comedy']);
+      return q;
     },
   },
   {
@@ -233,25 +176,14 @@ const Q_DEPTH = [
     question_en: 'Are you interested in a mind-bending, non-linear plot?',
     answers_ka: ['კი, კომპლექსური', 'არა, პირდაპირი', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, complex structure', 'No, straightforward', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const complexTags = ['nonlinear', 'twist', 'unreliable narrator', 'psychological'];
-      if (i === 0) return movies.filter(m => m.themes?.some(t => complexTags.includes(t)));
-      if (i === 1) return movies.filter(m => !m.themes?.some(t => complexTags.includes(t)));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const complexTags = ['nonlinear', 'twist', 'unreliable narrator', 'psychological'];
-      const isComplex = movie.themes?.some(t => complexTags.includes(t));
-      if (i === 0) return isComplex ? 3 : 0;
-      if (i === 1) return isComplex ? 0 : 1;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.filter('themes', 'ov', '{nonlinear,twist,"unreliable narrator",psychological}');
+      return q; // "No" → skip
     },
   },
 ];
 
-// Adaptive pool questions (used after checkpoint)
+// Adaptive questions — picked randomly after the checkpoint
 const Q_ADAPTIVE = [
   {
     id: 'adapt_fantasy',
@@ -260,24 +192,9 @@ const Q_ADAPTIVE = [
     question_en: 'Do you want fantasy / supernatural elements?',
     answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes', 'No', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const tags = ['supernatural', 'fantasy', 'magic', 'vampires', 'mythology'];
-      if (i === 0) return movies.filter(m =>
-        m.themes?.some(t => tags.includes(t)) || m.genres?.includes('Fantasy')
-      );
-      if (i === 1) return movies.filter(m =>
-        !m.themes?.some(t => tags.includes(t)) && !m.genres?.includes('Fantasy')
-      );
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const tags = ['supernatural', 'fantasy', 'magic', 'vampires', 'mythology'];
-      const has = movie.themes?.some(t => tags.includes(t)) || movie.genres?.includes('Fantasy');
-      if (i === 0) return has ? 3 : 0;
-      if (i === 1) return has ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.or('themes.ov.{supernatural,fantasy,magic,vampires,mythology},genres.cs.{Fantasy}');
+      return q;
     },
   },
   {
@@ -287,22 +204,9 @@ const Q_ADAPTIVE = [
     question_en: 'Are you interested in science fiction?',
     answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes', 'No', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      if (i === 0) return movies.filter(m =>
-        m.genres?.includes('Science Fiction') || m.genres?.includes('Sci-Fi') || m.timeline === 'future'
-      );
-      if (i === 1) return movies.filter(m =>
-        !m.genres?.includes('Science Fiction') && !m.genres?.includes('Sci-Fi') && m.timeline !== 'future'
-      );
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const isSF = movie.genres?.includes('Science Fiction') || movie.genres?.includes('Sci-Fi') || movie.timeline === 'future';
-      if (i === 0) return isSF ? 3 : 0;
-      if (i === 1) return isSF ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.or('genres.cs.{"Sci-Fi"},timeline.eq.future');
+      return q;
     },
   },
   {
@@ -312,20 +216,9 @@ const Q_ADAPTIVE = [
     question_en: 'Do you want an emotionally powerful, moving film?',
     answers_ka: ['კი, ემოციური', 'არა, ნეიტრალური', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes, emotional', 'No, neutral', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const emotionTags = ['emotional', 'grief', 'love', 'loss', 'redemption', 'friendship'];
-      if (i === 0) return movies.filter(m => m.themes?.some(t => emotionTags.includes(t)));
-      if (i === 1) return movies.filter(m => !m.themes?.some(t => emotionTags.includes(t)));
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const emotionTags = ['emotional', 'grief', 'love', 'loss', 'redemption', 'friendship'];
-      const count = movie.themes?.filter(t => emotionTags.includes(t)).length ?? 0;
-      if (i === 0) return count * 2;
-      if (i === 1) return count === 0 ? 2 : 0;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.overlaps('themes', ['emotional', 'grief', 'love', 'loss', 'redemption', 'friendship']);
+      return q;
     },
   },
   {
@@ -335,34 +228,19 @@ const Q_ADAPTIVE = [
     question_en: 'Do you want a strong romance storyline?',
     answers_ka: ['კი', 'არა', 'მნიშვნელობა არ აქვს'],
     answers_en: ['Yes', 'No', "Doesn't matter"],
-    filter: (movies, i) => {
-      if (i === 2) return movies;
-      const romanceTags = ['romance', 'love', 'forbidden love'];
-      if (i === 0) return movies.filter(m =>
-        m.genres?.includes('Romance') || m.themes?.some(t => romanceTags.includes(t))
-      );
-      if (i === 1) return movies.filter(m =>
-        !m.genres?.includes('Romance') && !m.themes?.some(t => romanceTags.includes(t))
-      );
-      return movies;
-    },
-    score: (movie, i) => {
-      if (i === 2) return 0;
-      const romanceTags = ['romance', 'love', 'forbidden love'];
-      const has = movie.genres?.includes('Romance') || movie.themes?.some(t => romanceTags.includes(t));
-      if (i === 0) return has ? 3 : 0;
-      if (i === 1) return has ? 0 : 2;
-      return 0;
+    applyFilter: (q, i) => {
+      if (i === 0) return q.or('genres.cs.{Romance},themes.ov.{romance,love,"forbidden love"}');
+      return q;
     },
   },
 ];
 
-// ─── Pick one random question from a group array ─────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function pickFromGroup(group) {
   return group[Math.floor(Math.random() * group.length)];
 }
 
-// ─── Build the fixed 5-question sequence for questions 1–5 ───────────────────
 function buildSessionQuestions() {
   return [
     Q_ERA,
@@ -373,94 +251,57 @@ function buildSessionQuestions() {
   ];
 }
 
-// ─── Pick best adaptive question (closest 50/50 split) ───────────────────────
-function pickAdaptiveQuestion(remainingMovies, askedIds) {
+// Pick a random unused adaptive question
+function pickAdaptiveQuestion(askedIds) {
   const available = Q_ADAPTIVE.filter(q => !askedIds.has(q.id));
   if (available.length === 0) return null;
-
-  const target = remainingMovies.length / 2;
-  let best = available[0];
-  let bestScore = Infinity;
-
-  for (const q of available) {
-    let variance = 0;
-    for (let i = 0; i < q.answers_ka.length - 1; i++) {
-      const filtered = q.filter(remainingMovies, i);
-      variance += Math.abs(filtered.length - target);
-    }
-    if (variance < bestScore) {
-      bestScore = variance;
-      best = q;
-    }
-  }
-
-  return best;
-}
-
-// ─── Score movies against collected answers ───────────────────────────────────
-function scoreAndRank(movies, answeredQuestions) {
-  const pool = movies.length > 0 ? movies : [];
-  const scored = pool.map(movie => {
-    let s = 0;
-    for (const { question, answerIndex } of answeredQuestions) {
-      s += question.score(movie, answerIndex);
-    }
-    // Blend with IMDb rating as a tiebreaker
-    s += (movie.imdb_rating ?? 5) * 0.3;
-    return { movie, score: s };
-  });
-  return scored
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10)
-    .map(s => s.movie);
+  return available[Math.floor(Math.random() * available.length)];
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-const VISIBLE_COUNT = 3;
-
 export default function WizardModal({ open, onClose, collections = [] }) {
   const { lang } = useLang();
   const t = T[lang];
   const isKa = lang === 'ka';
 
-  const { movies: allMovies } = useMovies();
-
   // Session questions (fixed sequence of 5, built once per open)
   const [sessionQuestions, setSessionQuestions] = useState([]);
-  // Index into sessionQuestions (0–4 = structured, 5+ = adaptive)
+  // 0–4 = structured questions, 5+ = adaptive
   const [questionIndex, setQuestionIndex] = useState(0);
-  // Current adaptive question (used after checkpoint)
   const [adaptiveQuestion, setAdaptiveQuestion] = useState(null);
 
   const [phase, setPhase] = useState('question'); // 'question' | 'checkpoint' | 'results'
-  const [remainingMovies, setRemainingMovies] = useState([]);
+  const [remainingCount, setRemainingCount] = useState(null); // server-side count
+  const [countLoading, setCountLoading] = useState(false);
   const [askedIds, setAskedIds] = useState(new Set());
   const [answeredQuestions, setAnsweredQuestions] = useState([]); // [{question, answerIndex}]
   const [questionCount, setQuestionCount] = useState(0);
   const [results, setResults] = useState([]);
+  const [resultsLoading, setResultsLoading] = useState(false);
   const [scrollIndex, setScrollIndex] = useState(0);
 
-  // Determine current question
   const isAdaptivePhase = questionIndex >= 5;
   const currentQuestion = isAdaptivePhase
     ? adaptiveQuestion
     : sessionQuestions[questionIndex] ?? null;
 
-  // Initialize when modal opens (also handles movies arriving after open)
+  // Initialize (or re-initialize) when modal opens
   useEffect(() => {
-    if (!open || !allMovies.length) return;
+    if (!open) return;
     const sq = buildSessionQuestions();
     setSessionQuestions(sq);
     setQuestionIndex(0);
     setAdaptiveQuestion(null);
     setPhase('question');
-    setRemainingMovies(allMovies);
+    setRemainingCount(null);
+    setCountLoading(false);
     setAskedIds(new Set());
     setAnsweredQuestions([]);
     setQuestionCount(0);
     setResults([]);
+    setResultsLoading(false);
     setScrollIndex(0);
-  }, [open, allMovies]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Escape to close
   useEffect(() => {
@@ -470,57 +311,62 @@ export default function WizardModal({ open, onClose, collections = [] }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
 
-  // Lock scroll
+  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  // ── Helpers ──────────────────────────────────────────────────────────────────
+  // ── Core logic ───────────────────────────────────────────────────────────────
 
-  function showResults(movies, answered) {
-    const pool = movies.length > 0 ? movies : allMovies;
-    const top10 = scoreAndRank(pool, answered);
+  async function showResults(answered) {
+    setPhase('results');
+    setResultsLoading(true);
+    const top10 = await queryResults(answered);
     setResults(top10);
     setScrollIndex(0);
-    setPhase('results');
+    setResultsLoading(false);
   }
 
-  function handleAnswer(answerIndex) {
-    const filtered = currentQuestion.filter(remainingMovies, answerIndex);
-    const newAskedIds = new Set([...askedIds, currentQuestion.id]);
+  async function handleAnswer(answerIndex) {
     const newAnswered = [...answeredQuestions, { question: currentQuestion, answerIndex }];
+    const newAskedIds = new Set([...askedIds, currentQuestion.id]);
     const newCount = questionCount + 1;
     const nextIndex = questionIndex + 1;
 
-    setRemainingMovies(filtered);
-    setAskedIds(newAskedIds);
     setAnsweredQuestions(newAnswered);
+    setAskedIds(newAskedIds);
     setQuestionCount(newCount);
 
-    // Stop early if pool is small enough
-    if (filtered.length <= 10) {
-      showResults(filtered, newAnswered);
+    // Query Supabase for the new remaining count
+    setCountLoading(true);
+    const count = await queryCount(newAnswered);
+    setCountLoading(false);
+    setRemainingCount(count);
+
+    // Pool small enough — go straight to results
+    if (count !== null && count <= 10) {
+      showResults(newAnswered);
       return;
     }
 
-    // After question 5 (index 4), show checkpoint
+    // After the 5th structured question (index 4), show checkpoint
     if (questionIndex === 4) {
       setQuestionIndex(nextIndex);
       setPhase('checkpoint');
       return;
     }
 
-    // Structured phase: advance to next session question
+    // Still in structured phase
     if (nextIndex < 5) {
       setQuestionIndex(nextIndex);
       return;
     }
 
-    // Adaptive phase: pick best splitting question
-    const nextAdaptive = pickAdaptiveQuestion(filtered, newAskedIds);
+    // Adaptive phase — pick a random unused question
+    const nextAdaptive = pickAdaptiveQuestion(newAskedIds);
     if (!nextAdaptive) {
-      showResults(filtered, newAnswered);
+      showResults(newAnswered);
       return;
     }
     setAdaptiveQuestion(nextAdaptive);
@@ -528,9 +374,9 @@ export default function WizardModal({ open, onClose, collections = [] }) {
   }
 
   function handleContinueFromCheckpoint() {
-    const next = pickAdaptiveQuestion(remainingMovies, askedIds);
+    const next = pickAdaptiveQuestion(askedIds);
     if (!next) {
-      showResults(remainingMovies, answeredQuestions);
+      showResults(answeredQuestions);
       return;
     }
     setAdaptiveQuestion(next);
@@ -543,11 +389,13 @@ export default function WizardModal({ open, onClose, collections = [] }) {
     setQuestionIndex(0);
     setAdaptiveQuestion(null);
     setPhase('question');
-    setRemainingMovies(allMovies);
+    setRemainingCount(null);
+    setCountLoading(false);
     setAskedIds(new Set());
     setAnsweredQuestions([]);
     setQuestionCount(0);
     setResults([]);
+    setResultsLoading(false);
     setScrollIndex(0);
   }
 
@@ -605,15 +453,20 @@ export default function WizardModal({ open, onClose, collections = [] }) {
                           : 'wizard-answer-btn--no'
                     }`}
                     onClick={() => handleAnswer(i)}
+                    disabled={countLoading}
                   >
                     {label}
                   </button>
                 ))}
               </div>
               <p className="wizard-question__hint" style={{ marginTop: 12, color: '#888', fontSize: '0.8rem' }}>
-                {isKa
-                  ? `კითხვა ${questionCount + 1} · დარჩენილი ფილმები: ${remainingMovies.length}`
-                  : `Question ${questionCount + 1} · Remaining: ${remainingMovies.length}`}
+                {countLoading
+                  ? (isKa ? 'იძებნება...' : 'Searching...')
+                  : remainingCount !== null
+                    ? (isKa
+                        ? `კითხვა ${questionCount + 1} · დარჩენილი ფილმები: ${remainingCount}`
+                        : `Question ${questionCount + 1} · Remaining: ${remainingCount}`)
+                    : (isKa ? `კითხვა ${questionCount + 1}` : `Question ${questionCount + 1}`)}
               </p>
             </div>
           )}
@@ -628,14 +481,14 @@ export default function WizardModal({ open, onClose, collections = [] }) {
                   : `You've answered ${questionCount} questions`}
               </h2>
               <p className="wizard-decision__sub" style={{ color: '#aaa', marginBottom: 8 }}>
-                {isKa
-                  ? `დარჩენილი ფილმები: ${remainingMovies.length}`
-                  : `Remaining movies: ${remainingMovies.length}`}
+                {remainingCount !== null
+                  ? (isKa ? `დარჩენილი ფილმები: ${remainingCount}` : `Remaining movies: ${remainingCount}`)
+                  : '…'}
               </p>
               <div className="wizard-decision__actions">
                 <button
                   className="wizard-decision-btn wizard-decision-btn--primary"
-                  onClick={() => showResults(remainingMovies, answeredQuestions)}
+                  onClick={() => showResults(answeredQuestions)}
                 >
                   {isKa ? '✨ საუკეთესო შედეგების ნახვა' : '✨ Show best results'}
                 </button>
@@ -664,64 +517,61 @@ export default function WizardModal({ open, onClose, collections = [] }) {
                 </p>
               </div>
 
-              {results.length === 0 ? (
+              {resultsLoading ? (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
+                  <div style={{
+                    width: '32px', height: '32px',
+                    border: '3px solid rgba(232,197,71,0.15)',
+                    borderTopColor: 'var(--gold)',
+                    borderRadius: '50%',
+                    animation: 'wizardSpin 0.75s linear infinite',
+                  }} />
+                  <style>{`@keyframes wizardSpin { to { transform: rotate(360deg); } }`}</style>
+                </div>
+              ) : results.length === 0 ? (
                 <p style={{ color: '#888', textAlign: 'center', padding: '20px 0' }}>
                   {isKa ? 'ფილმები ვერ მოიძებნა' : 'No movies found'}
                 </p>
               ) : (() => {
-                const canGoLeft = scrollIndex > 0;
-                const canGoRight = scrollIndex + VISIBLE_COUNT < results.length;
-                const visibleMovies = results.slice(scrollIndex, scrollIndex + VISIBLE_COUNT);
+                // 2 cards on narrow viewports, 3 on wider ones
+                const count = window.innerWidth < 480 ? 2 : 3;
+
+                // Compute exact card pixel width so MovieCard's inline width prop
+                // doesn't overflow the panel.
+                // Layout: [arrow 32px] [gap 6px] [cards + (count-1)*8px gaps] [gap 6px] [arrow 32px]
+                // Panel inner width = panelWidth - body padding (24px * 2)
+                // Overlay padding: 16px each side on desktop, 0 on mobile (<480)
+                const overlayPadding = window.innerWidth < 480 ? 0 : 32;
+                const panelWidth = Math.min(window.innerWidth - overlayPadding, 480);
+                const cardPx = Math.floor((panelWidth - 48 - 76 - (count - 1) * 8) / count);
+                const cardWidth = `${cardPx}px`;
+
+                const canGoLeft  = scrollIndex > 0;
+                const canGoRight = scrollIndex + count < results.length;
+                const visibleMovies = results.slice(scrollIndex, scrollIndex + count);
                 return (
                   <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+                    <div className="wizard-carousel">
                       <button
+                        className={`wizard-carousel__btn${canGoLeft ? ' wizard-carousel__btn--active' : ''}`}
                         onClick={() => setScrollIndex(i => i - 1)}
                         disabled={!canGoLeft}
-                        style={{
-                          flexShrink: 0, width: '32px', height: '32px',
-                          borderRadius: '50%',
-                          background: canGoLeft ? 'rgba(234,179,8,0.9)' : 'rgba(255,255,255,0.08)',
-                          border: 'none',
-                          color: canGoLeft ? '#000' : '#444',
-                          fontSize: '20px',
-                          cursor: canGoLeft ? 'pointer' : 'default',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          lineHeight: 1,
-                        }}
+                        aria-label="Previous"
                       >‹</button>
-
-                      <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '8px',
-                        flex: 1,
-                        minWidth: 0,
-                      }}>
+                      <div className="wizard-carousel__grid">
                         {visibleMovies.map(movie => (
-                          <MovieCard key={movie.id} movie={movie} />
+                          <MovieCard key={movie.id} movie={movie} width={cardWidth} />
                         ))}
                       </div>
-
                       <button
+                        className={`wizard-carousel__btn${canGoRight ? ' wizard-carousel__btn--active' : ''}`}
                         onClick={() => setScrollIndex(i => i + 1)}
                         disabled={!canGoRight}
-                        style={{
-                          flexShrink: 0, width: '32px', height: '32px',
-                          borderRadius: '50%',
-                          background: canGoRight ? 'rgba(234,179,8,0.9)' : 'rgba(255,255,255,0.08)',
-                          border: 'none',
-                          color: canGoRight ? '#000' : '#444',
-                          fontSize: '20px',
-                          cursor: canGoRight ? 'pointer' : 'default',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          lineHeight: 1,
-                        }}
+                        aria-label="Next"
                       >›</button>
                     </div>
-
-                    <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginTop: '8px' }}>
-                      {scrollIndex + 1}–{Math.min(scrollIndex + VISIBLE_COUNT, results.length)} / {results.length}
+                    <p className="wizard-carousel__counter">
+                      {scrollIndex + 1}–{Math.min(scrollIndex + count, results.length)} / {results.length}
                     </p>
                   </>
                 );

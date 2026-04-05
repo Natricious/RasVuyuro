@@ -1,9 +1,20 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useFilteredMovies } from '../../hooks/useMovies';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import { useLang } from '../../context/LanguageContext';
 
-const PAGE_SIZE = 40;
+// Derive column count from a container pixel width.
+// Grid is: repeat(auto-fill, minmax(160px, 1fr)) with gap 20px
+// n = floor((containerWidth + gap) / (minWidth + gap))
+function colsFromWidth(containerWidth) {
+  return Math.max(1, Math.floor((containerWidth + 20) / 180));
+}
+
+// Initial estimate before the DOM is measured (avoids a wrong first fetch)
+function initialCols() {
+  const cw = Math.min(window.innerWidth, 1280) - (window.innerWidth <= 640 ? 32 : 64);
+  return colsFromWidth(cw);
+}
 
 const ALL_TIMELINES = ['ancient', 'medieval', '19th_century', 'ww2', 'modern', 'future'];
 
@@ -70,9 +81,37 @@ export default function MoviesPage() {
   const [page,     setPage]     = useState(0);
   const [allMovies, setAllMovies] = useState([]);
 
+  // ── Responsive page-size ──────────────────────────────────────────────────
+  // Measure the container so pageSize is always a multiple of the column count,
+  // ensuring every loaded batch fills complete rows with no empty trailing cells.
+  const containerRef = useRef(null);
+  const [cols, setCols] = useState(initialCols);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const measure = () => setCols(colsFromWidth(el.offsetWidth));
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Reset when the column count changes (viewport resize crosses a breakpoint)
+  const prevCols = useRef(cols);
+  useEffect(() => {
+    if (prevCols.current === cols) return;
+    prevCols.current = cols;
+    setAllMovies([]);
+    setPage(0);
+  }, [cols]);
+
+  // Smallest multiple of cols that is >= 40
+  const pageSize = Math.ceil(40 / cols) * cols;
+
   // Fetch current page
   const { movies: pageMovies, total, loading } = useFilteredMovies({
-    query: search, genre, timeline, sort, page, pageSize: PAGE_SIZE,
+    query: search, genre, timeline, sort, page, pageSize,
   });
 
   // Append results when a new page loads
@@ -113,7 +152,7 @@ export default function MoviesPage() {
 
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>
-      <div className="container">
+      <div className="container" ref={containerRef}>
 
         <div style={{ marginBottom: '28px' }}>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 700, color: 'var(--fg)', marginBottom: '6px' }}>
