@@ -151,7 +151,11 @@ export default function CollectionDetailPage() {
     if (page === 0) {
       setAllMovies(pageMovies);
     } else {
-      setAllMovies(prev => [...prev, ...pageMovies]);
+      setAllMovies(prev => {
+        const ids = new Set(prev.map(m => m.id));
+        const newMovies = pageMovies.filter(m => !ids.has(m.id));
+        return newMovies.length > 0 ? [...prev, ...newMovies] : prev;
+      });
     }
   }, [pageMovies, page, moviesLoading]);
 

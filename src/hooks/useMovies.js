@@ -182,6 +182,8 @@ export function useCollectionMovies(collection, filters = {}, page = 0, pageSize
     else if (sortBy === 'title')     q = q.order('title',       { ascending: true  })
     else                             q = q.order('imdb_rating', { ascending: false })
 
+    q = q.order('id', { ascending: true })
+
     q.range(from, to).then(({ data, error, count }) => {
       if (!error && data) {
         const result = { movies: data, total: count }
@@ -250,6 +252,8 @@ export function useFilteredMovies({ query = '', genre = '', timeline = '', sort 
     else if (sort === 'year_asc')  q = q.order('year',        { ascending: true  })
     else if (sort === 'title')     q = q.order('title',       { ascending: true  })
     else                           q = q.order('imdb_rating', { ascending: false })
+
+    q = q.order('id', { ascending: true })
 
     q.range(from, to).then(({ data, error, count }) => {
       if (!error && data) {
