@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
+import { useLang } from '../../context/LanguageContext';
 import './Footer.css';
 
 const NAV_LINKS = [
-  { to: '/', label: 'მთავარი' },
-  { to: '/movies', label: 'ფილმები' },
-  { to: '/collections', label: 'კოლექციები' },
-  { to: '/watched', label: 'ნანახი' },
-  { to: '/planned', label: 'გეგმა' },
+  { to: '/',           ka: 'მთავარი',     en: 'Home' },
+  { to: '/movies',     ka: 'ფილმები',     en: 'Movies' },
+  { to: '/collections',ka: 'კოლექციები',  en: 'Collections' },
+  { to: '/watched',    ka: 'ნანახი',      en: 'Watched' },
+  { to: '/planned',    ka: 'გეგმა',       en: 'Planned' },
 ];
 
 export default function Footer() {
+  const { lang } = useLang();
   return (
     <footer className="footer">
       <div className="container">
@@ -22,10 +24,10 @@ export default function Footer() {
               CineGuide
             </Link>
             <nav className="footer__nav" aria-label="Footer navigation">
-              {NAV_LINKS.map(({ to, label }, i) => (
+              {NAV_LINKS.map(({ to, ka, en }, i) => (
                 <span key={to} className="footer__nav-item">
                   {i > 0 && <span className="footer__dot">·</span>}
-                  <Link to={to} className="footer__link">{label}</Link>
+                  <Link to={to} className="footer__link">{lang === 'ka' ? ka : en}</Link>
                 </span>
               ))}
             </nav>

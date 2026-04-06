@@ -131,7 +131,7 @@
 }
 
 /* Responsive */
-@media (max-width: 767px) {
+@media (max-width: 639px) {
   .timeline-section__grid {
     grid-template-columns: 1fr;
   }

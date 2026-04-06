@@ -303,20 +303,17 @@ export default function MovieDetailPage() {
               </div>
 
               <div className="action-buttons">
-                <button className="btn btn-primary">
-                  ▶ {lang === 'ka' ? 'ყურება' : 'Watch'}
+                <button
+                  className={`btn ${watched ? 'btn-active' : 'btn-primary'}`}
+                  onClick={() => toggleWatched(movie.id)}
+                >
+                  {watched ? '✓' : '▶'} {lang === 'ka' ? (watched ? 'ნანახია' : 'ყურება') : (watched ? 'Watched' : 'Watch')}
                 </button>
-                <button 
+                <button
                   className={`btn ${planned ? 'btn-active' : 'btn-secondary'}`}
                   onClick={() => togglePlanned(movie.id)}
                 >
                   {planned ? '✓' : '+'} {lang === 'ka' ? 'ვაპირებ ყურებას' : 'Planned'}
-                </button>
-                <button 
-                  className={`btn ${watched ? 'btn-active' : 'btn-secondary'}`}
-                  onClick={() => toggleWatched(movie.id)}
-                >
-                  {watched ? '✓' : '♥'} {lang === 'ka' ? 'ნანახი მაქვს' : 'Watched'}
                 </button>
               </div>
               

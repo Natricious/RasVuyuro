@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMovies } from '../../hooks/useMovies';
+import { useLang } from '../../context/LanguageContext';
 import './Timeline.css';
 
 const ERAS = [
-  { id: 'ancient',  label: 'ძველი სამყარო' },
-  { id: 'medieval', label: 'შუასაუკუნეები' },
-  { id: 'modern',   label: 'თანამედროვე' },
+  { id: 'ancient',  ka: 'ძველი სამყარო', en: 'Ancient World' },
+  { id: 'medieval', ka: 'შუასაუკუნეები', en: 'Medieval' },
+  { id: 'modern',   ka: 'თანამედროვე',   en: 'Modern' },
 ];
 
 const ERA_COLORS = {
@@ -18,6 +19,7 @@ const ERA_COLORS = {
 export default function Timeline() {
   const [activeEra, setActiveEra] = useState('ancient');
   const { movies, loading } = useMovies();
+  const { lang } = useLang();
 
   const eraMovies = movies
     .filter(m => m.timeline === activeEra)
@@ -34,13 +36,13 @@ export default function Timeline() {
             <div className="section-header__left">
               <div className="section-header__accent-bar" />
               <div>
-                <p className="section-header__label">ქრონოლოგია</p>
-                <h2 className="section-header__title">ისტორიული ქრონოლოგია</h2>
-                <p className="section-header__desc">ფილმები ისტორიული პერიოდების მიხედვით</p>
+                <p className="section-header__label">{lang === 'ka' ? 'ქრონოლოგია' : 'Timeline'}</p>
+                <h2 className="section-header__title">{lang === 'ka' ? 'ისტორიული ქრონოლოგია' : 'Historical Timeline'}</h2>
+                <p className="section-header__desc">{lang === 'ka' ? 'ფილმები ისტორიული პერიოდების მიხედვით' : 'Movies by historical era'}</p>
               </div>
             </div>
             <Link to="/timeline" className="section-header__view-all">
-              ყველა
+              {lang === 'ka' ? 'ყველა' : 'All'}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
@@ -55,7 +57,7 @@ export default function Timeline() {
                 className={`era-btn ${activeEra === era.id ? 'era-btn--active' : ''}`}
                 onClick={() => setActiveEra(era.id)}
               >
-                {era.label}
+                {lang === 'ka' ? era.ka : era.en}
               </button>
             ))}
           </div>
@@ -114,13 +116,13 @@ export default function Timeline() {
 
             {eraMovies.length === 0 && (
               <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', padding: '40px 0' }}>
-                ამ პერიოდისთვის ფილმები ვერ მოიძებნა
+                {lang === 'ka' ? 'ამ პერიოდისთვის ფილმები ვერ მოიძებნა' : 'No movies found for this era'}
               </p>
             )}
           </div>
         )}
 
-        <p className="timeline-section__range">3000 BC – დღეს</p>
+        <p className="timeline-section__range">{lang === 'ka' ? '3000 ძვ.წ. – დღეს' : '3000 BC – Today'}</p>
 
       </div>
     </section>

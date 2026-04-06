@@ -278,7 +278,7 @@ export default function CollectionDetailPage() {
 
               {hasFilters && (
                 <button
-                  onClick={() => resetFilters(() => { setMinRating(0); setSelectedGenre('all'); setYearRange('all'); })}
+                  onClick={() => resetFilters(() => { setSortBy('rating'); setMinRating(0); setSelectedGenre('all'); setYearRange('all'); })}
                   style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '8px', color: 'var(--fg-muted)', padding: '7px 12px', fontSize: '0.8125rem', cursor: 'pointer' }}
                 >
                   {lang === 'ka' ? '✕ გასუფთავება' : '✕ Clear'}
