@@ -5,9 +5,9 @@ import { useCollections } from '../../hooks/useCollections';
 import { useLang } from '../../context/LanguageContext';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
-// Grid is: repeat(auto-fill, minmax(150px, 1fr)) with gap 20px
+// Grid is: repeat(auto-fill, minmax(160px, 1fr)) with gap 20px
 function colsFromWidth(containerWidth) {
-  return Math.max(1, Math.floor((containerWidth + 20) / 170));
+  return Math.max(1, Math.floor((containerWidth + 20) / 180));
 }
 
 function initialCols() {
@@ -298,7 +298,7 @@ export default function CollectionDetailPage() {
               </div>
             ) : (
               <>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '20px' }}>
                   {displayed.map(movie => (
                     <MovieCard key={movie.id} movie={movie} />
                   ))}
