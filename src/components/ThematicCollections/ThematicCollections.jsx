@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import { THEMATIC_COLLECTIONS } from '../../data/movies';
+import { useCollections } from '../../hooks/useCollections';
+import { useCollectionCounts } from '../../hooks/useMovies';
 import './ThematicCollections.css';
 
 export default function ThematicCollections() {
+  const { collections } = useCollections();
+  const counts = useCollectionCounts(collections);
   return (
     <section className="thematic">
       <div className="container">
@@ -53,7 +57,7 @@ export default function ThematicCollections() {
               <div className="theme-tile__text">
                 <p className="theme-tile__name">{col.name}</p>
                 <p className="theme-tile__count" style={{ color: `${col.accentColor}99` }}>
-                  {col.count} ფილმი
+                  {counts[col.key.replace('_', '-')] ?? col.count} ფილმი
                 </p>
               </div>
             </Link>

@@ -74,8 +74,6 @@ function buildCollectionOrFilter(slug, cf) {
       .join(',')
     parts.push(`themes.ov.{${vals}}`)
   }
-  if (cf.genres?.length)   parts.push(`genres.ov.{${cf.genres.join(',')}}`)
-  if (cf.timeline?.length) parts.push(`timeline.in.(${cf.timeline.join(',')})`)
   return parts.join(',')
 }
 
