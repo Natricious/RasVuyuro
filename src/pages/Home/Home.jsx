@@ -2,7 +2,6 @@ import HeroBanner from '../../components/HeroBanner/HeroBanner';
 import MovieRow from '../../components/MovieRow/MovieRow';
 import ThematicCollections from '../../components/ThematicCollections/ThematicCollections';
 import NewMovies from '../../components/NewMovies/NewMovies';
-import Timeline from '../../components/Timeline/Timeline';
 import { useTrendingMovies, useNewMovies } from '../../hooks/useMovies';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
@@ -28,7 +27,6 @@ export default function Home() {
 
       <NewMovies movies={newMovies} />
 
-      <Timeline />
     </main>
   );
 }

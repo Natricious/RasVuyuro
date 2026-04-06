@@ -1,16 +1,15 @@
-import moviesData from '../../data/movies.json';
+import { useMovies } from '../../hooks/useMovies';
 import { useWatched } from '../../hooks/useWatched';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
-const ALL_MOVIES = moviesData;
-
 export default function PlannedPage() {
+  const { movies, loading } = useMovies();
   const { plannedIds } = useWatched();
   const { lang } = useLang();
 
-  const plannedMovies = ALL_MOVIES.filter(m => plannedIds.has(m.id));
+  const plannedMovies = movies.filter(m => plannedIds.has(m.id));
 
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>
@@ -21,11 +20,11 @@ export default function PlannedPage() {
             {T[lang].plannedPageTitle}
           </h1>
           <p style={{ color: 'var(--fg-muted)', fontSize: '0.9375rem' }}>
-            {plannedMovies.length} {T[lang].plannedCount}
+            {loading ? '…' : `${plannedMovies.length} ${T[lang].plannedCount}`}
           </p>
         </div>
 
-        {plannedMovies.length === 0 ? (
+        {!loading && plannedMovies.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
             <p style={{ fontSize: '3rem', marginBottom: '16px' }}>🕐</p>
             <p style={{ fontSize: '1rem' }}>

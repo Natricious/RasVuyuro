@@ -11,9 +11,9 @@ const NAV_LINK_KEYS = [
   { to: '/', key: 'home' },
   { to: '/movies', key: 'movies' },
   { to: '/collections', key: 'collections' },
-  { to: '/timeline', key: 'timeline' },
   { to: '/watched', key: 'watched' },
   { to: '/planned', key: 'planned' },
+  { to: '/wizard-test', key: 'wizardTest' },
 ];
 
 // ── NavSearch ─────────────────────────────────────────────────────────────────

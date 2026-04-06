@@ -4,7 +4,6 @@ export const T = {
     trending: 'ტრენდული',
     newMovies: 'ახალი ფილმები',
     collections: 'კოლექციები',
-    timeline: 'ქრონოლოგია',
     search: 'ძებნა...',
     darkMode: 'მუქი რეჟიმი',
     findForMe: 'მომიძებნე ფილმი',
@@ -55,13 +54,14 @@ export const T = {
     plannedCount: 'ფილმი',
     // 404
     movieNotFound: 'ფილმი ვერ მოიძებნა',
+    // Wizard test nav
+    wizardTest: '🧪 ვიზარდი',
   },
   en: {
     findMovie: 'Find a Movie',
     trending: 'Trending',
     newMovies: 'New Movies',
     collections: 'Collections',
-    timeline: 'Timeline',
     search: 'Search...',
     darkMode: 'Dark mode',
     findForMe: 'Find me a movie',
@@ -112,5 +112,7 @@ export const T = {
     plannedCount: 'movies',
     // 404
     movieNotFound: 'Movie not found',
+    // Wizard test nav
+    wizardTest: '🧪 Wizard',
   },
 };
