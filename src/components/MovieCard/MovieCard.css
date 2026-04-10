@@ -9,7 +9,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   height: 100%;
-  max-width: 300px;
+  max-width: 320px;
   margin: 0 auto;
 }
 
@@ -20,7 +20,7 @@
 
 .movie-card__poster {
   width: 100%;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 32 / 45; /* Maintains original 450px max-height at 320px width */
   position: relative;
   overflow: hidden;
 }

@@ -9,10 +9,29 @@ import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import WatchedPage from './pages/Watched/WatchedPage';
 import PlannedPage from './pages/Planned/PlannedPage';
 import WizardTestPage from './pages/WizardTest/WizardTestPage';
+import LoginPage from './pages/Auth/LoginPage';
+import RegisterPage from './pages/Auth/RegisterPage';
+import AuthCallbackPage from './pages/Auth/AuthCallbackPage';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import { useAuth } from './context/AuthContext';
 
 export default function App() {
+  const { loading } = useAuth();
+
+  // Hold render until initial session is resolved — prevents flash on OAuth redirect
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh', display: 'flex',
+        alignItems: 'center', justifyContent: 'center',
+        background: 'var(--bg)', color: 'var(--text-muted)', fontSize: 14,
+      }}>
+        Loading…
+      </div>
+    );
+  }
+
   return (
     <>
       <ScrollToTop />
@@ -27,6 +46,9 @@ export default function App() {
         <Route path="/watched" element={<WatchedPage />} />
         <Route path="/planned" element={<PlannedPage />} />
         <Route path="/wizard-test" element={<WizardTestPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useLang } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 import { useWatched } from '../../hooks/useWatched';
 import { useNavSearch } from '../../hooks/useMovies';
 import { T } from '../../data/translations';
@@ -130,12 +131,89 @@ function NavSearch({ lang }) {
 }
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
+// ── UserMenu ──────────────────────────────────────────────────────────────────
+function UserMenu({ user, signOut, lang }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function onMouseDown(e) {
+      if (!ref.current?.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener('mousedown', onMouseDown);
+    return () => document.removeEventListener('mousedown', onMouseDown);
+  }, []);
+
+  const label = user.email?.split('@')[0] ?? 'User';
+
+  return (
+    <div ref={ref} style={{ position: 'relative' }}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 6,
+          background: 'rgba(255,255,255,0.07)', border: '1px solid var(--border)',
+          borderRadius: 999, padding: '5px 12px 5px 8px',
+          color: 'var(--text)', fontSize: 13, fontWeight: 500, cursor: 'pointer',
+        }}
+      >
+        <span style={{
+          width: 24, height: 24, borderRadius: '50%',
+          background: 'var(--gold)', color: '#000',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 11, fontWeight: 700, flexShrink: 0,
+        }}>
+          {label[0].toUpperCase()}
+        </span>
+        {label}
+        <svg width="10" height="10" viewBox="0 0 10 6" fill="none">
+          <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      </button>
+
+      {open && (
+        <div style={{
+          position: 'absolute', right: 0, top: 'calc(100% + 8px)',
+          background: 'var(--surface)', border: '1px solid var(--border)',
+          borderRadius: 10, minWidth: 160, overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.4)', zIndex: 200,
+        }}>
+          <div style={{ padding: '8px 14px 6px', borderBottom: '1px solid var(--border)' }}>
+            <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 1 }}>
+              {lang === 'ka' ? 'შესული ხარ' : 'Signed in as'}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 160 }}>
+              {user.email}
+            </div>
+          </div>
+          <button
+            onClick={() => { signOut(); setOpen(false); }}
+            style={{
+              width: '100%', padding: '9px 14px', textAlign: 'left',
+              background: 'transparent', border: 'none', color: '#ef4444',
+              fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            {lang === 'ka' ? 'გასვლა' : 'Sign Out'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLang } = useLang();
+  const { user, signOut } = useAuth();
   const { watchedIds, plannedIds } = useWatched();
   const t = T[lang];
 
@@ -229,6 +307,21 @@ export default function Navbar() {
                 </svg>
               )}
             </button>
+            {user ? (
+              <UserMenu user={user} signOut={signOut} lang={lang} />
+            ) : (
+              <Link
+                to="/login"
+                style={{
+                  background: 'var(--gold)', color: '#000',
+                  borderRadius: 999, padding: '5px 14px',
+                  fontSize: 13, fontWeight: 700, textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {lang === 'ka' ? 'შესვლა' : 'Sign In'}
+              </Link>
+            )}
             <Link to="/movies" className="navbar__cta">{t.viewAll}</Link>
             <button
               className="navbar__hamburger"
