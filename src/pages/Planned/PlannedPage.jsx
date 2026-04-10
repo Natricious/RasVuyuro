@@ -1,15 +1,26 @@
-import { useMovies } from '../../hooks/useMovies';
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabase';
 import { useWatched } from '../../hooks/useWatched';
 import { useLang } from '../../context/LanguageContext';
 import { T } from '../../data/translations';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
 export default function PlannedPage() {
-  const { movies, loading } = useMovies();
   const { plannedIds } = useWatched();
   const { lang } = useLang();
 
-  const plannedMovies = movies.filter(m => plannedIds.has(m.id));
+  const [plannedMovies, setPlannedMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const ids = [...plannedIds];
+    if (ids.length === 0) { setLoading(false); setPlannedMovies([]); return; }
+    supabase
+      .from('movies')
+      .select('id,title,title_ge,year,imdb_rating,poster,genres,themes,timeline,tone,collections,similar_movies')
+      .in('id', ids)
+      .then(({ data }) => { setPlannedMovies(data || []); setLoading(false); });
+  }, [plannedIds.size]);
 
   return (
     <main style={{ paddingTop: 'calc(var(--navbar-height) + 40px)', paddingBottom: '96px', minHeight: '100vh' }}>

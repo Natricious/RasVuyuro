@@ -380,8 +380,8 @@ export function useMovieDetail(id) {
 }
 
 // ── useMovies (backward compat) ───────────────────────────────────────────────
-// Fetches ALL movies via internal pagination. Used by ChatButton, WatchedPage,
-// PlannedPage, WizardModal, etc. Cached for session lifetime.
+// Fetches ALL movies via internal pagination. Used by WizardModal etc.
+// Cached for session lifetime.
 let allMoviesCacheV2 = null
 
 async function fetchAllMovies() {

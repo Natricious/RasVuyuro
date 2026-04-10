@@ -9,7 +9,7 @@
   --visible: 5;
   --gap: 16px;
   --card-width: calc((100% - ((var(--visible) - 1) * var(--gap))) / var(--visible));
-  --poster-height: calc(var(--card-width) * 1.40625);
+  --poster-height: calc(var(--card-width) * 1.5);
   --poster-center: calc(8px + (var(--poster-height) / 2) + (var(--poster-height) * 0.75));
 }
 
