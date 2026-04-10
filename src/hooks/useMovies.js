@@ -62,18 +62,15 @@ export function useNewMovies(limit = 10) {
   return { movies, loading }
 }
 
-// ── Shared: build PostgREST OR filter for collection matching ─────────────────
-// Used by both useCollectionMovies and useCollectionCounts.
-function buildCollectionOrFilter(slug, cf) {
-  const parts = [`collections.cs.{"${slug}"}`]
+// ── Shared: build PostgREST filter for collection matching ────────────────────
+// Matches ONLY on movie.collections[] containing the slug.
+// Theme/genre fallbacks were removed — they caused unrelated movies to appear.
+// movie.collections[] is now populated with exact slug values by assignCollections.js.
+function buildCollectionOrFilter(slug) {
+  // Also accept the underscore variant for legacy data (ancient_rome → ancient-rome)
   const underscoreSlug = slug.replace(/-/g, '_')
+  const parts = [`collections.cs.{"${slug}"}`]
   if (underscoreSlug !== slug) parts.push(`collections.cs.{"${underscoreSlug}"}`)
-  if (cf.themes?.length) {
-    const vals = cf.themes
-      .map(v => (/[ ,{}()"\\]/.test(v) ? `"${v.replace(/"/g, '\\"')}"` : v))
-      .join(',')
-    parts.push(`themes.ov.{${vals}}`)
-  }
   return parts.join(',')
 }
 
@@ -97,12 +94,12 @@ export function useCollectionCounts(collections) {
           batch.map(async col => {
             const cacheKey = ck('count', col.slug)
             if (queryCache.has(cacheKey)) return { slug: col.slug, count: queryCache.get(cacheKey) }
-            const orFilter = buildCollectionOrFilter(col.slug, col.filters || {})
-            const { count, error } = await supabase
+            const orFilter = buildCollectionOrFilter(col.slug)
+            const { data, error } = await supabase
               .from('movies')
-              .select('id', { count: 'exact', head: true })
+              .select('id')
               .or(orFilter)
-            const n = (!error && count != null) ? count : 0
+            const n = (!error && data) ? new Set(data.map(m => m.id)).size : 0
             queryCache.set(cacheKey, n)
             return { slug: col.slug, count: n }
           })
@@ -160,10 +157,9 @@ export function useCollectionMovies(collection, filters = {}, page = 0, pageSize
 
     let q = supabase
       .from('movies')
-      .select(LIST_FIELDS, { count: 'exact' })
+      .select(LIST_FIELDS)
 
-    // OR logic: slug match, themes, genres, timeline (see buildCollectionOrFilter)
-    q = q.or(buildCollectionOrFilter(slug, collection.filters || {}))
+    q = q.or(buildCollectionOrFilter(slug))
 
     // User filters
     if (minRating > 0)            q = q.gte('imdb_rating', minRating)
@@ -182,12 +178,25 @@ export function useCollectionMovies(collection, filters = {}, page = 0, pageSize
 
     q = q.order('id', { ascending: true })
 
-    q.range(from, to).then(({ data, error, count }) => {
+    let countQ = supabase.from('movies').select('id').or(buildCollectionOrFilter(slug))
+    if (minRating > 0)            countQ = countQ.gte('imdb_rating', minRating)
+    if (selectedGenre !== 'all')  countQ = countQ.contains('genres', [selectedGenre])
+    if (yearRange === 'classic')  countQ = countQ.lt('year', 1990)
+    else if (yearRange === '90s') countQ = countQ.gte('year', 1990).lt('year', 2000)
+    else if (yearRange === '2000s') countQ = countQ.gte('year', 2000).lt('year', 2010)
+    else if (yearRange === '2010s') countQ = countQ.gte('year', 2010).lt('year', 2020)
+    else if (yearRange === '2020s') countQ = countQ.gte('year', 2020)
+
+    Promise.all([
+      q.range(from, to),
+      countQ
+    ]).then(([ { data, error }, { data: allData, error: countError } ]) => {
       if (!error && data) {
-        const result = { movies: data, total: count }
+        const totalCount = (!countError && allData) ? new Set(allData.map(m => m.id)).size : 0
+        const result = { movies: data, total: totalCount }
         queryCache.set(key, result)
         setMovies(data)
-        setTotal(count)
+        setTotal(totalCount)
       }
       setLoading(false)
     })
@@ -238,7 +247,7 @@ export function useFilteredMovies({ query = '', genre = '', timeline = '', sort 
 
     let q = supabase
       .from('movies')
-      .select(LIST_FIELDS, { count: 'exact' })
+      .select(LIST_FIELDS)
 
     if (debouncedQuery.length >= 3) {
       q = q.or(`title.ilike.%${debouncedQuery}%,title_ge.ilike.%${debouncedQuery}%`)
@@ -253,12 +262,23 @@ export function useFilteredMovies({ query = '', genre = '', timeline = '', sort 
 
     q = q.order('id', { ascending: true })
 
-    q.range(from, to).then(({ data, error, count }) => {
+    let countQ = supabase.from('movies').select('id')
+    if (debouncedQuery.length >= 3) {
+      countQ = countQ.or(`title.ilike.%${debouncedQuery}%,title_ge.ilike.%${debouncedQuery}%`)
+    }
+    if (genre)    countQ = countQ.contains('genres', [genre])
+    if (timeline) countQ = countQ.eq('timeline', timeline)
+
+    Promise.all([
+      q.range(from, to),
+      countQ
+    ]).then(([ { data, error }, { data: allData, error: countError } ]) => {
       if (!error && data) {
-        const result = { movies: data, total: count }
+        const totalCount = (!countError && allData) ? new Set(allData.map(m => m.id)).size : 0
+        const result = { movies: data, total: totalCount }
         queryCache.set(activeKey, result)
         setMovies(data)
-        setTotal(count)
+        setTotal(totalCount)
       }
       setLoading(false)
     })

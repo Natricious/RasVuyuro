@@ -6,6 +6,7 @@ export const COLLECTION_CATEGORIES = [
   { id: 'psychological',  title_ka: 'ფსიქოლოგიური',        title_en: 'Psychological' },
   { id: 'social',         title_ka: 'სოციალური და ცხოვრება', title_en: 'Social & Life' },
   { id: 'adventure',      title_ka: 'სათავგადასავლო',       title_en: 'Adventure & Action' },
+  { id: 'animation',     title_ka: 'ანიმაცია',              title_en: 'Animation' },
 ];
 
 const COLLECTIONS = [
@@ -38,7 +39,7 @@ const COLLECTIONS = [
     color: '#60A5FA',
     imageUrl: 'https://images.unsplash.com/photo-1555993539-1732b0258235?w=600&q=80',
     filters: {
-      themes: ['Sparta', 'Greece', 'Trojan War', 'mythology', 'conquest', 'Egypt', 'Mayan'],
+      themes: ['ancient greece', 'sparta', 'athens', 'trojan war', 'thermopylae', 'Troy', 'Achilles', 'Leonidas', 'Alexander the Great', 'Olympia', 'Pericles', 'Odysseus', 'Persian Wars'],
       timeline: ['ancient'],
       tone: [],
       genres: [],
@@ -55,7 +56,7 @@ const COLLECTIONS = [
     color: '#94A3B8',
     imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',
     filters: {
-      themes: ['Picts', 'Scotland', 'warriors'],
+      themes: ['Picts', 'Scotland', 'viking', 'Vikings', 'Norse', 'Norsemen', 'longship', 'raid', 'Celtic', 'Braveheart', 'Ragnar'],
       timeline: ['medieval'],
       tone: [],
       genres: ['History'],
@@ -72,7 +73,7 @@ const COLLECTIONS = [
     color: '#A78BFA',
     imageUrl: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80',
     filters: {
-      themes: ['Notre Dame', 'religion vs science', 'faith', 'Christianity'],
+      themes: ['Notre Dame', 'religion vs science', 'medieval kingdom', 'feudalism', 'chivalry', 'plague', 'Black Death', 'inquisition', 'knighthood'],
       timeline: ['medieval'],
       tone: [],
       genres: ['History'],
@@ -89,7 +90,7 @@ const COLLECTIONS = [
     color: '#F59E0B',
     imageUrl: 'https://images.unsplash.com/photo-1608889335941-32ac5f2041b9?w=600&q=80',
     filters: {
-      themes: ['religion vs science', 'Christianity', 'conquest', 'honor', 'faith'],
+      themes: ['crusade', 'crusader', 'holy war', 'Jerusalem', 'Saladin', 'Templar', 'Holy Land', 'Richard the Lionheart'],
       timeline: ['medieval'],
       tone: [],
       genres: ['History', 'Action'],
@@ -106,7 +107,7 @@ const COLLECTIONS = [
     color: '#F472B6',
     imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80',
     filters: {
-      themes: ['art', 'science', 'religion vs science', "women's education", 'Hypatia'],
+      themes: ['Renaissance', 'Leonardo da Vinci', 'Michelangelo', 'Medici', 'Raphael', 'Botticelli', 'Florence', 'Hypatia', "women's education", 'religion vs science'],
       timeline: ['19th_century', 'ancient'],
       tone: [],
       genres: ['Biography', 'History'],
@@ -140,7 +141,7 @@ const COLLECTIONS = [
     color: '#78716C',
     imageUrl: 'https://images.unsplash.com/photo-1580130737987-2d5572a8bf4e?w=600&q=80',
     filters: {
-      themes: ['WWI', 'pacifism', 'duty', 'sacrifice'],
+      themes: ['WWI', 'World War I', 'Great War', 'trenches', 'No Man\'s Land', 'pacifism', 'mustard gas', 'Western Front'],
       timeline: [],
       tone: [],
       genres: ['War', 'History'],
@@ -157,7 +158,7 @@ const COLLECTIONS = [
     color: '#6B7280',
     imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80',
     filters: {
-      themes: ['Stalingrad', 'holocaust', 'POW', 'POW escape', 'tank warfare', 'duty', 'sacrifice', 'Zamperini', 'dehumanization'],
+      themes: ['Stalingrad', 'holocaust', 'POW', 'POW escape', 'tank warfare', 'Zamperini', 'dehumanization', 'WWII', 'World War II', 'D-Day', 'Nazi', 'concentration camp', 'resistance fighter', 'Operation'],
       timeline: ['ww2'],
       tone: [],
       genres: ['War'],
@@ -174,7 +175,7 @@ const COLLECTIONS = [
     color: '#475569',
     imageUrl: 'https://images.unsplash.com/photo-1611516491426-03025e6043c8?w=600&q=80',
     filters: {
-      themes: ['Cold War', 'spy exchange', 'defection', 'Berlin', 'tension', 'undercover'],
+      themes: ['Cold War', 'spy exchange', 'defection', 'Berlin', 'nuclear threat', 'CIA', 'KGB', 'Iron Curtain', 'arms race', 'espionage'],
       timeline: [],
       tone: [],
       genres: [],
@@ -191,7 +192,7 @@ const COLLECTIONS = [
     color: '#EF4444',
     imageUrl: 'https://images.unsplash.com/photo-1529528070346-3b56e5878f4e?w=600&q=80',
     filters: {
-      themes: ['Cold War', 'Stalingrad', 'Berlin', 'defection', 'imperialism', 'tyranny'],
+      themes: ['Cold War', 'Stalingrad', 'Berlin', 'defection', 'Soviet Union', 'USSR', 'Stalin', 'KGB', 'Gulag', 'Communist'],
       timeline: ['ww2'],
       tone: [],
       genres: ['History', 'Drama'],
@@ -261,7 +262,7 @@ const COLLECTIONS = [
     color: '#7C3AED',
     imageUrl: 'https://images.unsplash.com/photo-1567521464027-f127ff144326?w=600&q=80',
     filters: {
-      themes: ['shadow', 'darkness', 'chaos', 'obsession', 'madness'],
+      themes: ['witch', 'witchcraft', 'occult', 'satanic', 'cult', 'magic spell', 'sorcery', 'voodoo'],
       timeline: [],
       tone: [],
       genres: ['Horror', 'Fantasy'],
@@ -278,7 +279,7 @@ const COLLECTIONS = [
     color: '#FBBF24',
     imageUrl: 'https://images.unsplash.com/photo-1608889335941-32ac5f2041b9?w=600&q=80',
     filters: {
-      themes: ['mythology', 'Trojan War', 'Sparta', 'Greece', 'Egypt', 'Mayan'],
+      themes: ['mythology', 'greek mythology', 'norse mythology', 'egyptian mythology', 'greek gods', 'Zeus', 'Hercules', 'Thor', 'Odin', 'Poseidon', 'Hades', 'Ares', 'Ra', 'Osiris', 'demigod'],
       timeline: ['ancient'],
       tone: [],
       genres: ['Fantasy', 'History'],
@@ -295,7 +296,7 @@ const COLLECTIONS = [
     color: '#4B5563',
     imageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&q=80',
     filters: {
-      themes: ['gothic', 'darkness', 'shadow', 'underworld', 'dark romance', 'monster hunter'],
+      themes: ['gothic', 'dark romance', 'monster hunter', 'underworld', 'dark magic', 'fallen angel', 'demon'],
       timeline: [],
       tone: [],
       genres: ['Fantasy', 'Horror'],
@@ -312,7 +313,7 @@ const COLLECTIONS = [
     color: '#34D399',
     imageUrl: 'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?w=600&q=80',
     filters: {
-      themes: ['immortality', 'mortality', 'time', 'original vampire', 'Dracula', 'Vlad'],
+      themes: ['immortality', 'eternal life', 'original vampire', 'Dracula', 'Vlad', 'undead', 'fountain of youth'],
       timeline: [],
       tone: [],
       genres: [],
@@ -329,7 +330,7 @@ const COLLECTIONS = [
     color: '#DC2626',
     imageUrl: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?w=600&q=80',
     filters: {
-      themes: ['monster hunter', 'bear attack', 'tiger', 'chaos', 'hunter'],
+      themes: ['monster hunter', 'bear attack', 'tiger', 'creature', 'beast', 'monster', 'demon'],
       timeline: [],
       tone: [],
       genres: ['Horror', 'Adventure'],
@@ -346,7 +347,7 @@ const COLLECTIONS = [
     color: '#06B6D4',
     imageUrl: 'https://images.unsplash.com/photo-1501139083538-0139583c060f?w=600&q=80',
     filters: {
-      themes: ['time travel', 'alternate history', 'what if', 'time'],
+      themes: ['time travel', 'time loop', 'time machine', 'alternate history', 'back in time', 'temporal paradox'],
       timeline: [],
       tone: [],
       genres: ['Sci-Fi', 'Fantasy'],
@@ -365,7 +366,7 @@ const COLLECTIONS = [
     color: '#3B82F6',
     imageUrl: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600&q=80',
     filters: {
-      themes: ['space', 'ingenuity', 'science'],
+      themes: ['space', 'astronaut', 'NASA', 'space mission', 'Mars', 'moon landing', 'space shuttle', 'ingenuity', 'spacewalk', 'rocket'],
       timeline: ['future'],
       tone: [],
       genres: ['Sci-Fi'],
@@ -382,7 +383,7 @@ const COLLECTIONS = [
     color: '#4ADE80',
     imageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&q=80',
     filters: {
-      themes: ['space', 'post-apocalypse', 'chaos'],
+      themes: ['alien', 'aliens', 'extraterrestrial', 'alien invasion', 'first contact', 'alien attack', 'UFO', 'xenomorph'],
       timeline: ['future'],
       tone: [],
       genres: ['Sci-Fi', 'Horror'],
@@ -399,7 +400,7 @@ const COLLECTIONS = [
     color: '#818CF8',
     imageUrl: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
     filters: {
-      themes: ['ambition', 'Facebook', 'genius', 'Nobel Prize', 'science'],
+      themes: ['artificial intelligence', 'AI', 'robot', 'android', 'sentience', 'machine', 'singularity', 'consciousness'],
       timeline: ['future', 'modern'],
       tone: [],
       genres: ['Sci-Fi'],
@@ -416,7 +417,7 @@ const COLLECTIONS = [
     color: '#EC4899',
     imageUrl: 'https://images.unsplash.com/photo-1604076913837-52ab5629fdd9?w=600&q=80',
     filters: {
-      themes: ['dystopia', 'rebellion', 'chaos', 'ambition'],
+      themes: ['cyberpunk', 'neon city', 'hacker', 'megacorporation', 'neural implant', 'augmentation', 'cyberspace', 'corporate dystopia', 'neon noir'],
       timeline: ['future'],
       tone: [],
       genres: ['Sci-Fi', 'Thriller'],
@@ -450,7 +451,7 @@ const COLLECTIONS = [
     color: '#6366F1',
     imageUrl: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=600&q=80',
     filters: {
-      themes: ['what if', 'alternate history', 'time travel', 'philosophical'],
+      themes: ['multiverse', 'parallel universe', 'parallel world', 'alternate history', 'alternate reality', 'time travel', 'many worlds'],
       timeline: [],
       tone: [],
       genres: ['Sci-Fi', 'Fantasy'],
@@ -467,7 +468,7 @@ const COLLECTIONS = [
     color: '#0EA5E9',
     imageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=600&q=80',
     filters: {
-      themes: ['space', 'group survival', 'debris', 'isolation', 'endurance'],
+      themes: ['space', 'stranded in space', 'space station', 'spacecraft', 'debris', 'lost in space', 'zero gravity'],
       timeline: ['future'],
       tone: [],
       genres: ['Sci-Fi'],
@@ -503,7 +504,7 @@ const COLLECTIONS = [
     color: '#64748B',
     imageUrl: 'https://images.unsplash.com/photo-1453873531674-2151bcd01707?w=600&q=80',
     filters: {
-      themes: ['cat and mouse', 'tension', 'undercover'],
+      themes: ['detective', 'investigation', 'murder mystery', 'whodunit', 'crime scene', 'cat and mouse', 'undercover'],
       timeline: [],
       tone: [],
       genres: ['Mystery', 'Crime', 'Thriller'],
@@ -520,7 +521,7 @@ const COLLECTIONS = [
     color: '#7F1D1D',
     imageUrl: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=600&q=80',
     filters: {
-      themes: ['cat and mouse', 'darkness', 'madness', 'obsession', 'hunter'],
+      themes: ['serial killer', 'cat and mouse', 'profiler', 'murder investigation', 'psychopath', 'sociopath'],
       timeline: [],
       tone: [],
       genres: ['Thriller', 'Crime', 'Horror'],
@@ -537,7 +538,7 @@ const COLLECTIONS = [
     color: '#F59E0B',
     imageUrl: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80',
     filters: {
-      themes: ['chase', 'tension', 'betrayal'],
+      themes: ['heist', 'bank robbery', 'con artist', 'scam', 'theft', 'getaway'],
       timeline: [],
       tone: [],
       genres: ['Crime', 'Thriller', 'Action'],
@@ -554,7 +555,7 @@ const COLLECTIONS = [
     color: '#374151',
     imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
     filters: {
-      themes: ['power and love', 'betrayal', 'guilt', 'imperialism'],
+      themes: ['mafia', 'mob', 'gangster', 'organized crime', 'cartel', 'crime family', 'mob boss', 'crime boss'],
       timeline: [],
       tone: [],
       genres: ['Crime', 'Drama'],
@@ -571,7 +572,7 @@ const COLLECTIONS = [
     color: '#1D4ED8',
     imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80',
     filters: {
-      themes: ['law school', 'injustice', 'morality', 'guilt', 'underestimation'],
+      themes: ['courtroom', 'trial', 'lawyer', 'attorney', 'verdict', 'law school', 'injustice', 'cross-examination', 'judge', 'jury'],
       timeline: [],
       tone: [],
       genres: ['Drama', 'Mystery'],
@@ -588,7 +589,7 @@ const COLLECTIONS = [
     color: '#92400E',
     imageUrl: 'https://images.unsplash.com/photo-1543489822-c49534f3271f?w=600&q=80',
     filters: {
-      themes: ['POW escape', 'escape', 'freedom', 'trapped', 'perseverance'],
+      themes: ['POW escape', 'prison escape', 'prison break', 'prison', 'jailbreak', 'captive'],
       timeline: [],
       tone: [],
       genres: ['Action', 'Drama', 'History'],
@@ -624,7 +625,7 @@ const COLLECTIONS = [
     color: '#BE185D',
     imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80',
     filters: {
-      themes: ['self-discovery', 'finding yourself', 'loss of innocence', 'outsiders', 'self-worth'],
+      themes: ['self-discovery', 'finding yourself', 'identity', 'alter ego', 'imposter syndrome', 'dual identity', 'who am I'],
       timeline: [],
       tone: [],
       genres: ['Drama'],
@@ -641,7 +642,7 @@ const COLLECTIONS = [
     color: '#9D174D',
     imageUrl: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=600&q=80',
     filters: {
-      themes: ['schizophrenia', 'perspective', 'hidden-truth', 'madness', 'tension'],
+      themes: ['unreliable narrator', 'schizophrenia', 'hallucination', 'perspective', 'hidden-truth', 'plot twist', 'false memory'],
       timeline: [],
       tone: [],
       genres: ['Thriller', 'Mystery'],
@@ -658,7 +659,7 @@ const COLLECTIONS = [
     color: '#6D28D9',
     imageUrl: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80',
     filters: {
-      themes: ['madness', 'schizophrenia', 'grief', 'disillusionment', 'therapy', 'middle-age crisis'],
+      themes: ['madness', 'schizophrenia', 'mental illness', 'nervous breakdown', 'disillusionment', 'therapy', 'middle-age crisis', 'psychological collapse'],
       timeline: [],
       tone: [],
       genres: ['Drama'],
@@ -675,7 +676,7 @@ const COLLECTIONS = [
     color: '#1E40AF',
     imageUrl: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&q=80',
     filters: {
-      themes: ['betrayal', 'cat and mouse', 'undercover', 'hidden-truth', 'tension'],
+      themes: ['hidden-truth', 'cat and mouse', 'conspiracy', 'twist ending', 'secret identity', 'double cross', 'cover-up'],
       timeline: [],
       tone: [],
       genres: ['Thriller', 'Mystery', 'Crime'],
@@ -745,7 +746,7 @@ const COLLECTIONS = [
     color: '#F97316',
     imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=600&q=80',
     filters: {
-      themes: ['fatherhood', 'brothers', 'childhood', 'grief', 'hope', 'reunion'],
+      themes: ['fatherhood', 'brothers', 'childhood', 'mother-daughter', 'parent-child', 'family bonds', 'sibling rivalry', 'family drama'],
       timeline: [],
       tone: [],
       genres: ['Drama', 'Family'],
@@ -762,7 +763,7 @@ const COLLECTIONS = [
     color: '#84CC16',
     imageUrl: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80',
     filters: {
-      themes: ['community', 'reunion', 'nostalgia', 'connection', 'hope', 'conformity'],
+      themes: ['small town', 'rural life', 'village', 'conformity', 'small-town secrets', 'provincial life'],
       timeline: [],
       tone: [],
       genres: ['Drama', 'Comedy'],
@@ -832,7 +833,7 @@ const COLLECTIONS = [
     color: '#DC2626',
     imageUrl: 'https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=600&q=80',
     filters: {
-      themes: ['revenge', 'bounty hunter', 'western', 'honor', 'betrayal'],
+      themes: ['revenge', 'bounty hunter', 'western', 'vengeance', 'blood feud', 'vigilante', 'payback'],
       timeline: [],
       tone: [],
       genres: ['Action', 'Drama'],
@@ -849,7 +850,7 @@ const COLLECTIONS = [
     color: '#B91C1C',
     imageUrl: 'https://images.unsplash.com/photo-1565073624497-7144969a5242?w=600&q=80',
     filters: {
-      themes: ['war', 'conquest', 'heroism', 'brotherhood', 'sacrifice', 'military'],
+      themes: ['ancient battle', 'siege', 'medieval warfare', 'naval battle', 'cavalry charge', 'battle of', 'sword fight', 'conquest'],
       timeline: ['ancient', 'medieval', 'ww2', '19th_century'],
       tone: [],
       genres: ['War', 'History', 'Action'],
@@ -866,10 +867,46 @@ const COLLECTIONS = [
     color: '#D97706',
     imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80',
     filters: {
-      themes: ['heroism', 'honor', 'courage', 'perseverance', 'hope', 'willpower', 'human limits', 'self-rescue', 'endurance'],
+      themes: ['hero\'s journey', 'chosen one', 'human limits', 'self-rescue', 'willpower', 'underdog', 'transformation', 'coming of age'],
       timeline: [],
       tone: [],
       genres: ['Action', 'Adventure', 'Drama'],
+    },
+  },
+
+  // ── Animation ────────────────────────────────────────────────────────────────
+  {
+    slug: 'anime',
+    category: 'animation',
+    title_ka: 'ანიმე',
+    title_en: 'Anime',
+    description_ka: 'იაპონური ანიმაციური ფილმები და სერიალები',
+    description_en: 'Japanese animated films and series',
+    icon: '⛩️',
+    color: '#FF6B9D',
+    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&q=80',
+    filters: {
+      themes: ['anime', 'japanese animation', 'manga', 'studio ghibli', 'hayao miyazaki'],
+      timeline: [],
+      tone: [],
+      genres: ['Animation'],
+    },
+  },
+  {
+    slug: 'animation',
+    category: 'animation',
+    title_ka: 'ანიმაცია',
+    title_en: 'Animation',
+    description_ka: 'საუკეთესო ანიმაციური ფილმები ყველა ასაკისთვის',
+    description_en: 'Best animated films for all ages',
+    icon: '🎨',
+    color: '#4ECDC4',
+    imageUrl: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=600&q=80',
+    filters: {
+      themes: ['animation'],
+      timeline: [],
+      tone: [],
+      genres: ['Animation'],
     },
   },
 ];
