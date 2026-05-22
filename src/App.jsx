@@ -8,6 +8,7 @@ import CollectionDetailPage from './pages/Collections/CollectionDetailPage';
 import MovieDetailPage from './pages/MovieDetail/MovieDetailPage';
 import WatchedPage from './pages/Watched/WatchedPage';
 import PlannedPage from './pages/Planned/PlannedPage';
+import AccountPage from './pages/Account/AccountPage';
 import WizardTestPage from './pages/WizardTest/WizardTestPage';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/movie/:id" element={<MovieDetailPage />} />
         <Route path="/watched" element={<WatchedPage />} />
         <Route path="/planned" element={<PlannedPage />} />
+        <Route path="/account" element={<AccountPage />} />
         <Route path="/wizard-test" element={<WizardTestPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

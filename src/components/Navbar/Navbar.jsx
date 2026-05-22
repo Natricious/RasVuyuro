@@ -245,6 +245,7 @@ export default function Navbar() {
                   to={to}
                   className={`navbar__link ${location.pathname === to ? 'navbar__link--active' : ''}`}
                   style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                  onClick={to === '/' && location.pathname === '/' ? () => window.location.reload() : undefined}
                 >
                   {t[key]}
                   {key === 'watched' && watchedIds.size > 0 && (
@@ -308,7 +309,9 @@ export default function Navbar() {
               )}
             </button>
             {user ? (
-              <UserMenu user={user} signOut={signOut} lang={lang} />
+              <div className="navbar__user-desktop">
+                <UserMenu user={user} signOut={signOut} lang={lang} />
+              </div>
             ) : (
               <Link
                 to="/login"
@@ -339,6 +342,16 @@ export default function Navbar() {
 
       {/* Mobile menu overlay */}
       <div className={`mobile-menu ${menuOpen ? 'mobile-menu--open' : ''}`} aria-hidden={!menuOpen}>
+        <button
+          className="mobile-menu__close"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
         <nav className="mobile-menu__nav">
           {NAV_LINK_KEYS.map(({ to, key }, i) => (
             <Link
@@ -346,10 +359,20 @@ export default function Navbar() {
               to={to}
               className="mobile-menu__link"
               style={{ animationDelay: `${i * 0.08}s` }}
+              onClick={to === '/' && location.pathname === '/' ? () => window.location.reload() : undefined}
             >
               {t[key]}
             </Link>
           ))}
+          {user && (
+            <Link
+              to="/account"
+              className="mobile-menu__link"
+              style={{ animationDelay: `${NAV_LINK_KEYS.length * 0.08}s` }}
+            >
+              {lang === 'ka' ? 'ანგარიში' : 'Account'}
+            </Link>
+          )}
         </nav>
       </div>
     </>

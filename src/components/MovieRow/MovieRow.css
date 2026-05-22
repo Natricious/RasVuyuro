@@ -58,12 +58,7 @@
 }
 
 @media (max-width: 768px) {
-  .scroll-btn {
-    width: 36px;
-    height: 36px;
-  }
-  .scroll-btn--left { left: -44px; }
-  .scroll-btn--right { right: -44px; }
+  .scroll-btn { display: none; }
 }
 
 .scroll-row {
