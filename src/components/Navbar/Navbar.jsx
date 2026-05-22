@@ -373,6 +373,13 @@ export default function Navbar() {
               {lang === 'ka' ? 'ანგარიში' : 'Account'}
             </Link>
           )}
+          <button
+            className="mobile-menu__link"
+            style={{ animationDelay: `${(NAV_LINK_KEYS.length + (user ? 1 : 0)) * 0.08}s` }}
+            onClick={toggleLang}
+          >
+            {lang === 'ka' ? 'EN' : 'KA'}
+          </button>
         </nav>
       </div>
     </>
