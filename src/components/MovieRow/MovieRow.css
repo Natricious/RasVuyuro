@@ -50,11 +50,11 @@
 }
 
 .scroll-btn--left {
-  left: -28px;
+  left: -56px;
 }
 
 .scroll-btn--right {
-  right: -28px;
+  right: -56px;
 }
 
 @media (max-width: 768px) {
@@ -62,8 +62,8 @@
     width: 36px;
     height: 36px;
   }
-  .scroll-btn--left { left: -16px; }
-  .scroll-btn--right { right: -16px; }
+  .scroll-btn--left { left: -44px; }
+  .scroll-btn--right { right: -44px; }
 }
 
 .scroll-row {
