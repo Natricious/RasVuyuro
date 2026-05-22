@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
       options: {
         // Redirect back to app root; Supabase appends tokens as hash fragment
         // which the client picks up automatically via onAuthStateChange
-        redirectTo: window.location.origin,
+        redirectTo: 'https://natricious.github.io/RasVuyuro/',
       },
     });
   }
