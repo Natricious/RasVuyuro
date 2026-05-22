@@ -215,7 +215,12 @@ export default function MoviesPage() {
               </p>
             </div>
           ) : (
-            <Spinner />
+            <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--fg-muted)' }}>
+              <p style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🎬</p>
+              <p style={{ fontSize: '1rem' }}>
+                {lang === 'ka' ? 'ფილმი ვერ მოიძებნა' : 'No movies found'}
+              </p>
+            </div>
           )
         ) : (
           <>
