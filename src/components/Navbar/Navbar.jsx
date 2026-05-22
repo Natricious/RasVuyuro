@@ -322,7 +322,6 @@ export default function Navbar() {
                 {lang === 'ka' ? 'შესვლა' : 'Sign In'}
               </Link>
             )}
-            <Link to="/movies" className="navbar__cta">{t.viewAll}</Link>
             <button
               className="navbar__hamburger"
               aria-label="Toggle menu"
@@ -351,9 +350,6 @@ export default function Navbar() {
               {t[key]}
             </Link>
           ))}
-          <Link to="/movies" className="mobile-menu__cta" style={{ animationDelay: '0.24s' }}>
-            {t.viewAll}
-          </Link>
         </nav>
       </div>
     </>
